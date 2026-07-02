@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Getting to the Point: LAI Learning Module</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700;800;900" rel="stylesheet"/>
+  <style>
+    :root {
+      --panel: rgba(255, 255, 255, 0.74);
+      --panel-strong: rgba(255, 255, 255, 0.90);
+      --shadow: 0 20px 60px rgba(2, 6, 23, 0.18);
+      --glass-blur: blur(22px);
+      --radius-xl: 28px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      color: #0f172a;
+      background:
+        radial-gradient(circle at 8% 10%, rgba(56, 189, 248, 0.16), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(79, 70, 229, 0.18), transparent 26%),
+        radial-gradient(circle at 50% 100%, rgba(37, 99, 235, 0.10), transparent 34%),
+        linear-gradient(180deg, #f8fbff 0%, #f4f8ff 40%, #eef4fb 100%);
+      overflow: hidden;
+    }
+    .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .orb { position: absolute; border-radius: 999px; filter: blur(80px); opacity: 0.35; animation: floatOrb 16s ease-in-out infinite; mix-blend-mode: screen; }
+    .orb.one { width: 22rem; height: 22rem; left: -4rem; top: -3rem; background: rgba(56, 189, 248, 0.42); }
+    .orb.two { width: 24rem; height: 24rem; right: -8rem; top: 6rem; background: rgba(99, 102, 241, 0.32); animation-delay: -5s; }
+    .orb.three { width: 20rem; height: 20rem; left: 24%; bottom: -8rem; background: rgba(37, 99, 235, 0.24); animation-delay: -9s; }
+    @keyframes floatOrb { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(0, -18px, 0) scale(1.06); } }
+    .glass-shell { position: relative; z-index: 1; background: rgba(255,255,255,0.46); backdrop-filter: blur(8px); }
+    .glass-header { background: rgba(255,255,255,0.72); backdrop-filter: var(--glass-blur); border-bottom: 1px solid rgba(255,255,255,0.72); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06); }
+    .sidebar-shell { background: linear-gradient(180deg, rgba(255,255,255,0.76) 0%, rgba(255,255,255,0.90) 100%); backdrop-filter: var(--glass-blur); border-right: 1px solid rgba(226,232,240,0.88); box-shadow: 20px 0 40px rgba(15, 23, 42, 0.04); }
+    .soft-panel { background: var(--panel); backdrop-filter: var(--glass-blur); border: 1px solid rgba(255,255,255,0.78); box-shadow: var(--shadow); }
+    .soft-panel-strong { background: var(--panel-strong); border: 1px solid rgba(226, 232, 240, 0.88); box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08); }
+    .section-card { position: relative; overflow: hidden; border-radius: var(--radius-xl); background: rgba(255,255,255,0.84); border: 1px solid rgba(226,232,240,0.9); box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08); backdrop-filter: blur(20px); }
+    .section-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0)); pointer-events: none; }
+    .custom-scrollbar::-webkit-scrollbar, .content-scroll::-webkit-scrollbar { width: 8px; }
+    .custom-scrollbar::-webkit-scrollbar-track, .content-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb, .content-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.55); border-radius: 999px; }
+    .content-scroll { scrollbar-width: thin; scrollbar-color: rgba(148,163,184,0.55) transparent; }
+    .fade-in { animation: fadeIn 280ms ease forwards; }
+    .slide-up { animation: slideUp 420ms ease forwards; }
+    .scale-in { animation: scaleIn 220ms ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: scale(1); } }
+    .pill-stat { display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .8rem; border-radius: 999px; background: rgba(15,23,42,0.04); border: 1px solid rgba(148,163,184,0.14); font-size: .75rem; font-weight: 700; color: #334155; }
+    .nav-progress-track { height: 12px; border-radius: 999px; background: rgba(226, 232, 240, 0.95); overflow: hidden; }
+    .nav-progress-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%); box-shadow: inset 0 0 12px rgba(255,255,255,0.26); transition: width 300ms ease; }
+    .nav-card { position: relative; width: 100%; text-align: left; padding: 0.95rem 1rem; border-radius: 22px; border: 1px solid rgba(226, 232, 240, 0.85); background: rgba(255,255,255,0.74); color: #334155; transition: 180ms ease; overflow: hidden; }
+    .nav-card:hover { transform: translateY(-1px); background: rgba(255,255,255,0.92); color: #0f172a; box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08); }
+    .nav-card.active { color: white; border-color: rgba(96, 165, 250, 0.28); background: radial-gradient(circle at 16% 18%, rgba(125, 211, 252, 0.16), transparent 18%), linear-gradient(135deg, #0f172a 0%, #1d4ed8 64%, #4f46e5 100%); box-shadow: 0 16px 36px rgba(37, 99, 235, 0.28); }
+    .nav-card.active::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0)); pointer-events: none; }
+    .nav-card.active .nav-icon { color: #ffffff !important; opacity: 1; }
+    .header-brand-title { white-space: nowrap; }
+    .header-brand-tagline { white-space: nowrap; }
+    .primary-button, .secondary-button, .ghost-button { border-radius: 16px; font-weight: 700; transition: 180ms ease; display: inline-flex; align-items: center; justify-content: center; gap: .55rem; }
+    .primary-button { background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); color: white; box-shadow: 0 16px 28px rgba(37, 99, 235, 0.22); }
+    .primary-button:hover { transform: translateY(-1px); box-shadow: 0 20px 34px rgba(37, 99, 235, 0.28); }
+    .secondary-button { background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%); color: white; box-shadow: 0 16px 28px rgba(22, 163, 74, 0.20); }
+    .secondary-button:hover { transform: translateY(-1px); box-shadow: 0 20px 34px rgba(22, 163, 74, 0.26); }
+    .ghost-button { color: #475569; background: rgba(255,255,255,0.84); border: 1px solid rgba(226,232,240,0.88); }
+    .ghost-button:hover { color: #1d4ed8; border-color: rgba(96,165,250,0.42); background: rgba(255,255,255,0.96); }
+    .mobile-bottom-nav { position: sticky; bottom: 0; z-index: 18; display: none; padding: .9rem 1rem 1.05rem; background: linear-gradient(180deg, rgba(248,251,255,0) 0%, rgba(248,251,255,0.95) 40%, rgba(248,251,255,0.98) 100%); backdrop-filter: blur(16px); }
+    .mobile-bottom-nav .inner { display: grid; grid-template-columns: 1fr auto; gap: .75rem; border-radius: 22px; padding: .8rem; background: rgba(255,255,255,0.82); border: 1px solid rgba(226,232,240,0.88); box-shadow: 0 16px 36px rgba(15,23,42,0.10); }
+    .module-card { transition: all 0.3s ease; }
+    .module-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+    .step-active { background-color: #3b82f6; color: white; }
+    .step-inactive { background-color: #e5e7eb; color: #6b7280; }
+    .sim-overlay { background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+    .info-pill { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+    .choice-card { position: relative; overflow: hidden; transition: 180ms ease; }
+    .choice-card:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06); }
+    .choice-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0)); pointer-events: none; }
+    .fade-swap { transition: opacity 280ms ease, transform 280ms ease; will-change: opacity, transform; }
+    .swap-hidden { opacity: 0; transform: translateY(6px); pointer-events: none; }
+    .swap-visible { opacity: 1; transform: translateY(0); }
+    .buffering-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.35); backdrop-filter: blur(2px); }
+    .spinner { width:44px; height:44px; border-radius:9999px; border:4px solid rgba(255,255,255,0.25); border-top-color: rgba(255,255,255,0.95); animation: spin 0.9s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .video-shell { position: relative; overflow: hidden; border-radius: 28px; border: 1px solid rgba(226,232,240,0.88); background: #020617; box-shadow: 0 26px 60px rgba(15, 23, 42, 0.18); }
+    .video-overlay-btn { position: absolute; top: 16px; right: 16px; z-index: 12; display: flex; gap: 10px; opacity: 0; transition: opacity 220ms ease; }
+    .video-shell:hover .video-overlay-btn { opacity: 1; }
+    .icon-circle-btn { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 999px; color: white; border: 1px solid rgba(255,255,255,0.18); background: rgba(15,23,42,0.56); backdrop-filter: blur(12px); box-shadow: 0 10px 24px rgba(2, 6, 23, 0.22); transition: 180ms ease; }
+    .icon-circle-btn:hover { transform: translateY(-1px); background: rgba(37, 99, 235, 0.74); }
+    .tooltip { position: absolute; bottom: -42px; right: 0; opacity: 0; transform: translateY(4px); transition: 180ms ease; pointer-events: none; white-space: nowrap; font-size: .72rem; padding: .35rem .55rem; border-radius: 10px; color: white; background: rgba(15,23,42,0.94); }
+    .icon-wrap:hover .tooltip { opacity: 1; transform: translateY(0); }
+    .poster-stage { position: relative; display: block; width: 100%; overflow: hidden; background: radial-gradient(circle at 18% 20%, rgba(59,130,246,0.26), transparent 20%), radial-gradient(circle at 84% 12%, rgba(147,197,253,0.18), transparent 18%), linear-gradient(135deg, #020617 0%, #0f172a 38%, #1d4ed8 100%); min-height: 360px; }
+    .poster-stage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,6,23,0.02), rgba(2,6,23,0.48)); pointer-events: none; }
+    .poster-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 38px 38px; mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.18)); pointer-events: none; }
+    .poster-glow { position: absolute; inset: auto auto 20px 20px; display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .75rem; border-radius: 999px; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px); z-index: 2; }
+    .poster-content { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 1.5rem; z-index: 2; }
+    .poster-frame { position: relative; border-radius: 28px; padding: .9rem; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.08); box-shadow: 0 18px 60px rgba(2,6,23,0.28); backdrop-filter: blur(12px); max-width: 820px; width: 100%; }
+    .poster-image { display: block; width: 100%; max-height: 360px; object-fit: cover; border-radius: 22px; opacity: .94; }
+    .play-badge { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .play-core { width: 88px; height: 88px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.88); color: #0f172a; box-shadow: 0 20px 40px rgba(2,6,23,0.24); border: 1px solid rgba(255,255,255,0.78); }
+    .poster-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.25rem 1.25rem 1.1rem; background: linear-gradient(180deg, rgba(2,6,23,0) 0%, rgba(2,6,23,0.84) 85%); z-index: 2; text-align: left; color: white; }
+    .poster-title { font-size: 1.08rem; font-weight: 700; }
+    .poster-subtitle { margin-top: 0.22rem; font-size: .9rem; color: rgba(255,255,255,0.72); }
+    .video-stage { display: none; background: #020617; }
+    .video-stage.visible { display: block; animation: fadeIn 260ms ease forwards; }
+    .video-meta { display: grid; gap: 1rem; padding: 1.25rem; background: linear-gradient(180deg, rgba(15,23,42,0.98) 0%, rgba(15,23,42,0.92) 100%); color: white; }
+    .progress-shell { width: 100%; height: 8px; border-radius: 999px; background: rgba(148,163,184,0.28); overflow: hidden; }
+    .progress-bar { width: 0%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #38bdf8 0%, #2563eb 55%, #6366f1 100%); transition: width 120ms linear; }
+    .control-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .75rem; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.10); font-size: .78rem; font-weight: 700; color: rgba(255,255,255,0.88); }
+
+    /* Elite 3D Injection Lab */
+    .elite-lab-shell { min-height: 760px; }
+    .elite-topline { background: linear-gradient(135deg, rgba(2,6,23,.97), rgba(15,23,42,.95) 58%, rgba(30,64,175,.90)); border: 1px solid rgba(96,165,250,.24); box-shadow: 0 28px 70px rgba(2,6,23,.24); }
+    .elite-chip { display:inline-flex; align-items:center; gap:.45rem; padding:.55rem .75rem; border-radius:999px; border:1px solid rgba(148,163,184,.20); background:rgba(15,23,42,.48); color:#dbeafe; font-size:.72rem; font-weight:800; letter-spacing:.04em; }
+    .elite-stepper { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:.55rem; }
+    .elite-step { position:relative; padding:.7rem .55rem; border-radius:16px; border:1px solid rgba(148,163,184,.16); background:rgba(15,23,42,.44); color:#64748b; text-align:center; transition:180ms ease; }
+    .elite-step .step-dot { width:24px; height:24px; margin:0 auto .35rem; border-radius:999px; display:flex; align-items:center; justify-content:center; background:rgba(148,163,184,.14); font-size:.68rem; font-weight:900; }
+    .elite-step.active { color:#fff; border-color:rgba(56,189,248,.64); background:rgba(37,99,235,.20); box-shadow:0 0 0 1px rgba(56,189,248,.18), 0 10px 24px rgba(37,99,235,.14); }
+    .elite-step.active .step-dot { background:linear-gradient(135deg,#38bdf8,#4f46e5); color:white; }
+    .elite-step.complete { color:#bbf7d0; border-color:rgba(34,197,94,.38); background:rgba(22,163,74,.12); }
+    .elite-step.complete .step-dot { background:#16a34a; color:white; }
+    .elite-grid { display:grid; grid-template-columns:250px minmax(430px,1fr) 330px; gap:1rem; align-items:stretch; }
+    .elite-panel { border-radius:24px; border:1px solid rgba(148,163,184,.16); background:linear-gradient(180deg,rgba(15,23,42,.94),rgba(2,6,23,.96)); box-shadow:0 18px 42px rgba(2,6,23,.18); overflow:hidden; }
+    .elite-panel-header { padding:1rem 1rem .8rem; border-bottom:1px solid rgba(148,163,184,.12); }
+    .elite-site-card { width:100%; text-align:left; padding:.8rem; border-radius:16px; border:1px solid rgba(148,163,184,.14); background:rgba(30,41,59,.52); color:#94a3b8; transition:180ms ease; }
+    .elite-site-card:hover { transform:translateY(-1px); color:white; border-color:rgba(96,165,250,.42); background:rgba(30,64,175,.20); }
+    .elite-site-card.active { color:white; border-color:rgba(56,189,248,.72); background:linear-gradient(135deg,rgba(37,99,235,.32),rgba(79,70,229,.22)); box-shadow:0 12px 26px rgba(37,99,235,.18); }
+    .elite-site-card .site-risk { color:#fbbf24; }
+    .elite-stage { position:relative; min-height:650px; border-radius:24px; overflow:hidden; border:1px solid rgba(96,165,250,.22); background:radial-gradient(circle at 50% 30%,rgba(37,99,235,.26),transparent 32%),linear-gradient(180deg,#071225 0%,#020617 100%); box-shadow:inset 0 0 70px rgba(37,99,235,.08),0 24px 60px rgba(2,6,23,.25); }
+    .elite-stage::before { content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(148,163,184,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.06) 1px,transparent 1px); background-size:42px 42px; mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 92%); pointer-events:none; }
+    #elite-three-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; cursor:grab; }
+    #elite-three-canvas:active { cursor:grabbing; }
+    .stage-toolbar { position:absolute; top:14px; left:14px; right:14px; z-index:8; display:flex; justify-content:space-between; gap:.7rem; pointer-events:none; }
+    .stage-toolbar > * { pointer-events:auto; }
+    .stage-tool-group { display:flex; gap:.45rem; padding:.4rem; border-radius:16px; background:rgba(2,6,23,.58); border:1px solid rgba(148,163,184,.16); backdrop-filter:blur(14px); }
+    .stage-tool { height:36px; min-width:36px; padding:0 .65rem; border-radius:11px; color:#cbd5e1; display:inline-flex; align-items:center; justify-content:center; gap:.35rem; font-size:.7rem; font-weight:800; transition:160ms ease; }
+    .stage-tool:hover,.stage-tool.active { color:white; background:rgba(37,99,235,.65); }
+    .stage-readout { position:absolute; left:16px; bottom:16px; z-index:8; max-width:min(420px,calc(100% - 32px)); padding:.85rem 1rem; border-radius:17px; color:white; background:rgba(2,6,23,.62); border:1px solid rgba(148,163,184,.16); backdrop-filter:blur(15px); }
+    .stage-hint { position:absolute; right:16px; bottom:16px; z-index:8; padding:.65rem .8rem; border-radius:14px; color:#94a3b8; background:rgba(2,6,23,.54); border:1px solid rgba(148,163,184,.14); backdrop-filter:blur(12px); font-size:.68rem; font-weight:700; }
+    .stage-loading { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#94a3b8; z-index:2; }
+    .clinical-score-ring { width:74px; height:74px; border-radius:999px; display:grid; place-items:center; background:conic-gradient(#38bdf8 var(--score,0%),rgba(51,65,85,.72) 0); position:relative; }
+    .clinical-score-ring::after { content:""; position:absolute; inset:7px; border-radius:inherit; background:#07111f; }
+    .clinical-score-ring span { position:relative; z-index:1; color:white; font-weight:900; font-size:1.05rem; }
+    .elite-check { display:flex; align-items:flex-start; gap:.65rem; padding:.62rem .7rem; border-radius:14px; color:#64748b; border:1px solid rgba(148,163,184,.10); background:rgba(15,23,42,.36); transition:160ms ease; }
+    .elite-check.complete { color:#dcfce7; border-color:rgba(34,197,94,.25); background:rgba(22,163,74,.10); }
+    .elite-check.current { color:white; border-color:rgba(56,189,248,.28); background:rgba(37,99,235,.12); }
+    .elite-action { width:100%; display:flex; align-items:center; justify-content:center; gap:.5rem; padding:.78rem .9rem; border-radius:14px; font-size:.78rem; font-weight:850; color:white; background:linear-gradient(135deg,#2563eb,#4f46e5); box-shadow:0 12px 24px rgba(37,99,235,.22); transition:170ms ease; }
+    .elite-action:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 16px 28px rgba(37,99,235,.30); }
+    .elite-action.secondary { background:rgba(30,41,59,.78); color:#e2e8f0; box-shadow:none; border:1px solid rgba(148,163,184,.16); }
+    .elite-action.success { background:linear-gradient(135deg,#16a34a,#059669); box-shadow:0 12px 24px rgba(16,185,129,.20); }
+    .elite-action:disabled { opacity:.36; cursor:not-allowed; filter:saturate(.6); }
+    .needle-option { flex:1; padding:.58rem .45rem; border-radius:12px; border:1px solid rgba(148,163,184,.14); background:rgba(15,23,42,.62); color:#94a3b8; font-size:.7rem; font-weight:850; }
+    .needle-option.active { color:white; border-color:rgba(56,189,248,.62); background:rgba(37,99,235,.24); }
+    .elite-range { width:100%; accent-color:#38bdf8; }
+    .tissue-gauge { height:68px; border-radius:14px; overflow:hidden; position:relative; border:1px solid rgba(148,163,184,.14); background:linear-gradient(180deg,#f3c9a7 0 28%,#f2d16f 28% 48%,#c85e5e 48% 100%); }
+    .tissue-gauge::after { content:""; position:absolute; left:50%; top:0; width:3px; height:var(--needle-depth,48%); transform:translateX(-50%); background:linear-gradient(#e2e8f0,#94a3b8); box-shadow:0 0 12px rgba(255,255,255,.72); transition:height 160ms ease; }
+    .tissue-labels { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-around; padding:.15rem .45rem; color:rgba(15,23,42,.74); font-size:.56rem; font-weight:900; text-transform:uppercase; pointer-events:none; }
+    .elite-toast { position:absolute; left:50%; top:50%; z-index:40; transform:translate(-50%,-50%) scale(.9); opacity:0; pointer-events:none; padding:1rem 1.25rem; border-radius:18px; color:white; font-weight:850; box-shadow:0 24px 60px rgba(2,6,23,.34); transition:220ms ease; text-align:center; }
+    .elite-toast.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+    .elite-summary { position:fixed; inset:0; z-index:120; display:none; align-items:center; justify-content:center; padding:1.2rem; background:rgba(2,6,23,.72); backdrop-filter:blur(12px); }
+    .elite-summary.show { display:flex; animation:fadeIn 220ms ease; }
+    .elite-summary-card { width:min(720px,100%); max-height:90vh; overflow:auto; border-radius:28px; border:1px solid rgba(96,165,250,.22); background:linear-gradient(180deg,#0f172a,#020617); color:white; box-shadow:0 32px 100px rgba(2,6,23,.58); }
+    .mastery-grade { display:inline-flex; align-items:center; justify-content:center; width:88px; height:88px; border-radius:999px; background:linear-gradient(135deg,#38bdf8,#4f46e5); color:white; font-size:2rem; font-weight:950; box-shadow:0 18px 38px rgba(37,99,235,.30); }
+    .confetti-piece { position:absolute; width:8px; height:14px; border-radius:2px; animation:eliteConfetti 1.5s ease-out forwards; }
+    @keyframes eliteConfetti { from { transform:translateY(-30px) rotate(0); opacity:1; } to { transform:translateY(280px) rotate(600deg); opacity:0; } }
+    @media (max-width: 1250px) {
+      .elite-grid { grid-template-columns:220px minmax(380px,1fr); }
+      .elite-dashboard { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+      .elite-stage { min-height:610px; }
+    }
+    @media (max-width: 900px) {
+      .elite-grid { grid-template-columns:1fr; }
+      .elite-dashboard { grid-column:auto; display:block; }
+      .elite-stage { min-height:580px; }
+      .elite-stepper { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width: 600px) {
+      .elite-lab-shell { min-height:0; }
+      .elite-stage { min-height:520px; }
+      .stage-hint { display:none; }
+      .stage-toolbar { flex-wrap:wrap; }
+      .stage-tool span.label { display:none; }
+      .elite-stepper { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+
+    @media (max-width: 767px) {
+      body { overflow: auto; }
+      #app-shell { display: block; min-height: 100dvh; height: auto; overflow: visible; }
+      #sidebar { position: fixed; inset: 0 auto 0 0; width: min(90vw, 360px); max-width: 90vw; height: 100dvh; }
+      .content-scroll { -webkit-overflow-scrolling: touch; }
+      .header-brand-title { white-space: normal; line-height: 1.05; }
+      .header-brand-tagline { white-space: normal; line-height: 1.25; max-width: 15rem; }
+      .poster-stage { min-height: 260px; }
+      .section-card, .video-shell, .soft-panel, .soft-panel-strong { border-radius: 20px; }
+      .video-overlay-btn { opacity: 1; top: 12px; right: 12px; gap: 8px; }
+      .tooltip { display: none; }
+      .icon-circle-btn { width: 40px; height: 40px; }
+      .mobile-bottom-nav { display: block; padding: .75rem .85rem calc(1rem + env(safe-area-inset-bottom)); }
+      .mobile-bottom-nav .inner { grid-template-columns: 1fr; }
+      .mobile-bottom-nav .inner button { width: 100%; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+</head>
+<body class="text-slate-900">
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+  </div>
+
+  <div id="app-shell" class="glass-shell h-screen flex overflow-hidden">
+    <aside id="sidebar" class="sidebar-shell w-80 max-w-[88vw] flex-shrink-0 h-full absolute md:relative z-30 -translate-x-full md:translate-x-0 transition-transform duration-300 flex flex-col">
+      <div class="px-5 pt-5 pb-4 border-b border-slate-200/70">
+        <div class="soft-panel rounded-[28px] p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <div class="text-xl font-black tracking-tight text-slate-950">Getting to the Point</div>
+              <p class="text-sm text-slate-500 mt-1 leading-relaxed">Evidence, shared decision-making, clinic logistics, and hands-on injection simulation.</p>
+            </div>
+            <button class="md:hidden text-slate-500 hover:text-slate-900 rounded-xl p-2 hover:bg-slate-100" onclick="toggleSidebar()" aria-label="Close navigation">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <div class="mt-4 p-4 rounded-2xl bg-slate-950 text-white shadow-xl shadow-slate-900/15">
+            <div class="flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.18em] font-bold text-slate-300">
+              <span>Module Progress</span>
+              <span id="sidebar-progress-count">1 of 6</span>
+            </div>
+            <div class="nav-progress-track mt-3">
+              <div id="sidebar-progress-bar" class="nav-progress-bar" style="width: 16.67%;"></div>
+            </div>
+            <div class="mt-3 flex items-center justify-between text-sm">
+              <div class="text-slate-300">Completion</div>
+              <div class="font-extrabold text-white" id="sidebar-progress-label">17%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 py-4 flex-1 overflow-y-auto content-scroll">
+        <div class="text-[11px] uppercase tracking-[0.22em] font-bold text-slate-400 px-2 mb-3">Module Navigation</div>
+        <div class="space-y-2">
+          <button class="nav-btn nav-card active" id="btn-intro" onclick="showSection('intro')">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined nav-icon text-slate-400">home</span><span class="font-bold text-sm">Introduction</span></div>
+          </button>
+          <button class="nav-btn nav-card" id="btn-module1" onclick="showSection('module1')">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined nav-icon text-slate-400">analytics</span><span class="font-bold text-sm text-left">1. Evidence &amp; Guidelines</span></div>
+          </button>
+          <button class="nav-btn nav-card" id="btn-module2" onclick="showSection('module2')">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined nav-icon text-slate-400">handshake</span><span class="font-bold text-sm text-left">2. Shared Decision-Making</span></div>
+          </button>
+          <button class="nav-btn nav-card" id="btn-module3" onclick="showSection('module3')">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined nav-icon text-slate-400">settings_suggest</span><span class="font-bold text-sm text-left">3. Clinic Logistics</span></div>
+          </button>
+          <button class="nav-btn nav-card" id="btn-module4" onclick="showSection('module4')">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined nav-icon text-slate-400">quiz</span><span class="font-bold text-sm text-left">4. Knowledge Check</span></div>
+          </button>
+          <button class="nav-btn nav-card" id="btn-simulation" onclick="showSection('simulation')">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined nav-icon text-slate-400">3d_rotation</span><span class="font-bold text-sm text-left">3D Elite Injection Lab</span></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-slate-200/70">
+        <div class="soft-panel-strong rounded-[22px] p-4">
+          <div class="text-xs uppercase tracking-[0.18em] font-bold text-slate-400">Live Education</div>
+          <div class="mt-2 text-sm font-bold text-slate-900">APNA Annual Conference 2026</div>
+          <div class="text-xs text-slate-500 mt-1">Phoenix, AZ | Oct 28-31</div>
+        </div>
+      </div>
+    </aside>
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-slate-950/40 backdrop-blur-[2px] hidden z-20 md:hidden" onclick="toggleSidebar()"></div>
+
+    <div class="flex-1 flex flex-col h-full min-w-0 relative z-10">
+      <header class="glass-header sticky top-0 z-20">
+        <div class="px-4 md:px-6 py-3.5 flex items-center justify-between gap-4">
+          <div class="min-w-0 flex items-center gap-3">
+            <button class="md:hidden text-slate-600 hover:text-slate-950 rounded-xl p-2 hover:bg-white/70" onclick="toggleSidebar()" aria-label="Open navigation">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="min-w-0">
+              <div class="header-brand-title text-base sm:text-lg font-black uppercase tracking-tight text-slate-950">REAL WORLD <span class="text-blue-600">CE</span></div>
+              <div class="header-brand-tagline text-[11px] sm:text-xs font-semibold tracking-[0.08em] text-slate-600 mt-1">Featuring Real World <span class="text-blue-600">Sim</span></div>
+            </div>
+          </div>
+
+          <div class="hidden xl:flex items-center gap-3 min-w-0">
+            <div class="pill-stat"><span class="material-symbols-outlined text-[16px] text-blue-600">medical_services</span><span>LAI Learning Module</span></div>
+            <div class="pill-stat min-w-0 max-w-[320px]"><span class="material-symbols-outlined text-[16px] text-blue-600">chevron_right</span><span id="breadcrumb-section" class="truncate">Introduction</span></div>
+          </div>
+
+          <div class="hidden md:flex items-center gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-32 h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200"><div class="h-full bg-blue-600 transition-all duration-500" id="progressBar" style="width: 0%"></div></div>
+              <span id="progressText" class="text-xs font-bold text-blue-600">0%</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main id="mainScroller" class="flex-1 overflow-y-auto custom-scrollbar px-4 md:px-8 py-5 md:py-8 bg-transparent">
+<section class="content-section p-8 max-w-5xl mx-auto block" id="intro">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+          <div class="relative h-64">
+            <img alt="Healthcare Team" class="w-full h-full object-cover"
+                 src="Heart Table.png" loading="lazy" decoding="async"
+                 onerror="this.onerror=null; this.src=window.__missingImgSvg('Missing: Heart Table.png');"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-blue-900/90 to-transparent flex items-end p-8">
+              <div class="text-white">
+                <span class="bg-blue-500 px-3 py-1 rounded-full text-xs font-bold uppercase mb-4 inline-block">Course Introduction</span>
+                <h2 class="text-4xl font-black">Bridging the Reaction Gap</h2>
+                <p class="text-blue-100 mt-2 max-w-2xl">Transitioning to Long-Acting Injectables early in schizophrenia treatment to prevent relapse and improve patient outcomes.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-8 grid md:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-blue-500">task_alt</span>
+                Learning Objectives
+              </h3>
+
+              <ul class="space-y-4">
+                <li class="flex gap-3">
+                  <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold shrink-0 mt-1">1</div>
+                  <p class="text-slate-600 text-sm">Describe proactive guideline recommendations for early LAI administration and review evidence from clinical trials.</p>
+                </li>
+                <li class="flex gap-3">
+                  <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold shrink-0 mt-1">2</div>
+                  <p class="text-slate-600 text-sm">Demonstrate shared decision-making techniques to align treatment with patient goals and autonomy.</p>
+                </li>
+                <li class="flex gap-3">
+                  <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold shrink-0 mt-1">3</div>
+                  <p class="text-slate-600 text-sm">Master clinic logistics and transition protocols, including proper injection techniques for Ventrogluteal and gluteal sites.</p>
+                </li>
+              </ul>
+
+              <div class="mt-10 p-4 bg-orange-50 border border-orange-200 rounded-2xl flex gap-4">
+                <span class="material-symbols-outlined text-orange-500">warning</span>
+                <div>
+                  <p class="text-sm font-bold text-orange-800">The Problem</p>
+                  <p class="text-xs text-orange-700">Despite clear evidence of superior outcomes, only 4% of patients receive LAIs early in treatment.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+              <h3 class="font-bold text-slate-800 mb-4">Module Overview</h3>
+
+              <div class="space-y-4">
+                <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200">
+                  <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-blue-400">timer</span>
+                    <span class="text-sm font-medium text-slate-600">Total Duration</span>
+                  </div>
+                  <span class="text-sm font-bold text-blue-600">60 Minutes</span>
+                </div>
+
+                <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200">
+                  <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-green-400">workspace_premium</span>
+                    <span class="text-sm font-medium text-slate-600">Certification</span>
+                  </div>
+                  <span class="text-sm font-bold text-green-600">1.0 AMA PRA / CE</span>
+                </div>
+              </div>
+
+              <button class="w-full mt-8 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 flex items-center justify-center gap-2"
+                      onclick="showSection('module1')">
+                Start Training
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section p-8 max-w-5xl mx-auto hidden" id="module1">
+        <div class="mb-8 flex justify-between items-end">
+          <div>
+            <span class="text-blue-600 font-bold uppercase tracking-widest text-xs">Section 1</span>
+            <h2 class="text-3xl font-black text-slate-900">Proactive Treatment &amp; Guidelines</h2>
+          </div>
+          <div class="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg">psychology</span>
+            The Evidence Gap
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Why Early Initiation?</h3>
+            <p class="text-slate-600 leading-relaxed mb-6">
+              Schizophrenia leads to an average of <strong class="text-blue-600">28.5 years of life lost</strong> per patient.
+              Real-world data shows a <strong class="text-green-600">20-30% reduction in hospitalizations</strong> when using LAIs early,
+              including following the first episode of psychosis.
+            </p>
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+              <p class="italic text-sm text-blue-800">
+                "Traditional RCTs often underestimate the real-world advantage of LAIs because they artificially increase adherence in the oral control groups."
+              </p>
+              <p class="text-xs font-bold text-blue-600 mt-2">— Dr. Christoph Correll</p>
+            </div>
+          </div>
+
+          <div class="rounded-3xl overflow-hidden shadow-lg">
+            <img class="w-full h-full object-cover" src="Brain.png" alt="Brain visual"
+                 loading="lazy" decoding="async"
+                 onerror="this.onerror=null; this.src=window.__missingImgSvg('Missing: Brain.png');"/>
+          </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-slate-800 mb-6">Key Guideline Recommendations</h3>
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+          <div class="bg-white p-6 rounded-2xl border-t-4 border-blue-500 shadow-sm">
+            <span class="material-symbols-outlined text-blue-500 mb-2">fast_forward</span>
+            <h4 class="font-bold text-slate-800">Early Intervention</h4>
+            <p class="text-xs text-slate-500 mt-2">APA/AAPP guidelines recommend LAI initiation even after the first psychotic episode to protect neural tissue.</p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl border-t-4 border-green-500 shadow-sm">
+            <span class="material-symbols-outlined text-green-500 mb-2">trending_down</span>
+            <h4 class="font-bold text-slate-800">Relapse Prevention</h4>
+            <p class="text-xs text-slate-500 mt-2">LAIs prevent the "compounding effects" of repeated relapses and subsequent functional decline.</p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl border-t-4 border-orange-500 shadow-sm">
+            <span class="material-symbols-outlined text-orange-500 mb-2">track_changes</span>
+            <h4 class="font-bold text-slate-800">Monotherapy Goal</h4>
+            <p class="text-xs text-slate-500 mt-2">The goal should be full transition to LAI monotherapy, moving away from reactive "reserved for failure" models.</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 text-white p-8 rounded-3xl flex flex-col md:flex-row gap-8 items-center">
+          <div class="flex-1">
+            <h3 class="text-2xl font-bold mb-4">The "Wait &amp; See" Myth</h3>
+            <p class="text-slate-400 text-sm mb-6">
+              Electronic monitoring suggests oral adherence is only 40-50%, while clinicians often overestimate it at 74%.
+              This discrepancy fuels the persistent underutilization of LAIs.
+            </p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
+                <p class="text-3xl font-black text-blue-400">74%</p>
+                <p class="text-[10px] uppercase font-bold text-slate-500">Perceived Adherence</p>
+              </div>
+              <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
+                <p class="text-3xl font-black text-orange-400">40%</p>
+                <p class="text-[10px] uppercase font-bold text-slate-500">Actual Adherence</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full md:w-64">
+            <img class="rounded-2xl w-full border border-white/10" src="needle.png" alt="Injection needle"
+                 loading="lazy" decoding="async"
+                 onerror="this.onerror=null; this.src=window.__missingImgSvg('Missing: needle.png');"/>
+          </div>
+        </div>
+
+        <div class="mt-12 flex justify-end">
+          <button class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl flex items-center gap-2 hover:bg-blue-700"
+                  onclick="showSection('module2')">
+            Next: Shared Decision-Making
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="content-section p-8 max-w-5xl mx-auto hidden" id="module2">
+        <div class="mb-8">
+          <span class="text-green-600 font-bold uppercase tracking-widest text-xs">Section 2</span>
+          <h2 class="text-3xl font-black text-slate-900">The Perception Gap: Shared Decision-Making</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-12">
+          <img class="rounded-3xl shadow-xl border border-slate-200"
+               src="man woman.png" alt="Clinician and patient conversation"
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src=window.__missingImgSvg('Missing: man woman.png');"/>
+
+          <div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-4">Reframing the Conversation</h3>
+            <p class="text-slate-600 mb-6">
+              Shared decision-making (SDM) shifts the conversation from <strong class="text-blue-600">"Compliance"</strong>
+              to achieving <strong class="text-green-600">Patient-Centered Goals</strong> like stability, lifestyle convenience, and autonomy.
+            </p>
+
+            <div class="space-y-4">
+              <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <span class="material-symbols-outlined text-blue-500 bg-blue-50 p-2 rounded-lg">forum</span>
+                <div>
+                  <p class="font-bold text-slate-800">Neutral Framing</p>
+                  <p class="text-xs text-slate-500">Present LAIs as a choice, not a punishment for "failing" pills.</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <span class="material-symbols-outlined text-green-500 bg-green-50 p-2 rounded-lg">volunteer_activism</span>
+                <div>
+                  <p class="font-bold text-slate-800">90% Acceptance Rate</p>
+                  <p class="text-xs text-slate-500">With SDM training, patient acceptance jumps from 15% to 90%.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm mb-12">
+          <h3 class="text-xl font-bold mb-6">Patient Preferences: Reality vs. Perception</h3>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
+              <p class="text-red-800 font-bold mb-2">Clinician Misperception</p>
+              <p class="text-sm text-red-700 italic">"Patients will feel coerced if I suggest an injection. They prefer the control of taking a daily pill."</p>
+            </div>
+
+            <div class="p-6 bg-green-50 rounded-2xl border border-green-100">
+              <p class="text-green-800 font-bold mb-2">Patient Reality</p>
+              <p class="text-sm text-green-700 italic">"I value the freedom from the daily reminder of my illness. The injection gives me more autonomy."</p>
+            </div>
+          </div>
+
+          <div class="mt-8 p-6 bg-blue-50 rounded-2xl flex items-center gap-6">
+            <div class="text-center">
+              <p class="text-3xl font-black text-blue-600">77%</p>
+              <p class="text-[10px] font-bold text-blue-400 uppercase">Preference</p>
+            </div>
+            <p class="text-sm text-blue-800 font-medium">of patients surveyed report preferring LAIs over oral administration when benefits are collaboratively explained.</p>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center bg-slate-100 p-6 rounded-2xl">
+          <button class="text-slate-600 font-bold flex items-center gap-2 hover:text-slate-900" onclick="showSection('module1')">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back
+          </button>
+
+          <button class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl flex items-center gap-2 hover:bg-blue-700"
+                  onclick="showSection('module3')">
+            Next: Clinic Logistics
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="content-section p-8 max-w-5xl mx-auto hidden" id="module3">
+        <div class="mb-8">
+          <span class="text-orange-600 font-bold uppercase tracking-widest text-xs">Section 3</span>
+          <h2 class="text-3xl font-black text-slate-900">Clinic Logistics &amp; Transition Protocols</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="space-y-6">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-orange-500">inventory_2</span>
+                Inventory &amp; Storage
+              </h3>
+              <ul class="space-y-3 text-sm text-slate-600">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-slate-400 text-sm">check_circle</span> Refrigeration requirements &amp; temp logs</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-slate-400 text-sm">check_circle</span> Stocking levels and ordering schedules</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-slate-400 text-sm">check_circle</span> Disposal of sharps and biohazards</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-blue-500">assignment_turned_in</span>
+                Administrative Support
+              </h3>
+              <ul class="space-y-3 text-sm text-slate-600">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-slate-400 text-sm">check_circle</span> Insurance &amp; Prior Authorization support</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-slate-400 text-sm">check_circle</span> Appointment scheduling (The "Injection Day" model)</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-slate-400 text-sm">check_circle</span> Tracking and monitoring patient follow-ups</li>
+              </ul>
+            </div>
+          </div>
+
+          <img class="rounded-3xl shadow-xl h-full object-cover"
+               src="fridge.png" alt="Medication refrigerator"
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src=window.__missingImgSvg('Missing: fridge.png');"/>
+        </div>
+
+        <div class="bg-blue-900 text-white p-10 rounded-3xl mb-12">
+          <h3 class="text-2xl font-black mb-6">Transitioning Safely: The Critical Window</h3>
+          <p class="text-blue-100 mb-8">Up to <strong class="text-white">80% of patients</strong> experience medication discrepancies upon hospital discharge. Bridging the transition from inpatient to community care is vital.</p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white/10 p-6 rounded-2xl">
+              <h4 class="font-bold text-blue-300 mb-2 uppercase text-xs tracking-widest">Protocol 1</h4>
+              <p class="font-bold mb-2">Oral Overlap &amp; Loading</p>
+              <p class="text-xs text-blue-100">Each LAI has a specific overlap period (0 to 21 days). Maintenance doses must align with pharmacokinetic steady-state goals.</p>
+            </div>
+
+            <div class="bg-white/10 p-6 rounded-2xl">
+              <h4 class="font-bold text-orange-300 mb-2 uppercase text-xs tracking-widest">Avoid</h4>
+              <p class="font-bold mb-2">The Polypharmacy Paradox</p>
+              <p class="text-xs text-blue-100">Indefinite maintenance of oral antipsychotics (OAs) after LAI steady-state increases rehospitalization risk by 49%.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <button class="bg-blue-600 text-white font-black px-12 py-5 rounded-full flex items-center gap-3 hover:scale-105 transition-all shadow-2xl shadow-blue-400"
+                  onclick="showSection('module4')"> Next: Knowledge Check
+            <span class="material-symbols-outlined text-3xl">arrow_forward</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="content-section p-8 max-w-5xl mx-auto hidden" id="module4">
+        <div class="mb-8">
+          <span class="text-purple-600 font-bold uppercase tracking-widest text-xs">Section 4</span>
+          <h2 class="text-3xl font-black text-slate-900">Knowledge Check</h2>
+        </div>
+
+        <div class="bg-white rounded-3xl p-10 shadow-xl border border-slate-200 mb-12">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-black text-slate-900 flex items-center gap-2">
+              <span class="material-symbols-outlined text-blue-500">quiz</span>
+              Final Review
+            </h3>
+            <span class="text-xs uppercase font-bold text-blue-500 bg-blue-50 px-3 py-1 rounded-full">
+              Core Curriculum
+            </span>
+          </div>
+
+          <p class="text-slate-500 mb-8">
+            Test your understanding of early LAI guideline recommendations before moving to the simulation.
+          </p>
+
+          <div id="quiz-container">
+            <div class="quiz-step" data-step="1">
+              <h4 class="text-lg font-bold text-slate-800 mb-6">
+                1. Which patient population do current guidelines explicitly recommend for early LAI initiation?
+              </h4>
+
+              <div class="space-y-4">
+                <button class="w-full text-left p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-500 transition-all font-medium"
+                        onclick="checkAnswer(1, 'A', this)">
+                  A. Only patients who have failed at least 3 oral agents.
+                </button>
+
+                <button class="w-full text-left p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-500 transition-all font-medium"
+                        onclick="checkAnswer(1, 'B', this)">
+                  B. Patients following their first episode of psychosis.
+                </button>
+
+                <button class="w-full text-left p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-500 transition-all font-medium"
+                        onclick="checkAnswer(1, 'C', this)">
+                  C. Only patients currently under involuntary hospitalization.
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-8 p-6 rounded-2xl border hidden" id="quiz-feedback">
+              <p class="text-sm font-bold" id="feedback-text"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <button class="bg-blue-600 text-white font-black px-12 py-5 rounded-full flex items-center gap-3 hover:scale-105 transition-all shadow-2xl shadow-blue-400"
+                  onclick="showSection('simulation')">
+            <span class="material-symbols-outlined text-3xl">3d_rotation</span>
+            Enter 3D Elite Injection Lab
+          </button>
+        </div>
+      </section>
+
+      <section class="content-section max-w-[1600px] mx-auto hidden" id="simulation">
+        <div class="elite-lab-shell">
+          <div class="elite-topline rounded-[30px] p-5 md:p-7 text-white mb-4">
+            <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-5">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-3">
+                  <span class="elite-chip"><span class="material-symbols-outlined text-[16px] text-sky-300">deployed_code</span>3D Skills Lab</span>
+                  <span class="elite-chip"><span class="material-symbols-outlined text-[16px] text-emerald-300">verified</span>Guided Competency</span>
+                  <span class="elite-chip"><span class="material-symbols-outlined text-[16px] text-violet-300">neurology</span>Anatomy Layer</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight">Elite Injection Learning Experience</h2>
+                <p class="text-slate-300 mt-2 max-w-3xl text-sm md:text-base">Rotate the 3D patient, select an intramuscular site, verify the procedure, identify landmarks, set technique parameters, and complete a scored injection simulation.</p>
+              </div>
+              <div class="flex items-center gap-4 rounded-2xl bg-white/5 border border-white/10 px-4 py-3">
+                <div class="clinical-score-ring" id="clinical-score-ring" style="--score:0%"><span id="elite-score">0</span></div>
+                <div>
+                  <div class="text-[10px] uppercase tracking-[.2em] text-slate-400 font-extrabold">Clinical Mastery</div>
+                  <div class="font-black text-lg" id="elite-rank">Not Started</div>
+                  <div class="text-xs text-slate-400 mt-0.5" id="elite-progress-label">0 of 6 phases complete</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="elite-stepper mt-5" id="elite-stepper">
+              <div class="elite-step active" data-phase="0"><div class="step-dot">1</div><div class="text-[10px] font-extrabold uppercase">Site</div></div>
+              <div class="elite-step" data-phase="1"><div class="step-dot">2</div><div class="text-[10px] font-extrabold uppercase">Verify</div></div>
+              <div class="elite-step" data-phase="2"><div class="step-dot">3</div><div class="text-[10px] font-extrabold uppercase">Prepare</div></div>
+              <div class="elite-step" data-phase="3"><div class="step-dot">4</div><div class="text-[10px] font-extrabold uppercase">Landmark</div></div>
+              <div class="elite-step" data-phase="4"><div class="step-dot">5</div><div class="text-[10px] font-extrabold uppercase">Inject</div></div>
+              <div class="elite-step" data-phase="5"><div class="step-dot">6</div><div class="text-[10px] font-extrabold uppercase">Debrief</div></div>
+            </div>
+          </div>
+
+          <div class="elite-grid">
+            <aside class="elite-panel">
+              <div class="elite-panel-header">
+                <div class="text-[10px] uppercase tracking-[.2em] font-extrabold text-slate-500">Patient Scenario</div>
+                <div class="mt-2 flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-300 flex items-center justify-center"><span class="material-symbols-outlined">person</span></div>
+                  <div><div class="text-white font-extrabold text-sm">Adult Patient</div><div class="text-slate-500 text-xs">Average build · IM training</div></div>
+                </div>
+              </div>
+              <div class="p-3 space-y-2">
+                <div class="px-2 pt-1 pb-2 text-[10px] uppercase tracking-[.18em] font-extrabold text-slate-500">Select Injection Site</div>
+                <button class="elite-site-card" data-site="ventrogluteal" onclick="setEliteSite('ventrogluteal', this)">
+                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-sky-300">accessibility_new</span><div><div class="font-extrabold text-sm">Ventrogluteal</div><div class="text-[10px] mt-1 opacity-70">Lateral hip landmarking</div></div></div>
+                </button>
+                <button class="elite-site-card" data-site="deltoid" onclick="setEliteSite('deltoid', this)">
+                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-sky-300">front_hand</span><div><div class="font-extrabold text-sm">Deltoid</div><div class="text-[10px] mt-1 opacity-70">Upper-arm landmarking</div></div></div>
+                </button>
+                <button class="elite-site-card" data-site="vastus" onclick="setEliteSite('vastus', this)">
+                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-sky-300">directions_walk</span><div><div class="font-extrabold text-sm">Vastus Lateralis</div><div class="text-[10px] mt-1 opacity-70">Lateral thigh landmarking</div></div></div>
+                </button>
+                <button class="elite-site-card" data-site="dorsogluteal" onclick="setEliteSite('dorsogluteal', this)">
+                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-amber-300">warning</span><div><div class="font-extrabold text-sm">Dorsogluteal</div><div class="site-risk text-[10px] mt-1">Safety-zone review</div></div></div>
+                </button>
+              </div>
+              <div class="p-3 border-t border-slate-700/40">
+                <div class="rounded-2xl p-3 bg-slate-900/60 border border-slate-700/50">
+                  <div class="flex items-center justify-between gap-2"><span class="text-[10px] uppercase tracking-[.16em] font-extrabold text-slate-500">Training Mode</span><button id="guidance-toggle" onclick="toggleEliteGuidance()" class="text-[10px] font-extrabold text-sky-300">GUIDED</button></div>
+                  <p class="text-xs text-slate-400 mt-2 leading-relaxed" id="guidance-copy">Coaching prompts and landmark cues are enabled.</p>
+                </div>
+                <button class="elite-action secondary mt-3" onclick="resetEliteLab()"><span class="material-symbols-outlined text-[18px]">restart_alt</span>Reset Lab</button>
+              </div>
+            </aside>
+
+            <div class="elite-stage" id="elite-stage">
+              <canvas id="elite-three-canvas" aria-label="Interactive 3D patient injection model"></canvas>
+              <div class="stage-loading" id="elite-stage-loading"><div class="text-center"><div class="spinner mx-auto"></div><div class="mt-3 text-xs font-bold">Building 3D patient model…</div></div></div>
+
+              <div class="stage-toolbar">
+                <div class="stage-tool-group">
+                  <button class="stage-tool active" data-view="front" onclick="setEliteView('front', this)" title="Front view"><span class="material-symbols-outlined text-[18px]">person</span><span class="label">Front</span></button>
+                  <button class="stage-tool" data-view="right" onclick="setEliteView('right', this)" title="Right-side view"><span class="material-symbols-outlined text-[18px]">view_sidebar</span><span class="label">Side</span></button>
+                  <button class="stage-tool" data-view="back" onclick="setEliteView('back', this)" title="Posterior view"><span class="material-symbols-outlined text-[18px]">accessibility</span><span class="label">Back</span></button>
+                </div>
+                <div class="stage-tool-group">
+                  <button class="stage-tool" id="anatomy-toggle" onclick="toggleAnatomyLayer()"><span class="material-symbols-outlined text-[18px]">biotech</span><span class="label">Anatomy</span></button>
+                  <button class="stage-tool" onclick="focusSelectedSite()"><span class="material-symbols-outlined text-[18px]">center_focus_strong</span><span class="label">Focus</span></button>
+                </div>
+              </div>
+
+              <div class="stage-readout">
+                <div class="text-[10px] uppercase tracking-[.18em] font-extrabold text-sky-300" id="stage-site-kicker">Awaiting site selection</div>
+                <div class="font-black mt-1" id="stage-site-title">Explore the 3D patient</div>
+                <div class="text-xs text-slate-400 mt-1 leading-relaxed" id="stage-site-copy">Drag to rotate the model, scroll to zoom, or select a site from the left panel.</div>
+              </div>
+              <div class="stage-hint"><span class="material-symbols-outlined text-[14px] align-middle">360</span> Drag to rotate · Scroll to zoom · Click a hotspot</div>
+              <div id="sim-msg" class="elite-toast bg-blue-600" aria-live="polite"></div>
+            </div>
+
+            <aside class="elite-panel elite-dashboard">
+              <div class="elite-panel-header">
+                <div class="flex items-start justify-between gap-3">
+                  <div><div class="text-[10px] uppercase tracking-[.2em] font-extrabold text-slate-500">Procedure Coach</div><div class="text-white font-black mt-1" id="coach-title">Choose an injection site</div></div>
+                  <span id="sim-status" class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase bg-slate-800 text-slate-400">Phase 1</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed" id="coach-copy">Select a hotspot on the 3D patient or use the site menu.</p>
+              </div>
+
+              <div class="p-3 space-y-2" id="procedure-checklist">
+                <div class="elite-check current" data-check="site"><span class="material-symbols-outlined text-[18px]">radio_button_checked</span><div><div class="font-bold text-xs">Select site</div><div class="text-[10px] opacity-70 mt-0.5">Match the site to the scenario.</div></div></div>
+                <div class="elite-check" data-check="verified"><span class="material-symbols-outlined text-[18px]">patient_list</span><div><div class="font-bold text-xs">Verify patient and order</div><div class="text-[10px] opacity-70 mt-0.5">Confirm the rights of medication administration.</div></div></div>
+                <div class="elite-check" data-check="prepared"><span class="material-symbols-outlined text-[18px]">vaccines</span><div><div class="font-bold text-xs">Prepare equipment</div><div class="text-[10px] opacity-70 mt-0.5">Select equipment and apply aseptic technique.</div></div></div>
+                <div class="elite-check" data-check="cleaned"><span class="material-symbols-outlined text-[18px]">cleaning_services</span><div><div class="font-bold text-xs">Clean and landmark</div><div class="text-[10px] opacity-70 mt-0.5">Identify the safe zone before insertion.</div></div></div>
+                <div class="elite-check" data-check="injected"><span class="material-symbols-outlined text-[18px]">check_circle</span><div><div class="font-bold text-xs">Administer and document</div><div class="text-[10px] opacity-70 mt-0.5">Technique is scored in real time.</div></div></div>
+              </div>
+
+              <div class="p-3 border-t border-slate-700/40 space-y-3">
+                <div>
+                  <div class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-[.14em] text-slate-500"><span>Needle Selection</span><span id="needle-label" class="text-sky-300">1.5 in</span></div>
+                  <div class="flex gap-2 mt-2">
+                    <button class="needle-option" onclick="setNeedleSize('1 in',this)">1 in</button>
+                    <button class="needle-option active" onclick="setNeedleSize('1.5 in',this)">1.5 in</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-[.14em] text-slate-500"><span>Insertion Angle</span><span id="angle-value" class="text-white">90°</span></div>
+                  <input id="angle-range" class="elite-range mt-2" type="range" min="45" max="90" value="90" oninput="updateEliteTechnique('angle',this.value)">
+                </div>
+                <div>
+                  <div class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-[.14em] text-slate-500"><span>Training Depth</span><span id="depth-value" class="text-white">75%</span></div>
+                  <input id="depth-range" class="elite-range mt-2" type="range" min="35" max="100" value="75" oninput="updateEliteTechnique('depth',this.value)">
+                  <div class="tissue-gauge mt-2" id="tissue-gauge" style="--needle-depth:52%"><div class="tissue-labels"><span>Skin</span><span>Subcutaneous</span><span>Muscle target</span></div></div>
+                </div>
+              </div>
+
+              <div class="p-3 border-t border-slate-700/40 space-y-2">
+                <button id="verify-btn" class="elite-action" onclick="completeLabStep('verify')" disabled><span class="material-symbols-outlined text-[18px]">fact_check</span>Verify Patient &amp; Order</button>
+                <button id="prepare-btn" class="elite-action" onclick="completeLabStep('prepare')" disabled><span class="material-symbols-outlined text-[18px]">inventory_2</span>Prepare Equipment</button>
+                <button id="clean-btn" class="elite-action" onclick="completeLabStep('clean')" disabled><span class="material-symbols-outlined text-[18px]">clean_hands</span>Cleanse Site</button>
+                <button id="landmark-btn" class="elite-action" onclick="completeLabStep('landmark')" disabled><span class="material-symbols-outlined text-[18px]">my_location</span>Identify Landmark</button>
+                <button id="inject-btn" class="elite-action success" onclick="performEliteInjection()" disabled><span class="material-symbols-outlined text-[18px]">vaccines</span>Administer Injection</button>
+              </div>
+            </aside>
+          </div>
+
+          <div class="mt-4 rounded-2xl border border-amber-200/70 bg-amber-50 px-4 py-3 flex gap-3 text-amber-900">
+            <span class="material-symbols-outlined text-amber-600">info</span>
+            <p class="text-xs leading-relaxed"><strong>Educational simulation:</strong> Technique, needle selection, medication preparation, and site eligibility must follow the specific product prescribing information, institutional policy, and patient assessment.</p>
+          </div>
+        </div>
+      </section>
+      </main>
+
+      <div class="px-4 md:px-8 pb-24 md:pb-6">
+        
+      </div>
+
+      <div class="mobile-bottom-nav md:hidden">
+        <div class="inner">
+          <div class="min-w-0">
+            <div class="text-[10px] uppercase tracking-[0.18em] font-extrabold text-slate-400">Current Section</div>
+            <div id="mobile-current-section" class="text-sm font-bold text-slate-900 truncate mt-1">Introduction</div>
+          </div>
+          <button onclick="goToNextSection()" class="primary-button px-4 py-3 text-sm">Next<span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 sm:p-12" id="resourceOverlay">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleResources()"></div>
+
+    <div class="relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-full">
+      <div class="p-6 bg-blue-600 text-white flex justify-between items-center">
+        <h2 class="text-xl font-bold">Clinical Resources</h2>
+        <button class="material-symbols-outlined hover:bg-white/20 p-2 rounded-full" onclick="toggleResources()">close</button>
+      </div>
+
+      <div class="p-8 overflow-y-auto grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-bold text-slate-800 mb-4 border-b pb-2">Guidelines &amp; Protocols</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-blue-500">picture_as_pdf</span>
+              <div>
+                <p class="text-sm font-bold">APA Practice Guidelines</p>
+                <p class="text-xs text-slate-500">Comprehensive treatment for patients with schizophrenia.</p>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-blue-500">inventory</span>
+              <div>
+                <p class="text-sm font-bold">Clinic Storage Checklist</p>
+                <p class="text-xs text-slate-500">Refrigeration, logging, and injection suite setup.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-slate-800 mb-4 border-b pb-2">Patient Materials</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-green-500">fact_check</span>
+              <div>
+                <p class="text-sm font-bold">Shared Decision-Making Guide</p>
+                <p class="text-xs text-slate-500">Tool for clinicians to frame LAI discussions collaboratively.</p>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-green-500">family_restroom</span>
+              <div>
+                <p class="text-sm font-bold">Caregiver Educational Handout</p>
+                <p class="text-xs text-slate-500">Understanding long-term outcomes and reduced relapse.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+  <script>
+    // Lightweight inline placeholder for missing images (prevents broken UI)
+    window.__missingImgSvg = (label) => {
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0f172a"/>
+              <stop offset="1" stop-color="#1e293b"/>
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#g)"/>
+          <text x="50%" y="50%" fill="#e2e8f0" font-family="Inter, Arial" font-size="28" text-anchor="middle">
+            ${String(label).replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+          </text>
+        </svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    };
+
+    // UPDATED SECTIONS LIST
+    const sections = ['intro', 'module1', 'module2', 'module3', 'module4', 'simulation'];
+    const sectionTitles = {
+      intro: 'Introduction',
+      module1: '1. Evidence & Guidelines',
+      module2: '2. Shared Decision-Making',
+      module3: '3. Clinic Logistics',
+      module4: '4. Knowledge Check',
+      simulation: '3D Elite Injection Lab'
+    };
+    let currentSection = 'intro';
+
+    let simulationState = {
+      site: null,
+      verified: false,
+      prepared: false,
+      cleaned: false,
+      located: false,
+      injected: false,
+      angle: 90,
+      depth: 75,
+      needle: '1.5 in',
+      score: 0,
+      phase: 0,
+      guided: true
+    };
+
+    function showSection(id) {
+      sections.forEach(s => {
+        const sectionEl = document.getElementById(s);
+        if (sectionEl) sectionEl.classList.add('hidden');
+        const btn = document.getElementById('btn-' + s);
+        if (btn) btn.classList.remove('active');
+      });
+
+      const activeSection = document.getElementById(id);
+      if (activeSection) activeSection.classList.remove('hidden');
+      const activeBtn = document.getElementById('btn-' + id);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      currentSection = id;
+      updateProgress();
+
+      const mainScroller = document.getElementById('mainScroller');
+      if (mainScroller) mainScroller.scrollTop = 0;
+
+      // Clear any lingering virtual injection pop-up when navigating between sections.
+      hideSimMsg();
+
+      if (id === 'simulation') {
+        setTimeout(() => {
+          initEliteLab();
+          resizeEliteLab();
+        }, 60);
+      }
+
+      if (window.innerWidth < 768) {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        if (sidebar) sidebar.classList.add('-translate-x-full');
+        if (overlay) overlay.classList.add('hidden');
+      }
+    }
+
+    function updateProgress() {
+      const idx = sections.indexOf(currentSection);
+      const progress = ((idx + 1) / sections.length) * 100;
+      const pct = Math.round(progress) + '%';
+
+      const progressBar = document.getElementById('progressBar');
+      if (progressBar) progressBar.style.width = pct;
+      const pt = document.getElementById('progressText');
+      if (pt) pt.innerText = pct;
+
+      const sidebarBar = document.getElementById('sidebar-progress-bar');
+      if (sidebarBar) sidebarBar.style.width = pct;
+      const sidebarLabel = document.getElementById('sidebar-progress-label');
+      if (sidebarLabel) sidebarLabel.innerText = pct;
+      const sidebarCount = document.getElementById('sidebar-progress-count');
+      if (sidebarCount) sidebarCount.innerText = `${idx + 1} of ${sections.length}`;
+
+      const breadcrumb = document.getElementById('breadcrumb-section');
+      if (breadcrumb) breadcrumb.innerText = sectionTitles[currentSection] || currentSection;
+      const mobileCurrent = document.getElementById('mobile-current-section');
+      if (mobileCurrent) mobileCurrent.innerText = sectionTitles[currentSection] || currentSection;
+    }
+
+    function toggleResources() {
+      const overlay = document.getElementById('resourceOverlay');
+      overlay.classList.toggle('hidden');
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (!sidebar || !overlay) return;
+      if (sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      }
+    }
+
+    function goToNextSection() {
+      const idx = sections.indexOf(currentSection);
+      if (idx < sections.length - 1) showSection(sections[idx + 1]);
+    }
+
+    // --- Elite 3D Injection Lab ---
+    const eliteSiteData = {
+      ventrogluteal: {
+        label: 'Ventrogluteal',
+        kicker: 'Lateral hip safe zone',
+        copy: 'Use the greater trochanter, anterior superior iliac spine, and iliac crest to establish the target area.',
+        position: [0.42, 0.02, 0.20], normal: [0.92, 0.05, 0.38], view: 'right', depth: [66, 88]
+      },
+      deltoid: {
+        label: 'Deltoid',
+        kicker: 'Upper-arm landmarking',
+        copy: 'Locate the acromion and center the target within the deltoid muscle safety zone.',
+        position: [0.69, 0.92, 0.04], normal: [1, 0.02, 0.08], view: 'right', depth: [58, 80]
+      },
+      vastus: {
+        label: 'Vastus Lateralis',
+        kicker: 'Lateral thigh safe zone',
+        copy: 'Divide the anterolateral thigh into thirds and target the middle lateral segment.',
+        position: [0.31, -0.57, 0.20], normal: [0.88, 0.02, 0.46], view: 'right', depth: [64, 88]
+      },
+      dorsogluteal: {
+        label: 'Dorsogluteal',
+        kicker: 'Posterior safety-zone review',
+        copy: 'Review the upper-outer quadrant and the nearby sciatic-nerve avoid zone before proceeding.',
+        position: [0.34, -0.02, -0.34], normal: [0.12, 0.04, -1], view: 'back', depth: [68, 90]
+      }
+    };
+
+    let eliteScene = null;
+    let eliteCamera = null;
+    let eliteRenderer = null;
+    let eliteBodyGroup = null;
+    let eliteMuscleGroup = null;
+    let eliteBodyMeshes = [];
+    let eliteHotspots = {};
+    let eliteNeedle = null;
+    let eliteNeedleAnimation = null;
+    let eliteInitialized = false;
+    let eliteAnatomyVisible = false;
+    let eliteTargetRotation = { x: 0, y: 0 };
+    let elitePointer = { down: false, moved: false, x: 0, y: 0, rx: 0, ry: 0 };
+    let eliteResizeObserver = null;
+    let eliteToastTimer = null;
+
+    function initEliteLab() {
+      if (eliteInitialized) return;
+      const canvas = document.getElementById('elite-three-canvas');
+      const stage = document.getElementById('elite-stage');
+      if (!canvas || !stage) return;
+
+      if (!window.THREE) {
+        const loading = document.getElementById('elite-stage-loading');
+        if (loading) loading.innerHTML = '<div class="text-center px-8"><span class="material-symbols-outlined text-5xl text-amber-300">view_in_ar</span><div class="mt-3 font-bold text-white">3D engine unavailable</div><div class="text-xs text-slate-400 mt-1">Check the internet connection and reload the module.</div></div>';
+        return;
+      }
+
+      eliteScene = new THREE.Scene();
+      eliteCamera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+      eliteCamera.position.set(0, 0.15, 5.7);
+
+      eliteRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+      eliteRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      eliteRenderer.outputColorSpace = THREE.SRGBColorSpace;
+      eliteRenderer.shadowMap.enabled = true;
+      eliteRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      const hemi = new THREE.HemisphereLight(0xbfe3ff, 0x16213a, 2.1);
+      eliteScene.add(hemi);
+      const key = new THREE.DirectionalLight(0xffffff, 2.4);
+      key.position.set(3.6, 4.8, 4.2);
+      key.castShadow = true;
+      eliteScene.add(key);
+      const rim = new THREE.DirectionalLight(0x3b82f6, 2.6);
+      rim.position.set(-4, 2.2, -4);
+      eliteScene.add(rim);
+      const fill = new THREE.PointLight(0x7dd3fc, 1.6, 10);
+      fill.position.set(0, 0.5, 3);
+      eliteScene.add(fill);
+
+      const platform = new THREE.Mesh(
+        new THREE.CylinderGeometry(1.35, 1.6, 0.12, 64),
+        new THREE.MeshStandardMaterial({ color: 0x0f1f3d, metalness: 0.55, roughness: 0.35 })
+      );
+      platform.position.y = -1.88;
+      platform.receiveShadow = true;
+      eliteScene.add(platform);
+      const platformRing = new THREE.Mesh(
+        new THREE.TorusGeometry(1.18, 0.018, 12, 96),
+        new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.72 })
+      );
+      platformRing.rotation.x = Math.PI / 2;
+      platformRing.position.y = -1.81;
+      eliteScene.add(platformRing);
+
+      createElitePatientModel();
+      createEliteHotspots();
+      bindEliteStageControls(canvas);
+
+      eliteResizeObserver = new ResizeObserver(resizeEliteLab);
+      eliteResizeObserver.observe(stage);
+      window.addEventListener('resize', resizeEliteLab);
+      eliteInitialized = true;
+      resizeEliteLab();
+      animateEliteLab();
+
+      const loading = document.getElementById('elite-stage-loading');
+      if (loading) setTimeout(() => loading.style.display = 'none', 350);
+      updateEliteUI();
+    }
+
+    function createElitePatientModel() {
+      eliteBodyGroup = new THREE.Group();
+      eliteBodyGroup.position.y = 0.02;
+      eliteScene.add(eliteBodyGroup);
+
+      const skin = new THREE.MeshStandardMaterial({ color: 0xd7a07d, roughness: 0.62, metalness: 0.02, transparent: true, opacity: 1 });
+      const skinDark = new THREE.MeshStandardMaterial({ color: 0xc68b69, roughness: 0.68, transparent: true, opacity: 1 });
+      const scrub = new THREE.MeshStandardMaterial({ color: 0x163b68, roughness: 0.55, metalness: 0.05, transparent: true, opacity: 1 });
+
+      const addMesh = (geometry, material, position, scale = [1,1,1], rotation = [0,0,0]) => {
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(...position);
+        mesh.scale.set(...scale);
+        mesh.rotation.set(...rotation);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        eliteBodyGroup.add(mesh);
+        eliteBodyMeshes.push(mesh);
+        return mesh;
+      };
+
+      addMesh(new THREE.SphereGeometry(0.34, 40, 32), skin, [0, 1.72, 0], [1, 1.18, .96]);
+      addMesh(new THREE.CylinderGeometry(.14,.16,.26,28), skinDark, [0,1.34,0]);
+      addMesh(new THREE.CapsuleGeometry(.48,.58,12,32), scrub, [0,.78,0], [1.05,1,.72]);
+      addMesh(new THREE.SphereGeometry(.48,36,28), scrub, [0,.09,0], [1.04,.72,.86]);
+
+      addMesh(new THREE.CapsuleGeometry(.135,.48,10,26), skin, [-.61,.83,0], [1,1,1], [0,0,-.16]);
+      addMesh(new THREE.CapsuleGeometry(.135,.48,10,26), skin, [.61,.83,0], [1,1,1], [0,0,.16]);
+      addMesh(new THREE.CapsuleGeometry(.115,.48,10,26), skin, [-.70,.27,.02], [1,1,1], [0,0,-.03]);
+      addMesh(new THREE.CapsuleGeometry(.115,.48,10,26), skin, [.70,.27,.02], [1,1,1], [0,0,.03]);
+      addMesh(new THREE.SphereGeometry(.13,24,20), skinDark, [-.71,-.05,.02], [1,.9,.8]);
+      addMesh(new THREE.SphereGeometry(.13,24,20), skinDark, [.71,-.05,.02], [1,.9,.8]);
+
+      addMesh(new THREE.CapsuleGeometry(.205,.68,10,28), scrub, [-.27,-.62,0], [1,1,.9]);
+      addMesh(new THREE.CapsuleGeometry(.205,.68,10,28), scrub, [.27,-.62,0], [1,1,.9]);
+      addMesh(new THREE.CapsuleGeometry(.16,.62,10,26), skin, [-.27,-1.37,0], [1,1,.92]);
+      addMesh(new THREE.CapsuleGeometry(.16,.62,10,26), skin, [.27,-1.37,0], [1,1,.92]);
+      addMesh(new THREE.SphereGeometry(.19,26,20), new THREE.MeshStandardMaterial({color:0x17243d,roughness:.78}), [-.27,-1.77,.08], [1.35,.55,2]);
+      addMesh(new THREE.SphereGeometry(.19,26,20), new THREE.MeshStandardMaterial({color:0x17243d,roughness:.78}), [.27,-1.77,.08], [1.35,.55,2]);
+
+      eliteMuscleGroup = new THREE.Group();
+      eliteMuscleGroup.visible = false;
+      eliteBodyGroup.add(eliteMuscleGroup);
+      const muscle = new THREE.MeshStandardMaterial({ color:0xc43f4c, roughness:.56, transparent:true, opacity:.88, emissive:0x3a0710, emissiveIntensity:.22 });
+      const muscleLite = new THREE.MeshStandardMaterial({ color:0xe36a5c, roughness:.55, transparent:true, opacity:.78, emissive:0x3b0b0b, emissiveIntensity:.18 });
+
+      const addMuscle = (geometry, material, position, scale=[1,1,1], rotation=[0,0,0]) => {
+        const m = new THREE.Mesh(geometry,material); m.position.set(...position); m.scale.set(...scale); m.rotation.set(...rotation); eliteMuscleGroup.add(m); return m;
+      };
+      addMuscle(new THREE.SphereGeometry(.17,28,22), muscle, [.62,.94,.015],[.9,1.25,.95]);
+      addMuscle(new THREE.SphereGeometry(.22,28,22), muscleLite, [.32,.05,-.30],[1.0,.92,.55]);
+      addMuscle(new THREE.SphereGeometry(.26,28,22), muscle, [.28,-.12,-.31],[1.0,.85,.58]);
+      addMuscle(new THREE.CapsuleGeometry(.12,.46,8,24), muscleLite, [.30,-.62,.14],[1.0,1.2,.8]);
+    }
+
+    function createEliteHotspots() {
+      Object.entries(eliteSiteData).forEach(([key, data]) => {
+        const group = new THREE.Group();
+        group.position.set(...data.position);
+        group.userData.site = key;
+
+        const orb = new THREE.Mesh(
+          new THREE.SphereGeometry(.065,24,20),
+          new THREE.MeshStandardMaterial({ color:0x38bdf8, emissive:0x0ea5e9, emissiveIntensity:1.4, transparent:true, opacity:.62 })
+        );
+        orb.userData.site = key;
+        group.add(orb);
+
+        const ring = new THREE.Mesh(
+          new THREE.TorusGeometry(.115,.012,10,48),
+          new THREE.MeshBasicMaterial({ color:0x7dd3fc, transparent:true, opacity:.40, depthTest:false })
+        );
+        ring.userData.site = key;
+        const normal = new THREE.Vector3(...data.normal).normalize();
+        ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1), normal);
+        group.add(ring);
+        group.userData.ring = ring;
+        group.userData.orb = orb;
+        eliteBodyGroup.add(group);
+        eliteHotspots[key] = group;
+      });
+    }
+
+    function bindEliteStageControls(canvas) {
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2();
+
+      canvas.addEventListener('pointerdown', (e) => {
+        elitePointer.down = true; elitePointer.moved = false; elitePointer.x = e.clientX; elitePointer.y = e.clientY;
+        elitePointer.rx = eliteTargetRotation.x; elitePointer.ry = eliteTargetRotation.y;
+        canvas.setPointerCapture?.(e.pointerId);
+      });
+      canvas.addEventListener('pointermove', (e) => {
+        if (!elitePointer.down) return;
+        const dx = e.clientX - elitePointer.x; const dy = e.clientY - elitePointer.y;
+        if (Math.abs(dx)+Math.abs(dy) > 5) elitePointer.moved = true;
+        eliteTargetRotation.y = elitePointer.ry + dx * .008;
+        eliteTargetRotation.x = Math.max(-.35, Math.min(.35, elitePointer.rx + dy * .004));
+      });
+      canvas.addEventListener('pointerup', (e) => {
+        if (!elitePointer.down) return;
+        elitePointer.down = false;
+        if (!elitePointer.moved) {
+          const rect = canvas.getBoundingClientRect();
+          pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(pointer, eliteCamera);
+          const targets = Object.values(eliteHotspots).flatMap(g => g.children);
+          const hits = raycaster.intersectObjects(targets, false);
+          if (hits.length && hits[0].object.userData.site) setEliteSite(hits[0].object.userData.site);
+        }
+      });
+      canvas.addEventListener('pointercancel', () => elitePointer.down = false);
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        eliteCamera.position.z = Math.max(4.1, Math.min(7.2, eliteCamera.position.z + e.deltaY * .003));
+      }, { passive:false });
+    }
+
+    function animateEliteLab(time = 0) {
+      requestAnimationFrame(animateEliteLab);
+      if (!eliteRenderer || !eliteScene || !eliteCamera || !eliteBodyGroup) return;
+
+      eliteBodyGroup.rotation.x += (eliteTargetRotation.x - eliteBodyGroup.rotation.x) * .08;
+      eliteBodyGroup.rotation.y += (eliteTargetRotation.y - eliteBodyGroup.rotation.y) * .08;
+
+      Object.entries(eliteHotspots).forEach(([key, group], idx) => {
+        const selected = simulationState.site === key;
+        const pulse = 1 + Math.sin(time * .004 + idx) * (selected ? .16 : .06);
+        group.scale.setScalar(pulse);
+        group.userData.orb.material.opacity = selected ? .98 : .34;
+        group.userData.orb.material.emissiveIntensity = selected ? 2.5 : .9;
+        group.userData.ring.material.opacity = selected ? .92 : .22;
+      });
+
+      if (eliteNeedleAnimation && eliteNeedle) {
+        const t = Math.min(1, (performance.now() - eliteNeedleAnimation.startTime) / eliteNeedleAnimation.duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        eliteNeedle.position.lerpVectors(eliteNeedleAnimation.from, eliteNeedleAnimation.to, eased);
+        if (t >= 1) eliteNeedleAnimation = null;
+      }
+
+      eliteRenderer.render(eliteScene, eliteCamera);
+    }
+
+    function resizeEliteLab() {
+      if (!eliteRenderer || !eliteCamera) return;
+      const stage = document.getElementById('elite-stage');
+      if (!stage) return;
+      const rect = stage.getBoundingClientRect();
+      if (rect.width < 10 || rect.height < 10) return;
+      eliteRenderer.setSize(rect.width, rect.height, false);
+      eliteCamera.aspect = rect.width / rect.height;
+      eliteCamera.updateProjectionMatrix();
+    }
+
+    function setEliteView(view, btnEl) {
+      const views = { front:{x:0,y:0}, right:{x:0,y:-Math.PI/2}, back:{x:0,y:Math.PI} };
+      if (!views[view]) return;
+      eliteTargetRotation = {...views[view]};
+      document.querySelectorAll('.stage-tool[data-view]').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+    }
+
+    function focusSelectedSite() {
+      if (!simulationState.site) return showSimMsg('Select a site first', 'bg-amber-600');
+      const view = eliteSiteData[simulationState.site].view;
+      const btn = document.querySelector(`.stage-tool[data-view="${view}"]`);
+      setEliteView(view, btn);
+      eliteCamera.position.z = 4.85;
+      showSimMsg(`${eliteSiteData[simulationState.site].label} centered`, 'bg-blue-600');
+    }
+
+    function toggleAnatomyLayer(force) {
+      if (!eliteInitialized) initEliteLab();
+      eliteAnatomyVisible = typeof force === 'boolean' ? force : !eliteAnatomyVisible;
+      if (eliteMuscleGroup) eliteMuscleGroup.visible = eliteAnatomyVisible;
+      eliteBodyMeshes.forEach(mesh => {
+        if (mesh.material && mesh.material.transparent) mesh.material.opacity = eliteAnatomyVisible ? .24 : 1;
+      });
+      const btn = document.getElementById('anatomy-toggle');
+      if (btn) btn.classList.toggle('active', eliteAnatomyVisible);
+      showSimMsg(eliteAnatomyVisible ? 'Anatomy layer enabled' : 'Surface view restored', eliteAnatomyVisible ? 'bg-violet-600' : 'bg-slate-700');
+    }
+
+    function setEliteSite(site, btnEl) {
+      if (!eliteSiteData[site]) return;
+      initEliteLab();
+      simulationState = {
+        site, verified:false, prepared:false, cleaned:false, located:false, injected:false,
+        angle:90, depth:75, needle:simulationState.needle || '1.5 in', score:12, phase:1, guided:simulationState.guided
+      };
+      removeEliteNeedle();
+      document.querySelectorAll('.elite-site-card').forEach(b => b.classList.toggle('active', b.dataset.site === site));
+      const siteBtn = btnEl || document.querySelector(`.elite-site-card[data-site="${site}"]`);
+      if (siteBtn) siteBtn.classList.add('active');
+      const data = eliteSiteData[site];
+      document.getElementById('stage-site-kicker').innerText = data.kicker;
+      document.getElementById('stage-site-title').innerText = data.label;
+      document.getElementById('stage-site-copy').innerText = data.copy;
+      const viewBtn = document.querySelector(`.stage-tool[data-view="${data.view}"]`);
+      setEliteView(data.view, viewBtn);
+      updateEliteUI();
+      showSimMsg(`${data.label} selected`, 'bg-blue-600');
+    }
+
+    function completeLabStep(action) {
+      const s = simulationState;
+      if (!s.site) return showSimMsg('Choose an injection site first', 'bg-amber-600');
+      if (action === 'verify') {
+        s.verified = true; s.phase = 2; s.score = Math.max(s.score, 27);
+        showSimMsg('Patient and order verified', 'bg-emerald-600');
+      } else if (action === 'prepare') {
+        if (!s.verified) return showSimMsg('Complete verification first', 'bg-amber-600');
+        s.prepared = true; s.phase = 3; s.score = Math.max(s.score, 43);
+        showSimMsg(`Equipment prepared · ${s.needle}`, 'bg-emerald-600');
+      } else if (action === 'clean') {
+        if (!s.prepared) return showSimMsg('Prepare equipment first', 'bg-amber-600');
+        s.cleaned = true; s.phase = 3; s.score = Math.max(s.score, 58);
+        showSimMsg('Site cleansed using aseptic technique', 'bg-emerald-600');
+      } else if (action === 'landmark') {
+        if (!s.cleaned) return showSimMsg('Cleanse the site first', 'bg-amber-600');
+        s.located = true; s.phase = 4; s.score = Math.max(s.score, 73);
+        toggleAnatomyLayer(true);
+        focusSelectedSite();
+        showSimMsg('Safe landmark zone identified', 'bg-sky-600');
+      }
+      updateEliteUI();
+    }
+
+    function setNeedleSize(value, btnEl) {
+      simulationState.needle = value;
+      document.querySelectorAll('.needle-option').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      const label = document.getElementById('needle-label');
+      if (label) label.innerText = value;
+    }
+
+    function updateEliteTechnique(type, value) {
+      value = Number(value);
+      if (type === 'angle') {
+        simulationState.angle = value;
+        document.getElementById('angle-value').innerText = `${value}°`;
+      } else {
+        simulationState.depth = value;
+        document.getElementById('depth-value').innerText = `${value}%`;
+        const gauge = document.getElementById('tissue-gauge');
+        if (gauge) gauge.style.setProperty('--needle-depth', `${Math.min(94, Math.max(20, value * .78))}%`);
+      }
+    }
+
+    function performEliteInjection() {
+      const s = simulationState;
+      if (!s.located || !s.site) return showSimMsg('Complete landmarking before injection', 'bg-amber-600');
+      if (s.injected) return;
+      s.injected = true; s.phase = 5;
+
+      const angleDelta = Math.abs(s.angle - 90);
+      const anglePoints = angleDelta <= 3 ? 15 : angleDelta <= 8 ? 10 : angleDelta <= 15 ? 6 : 2;
+      const [minDepth,maxDepth] = eliteSiteData[s.site].depth;
+      const depthPoints = s.depth >= minDepth && s.depth <= maxDepth ? 12 : (s.depth >= minDepth-8 && s.depth <= maxDepth+8 ? 8 : 3);
+      s.score = Math.min(100, 73 + anglePoints + depthPoints);
+
+      animateEliteNeedle();
+      showSimMsg('Injection in progress…', 'bg-indigo-600');
+      updateEliteUI();
+      setTimeout(() => {
+        s.phase = 6;
+        updateEliteUI();
+        showEliteSummary();
+      }, 1350);
+    }
+
+    function animateEliteNeedle() {
+      removeEliteNeedle();
+      const data = eliteSiteData[simulationState.site];
+      const point = new THREE.Vector3(...data.position);
+      const normal = new THREE.Vector3(...data.normal).normalize();
+      const direction = normal.clone().multiplyScalar(-1);
+      eliteNeedle = new THREE.Group();
+
+      const shaft = new THREE.Mesh(new THREE.CylinderGeometry(.009,.009,.82,12), new THREE.MeshStandardMaterial({color:0xdbeafe,metalness:.82,roughness:.18}));
+      shaft.position.y = -.41;
+      eliteNeedle.add(shaft);
+      const hub = new THREE.Mesh(new THREE.CylinderGeometry(.045,.055,.18,20), new THREE.MeshStandardMaterial({color:0x3b82f6,transparent:true,opacity:.82,roughness:.35}));
+      hub.position.y = .04;
+      eliteNeedle.add(hub);
+      const barrel = new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,.58,24), new THREE.MeshStandardMaterial({color:0xe0f2fe,transparent:true,opacity:.34,roughness:.2}));
+      barrel.position.y = .39;
+      eliteNeedle.add(barrel);
+      eliteNeedle.quaternion.setFromUnitVectors(new THREE.Vector3(0,-1,0), direction);
+
+      const from = point.clone().add(normal.clone().multiplyScalar(1.15));
+      const to = point.clone().add(normal.clone().multiplyScalar(.18));
+      eliteNeedle.position.copy(from);
+      eliteBodyGroup.add(eliteNeedle);
+      eliteNeedleAnimation = { from, to, startTime:performance.now(), duration:1050 };
+    }
+
+    function removeEliteNeedle() {
+      if (eliteNeedle && eliteNeedle.parent) eliteNeedle.parent.remove(eliteNeedle);
+      eliteNeedle = null; eliteNeedleAnimation = null;
+    }
+
+    function updateEliteUI() {
+      const s = simulationState;
+      const completedPhases = s.phase >= 6 ? 6 : Math.max(0, s.phase);
+      const score = Math.round(s.score || 0);
+      const rank = score >= 95 ? 'Elite' : score >= 85 ? 'Proficient' : score >= 70 ? 'Developing' : score > 0 ? 'In Progress' : 'Not Started';
+      const scoreEl = document.getElementById('elite-score');
+      if (scoreEl) scoreEl.innerText = score;
+      const ring = document.getElementById('clinical-score-ring');
+      if (ring) ring.style.setProperty('--score', `${score}%`);
+      const rankEl = document.getElementById('elite-rank');
+      if (rankEl) rankEl.innerText = rank;
+      const pLabel = document.getElementById('elite-progress-label');
+      if (pLabel) pLabel.innerText = `${completedPhases} of 6 phases complete`;
+
+      document.querySelectorAll('.elite-step').forEach((el, idx) => {
+        el.classList.toggle('complete', idx < s.phase || s.phase >= 6);
+        el.classList.toggle('active', idx === Math.min(s.phase,5) && s.phase < 6);
+        const dot = el.querySelector('.step-dot');
+        if (dot) dot.innerText = idx < s.phase || s.phase >= 6 ? '✓' : String(idx+1);
+      });
+
+      const checks = {
+        site: !!s.site,
+        verified: s.verified,
+        prepared: s.prepared,
+        cleaned: s.cleaned && s.located,
+        injected: s.injected
+      };
+      const checkOrder = ['site','verified','prepared','cleaned','injected'];
+      document.querySelectorAll('.elite-check').forEach(el => {
+        const key = el.dataset.check;
+        el.classList.toggle('complete', !!checks[key]);
+        const nextKey = checkOrder.find(k => !checks[k]);
+        el.classList.toggle('current', key === nextKey);
+        const icon = el.querySelector('.material-symbols-outlined');
+        if (icon && checks[key]) icon.innerText = 'check_circle';
+      });
+
+      setDisabled('verify-btn', !s.site || s.verified);
+      setDisabled('prepare-btn', !s.verified || s.prepared);
+      setDisabled('clean-btn', !s.prepared || s.cleaned);
+      setDisabled('landmark-btn', !s.cleaned || s.located);
+      setDisabled('inject-btn', !s.located || s.injected);
+
+      let title = 'Choose an injection site';
+      let copy = 'Select a hotspot on the 3D patient or use the site menu.';
+      let phaseLabel = 'Phase 1';
+      if (s.site && !s.verified) { title='Verify before you prepare'; copy='Confirm the patient, medication order, dose, route, timing, and required product instructions.'; phaseLabel='Phase 2'; }
+      else if (s.verified && !s.prepared) { title='Prepare equipment'; copy=`Confirm supplies and the selected ${s.needle} training needle.`; phaseLabel='Phase 3'; }
+      else if (s.prepared && !s.cleaned) { title='Establish aseptic technique'; copy='Cleanse the selected site and allow it to dry before landmarking.'; phaseLabel='Phase 3'; }
+      else if (s.cleaned && !s.located) { title='Identify the safe zone'; copy='Use the anatomy layer and site-specific landmarks to confirm placement.'; phaseLabel='Phase 4'; }
+      else if (s.located && !s.injected) { title='Set technique and inject'; copy='Review the insertion angle and training depth, then administer the simulated dose.'; phaseLabel='Phase 5'; }
+      else if (s.injected) { title='Procedure complete'; copy='Review your mastery score and coaching feedback in the debrief.'; phaseLabel='Debrief'; }
+      const coachTitle = document.getElementById('coach-title'); if (coachTitle) coachTitle.innerText=title;
+      const coachCopy = document.getElementById('coach-copy'); if (coachCopy) coachCopy.innerText=copy;
+      const status = document.getElementById('sim-status'); if (status) status.innerText=phaseLabel;
+    }
+
+    function setDisabled(id, disabled) {
+      const el = document.getElementById(id); if (el) el.disabled = disabled;
+    }
+
+    function toggleEliteGuidance() {
+      simulationState.guided = !simulationState.guided;
+      const toggle = document.getElementById('guidance-toggle');
+      const copy = document.getElementById('guidance-copy');
+      if (toggle) toggle.innerText = simulationState.guided ? 'GUIDED' : 'ASSESSMENT';
+      if (copy) copy.innerText = simulationState.guided ? 'Coaching prompts and landmark cues are enabled.' : 'Prompts are reduced for independent practice.';
+      document.querySelectorAll('.elite-check > div > div:last-child').forEach(el => el.style.display = simulationState.guided ? '' : 'none');
+    }
+
+    function resetEliteLab() {
+      const guided = simulationState.guided;
+      simulationState = { site:null,verified:false,prepared:false,cleaned:false,located:false,injected:false,angle:90,depth:75,needle:'1.5 in',score:0,phase:0,guided };
+      removeEliteNeedle();
+      document.querySelectorAll('.elite-site-card').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.needle-option').forEach((b,i) => b.classList.toggle('active', i===1));
+      const angle = document.getElementById('angle-range'); if (angle) angle.value=90;
+      const depth = document.getElementById('depth-range'); if (depth) depth.value=75;
+      updateEliteTechnique('angle',90); updateEliteTechnique('depth',75);
+      document.getElementById('stage-site-kicker').innerText='Awaiting site selection';
+      document.getElementById('stage-site-title').innerText='Explore the 3D patient';
+      document.getElementById('stage-site-copy').innerText='Drag to rotate the model, scroll to zoom, or select a site from the left panel.';
+      toggleAnatomyLayer(false);
+      setEliteView('front', document.querySelector('.stage-tool[data-view="front"]'));
+      eliteCamera && (eliteCamera.position.z=5.7);
+      updateEliteUI();
+      closeEliteSummary();
+      showSimMsg('Lab reset', 'bg-slate-700');
+    }
+
+    function showEliteSummary() {
+      let modal = document.getElementById('elite-summary');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id='elite-summary'; modal.className='elite-summary';
+        document.body.appendChild(modal);
+      }
+      const s=simulationState, data=eliteSiteData[s.site];
+      const angleText = Math.abs(s.angle-90)<=3 ? 'Excellent 90° alignment' : `Angle was ${s.angle}°; review perpendicular IM insertion.`;
+      const [minDepth,maxDepth]=data.depth;
+      const depthText = s.depth>=minDepth&&s.depth<=maxDepth ? 'Training depth reached the target muscle zone' : 'Training depth fell outside the simulator target zone';
+      const grade = s.score>=95?'A+':s.score>=90?'A':s.score>=85?'B+':s.score>=80?'B':s.score>=70?'C':'Review';
+      modal.innerHTML = `
+        <div class="elite-summary-card relative">
+          <div id="confetti-layer" class="absolute inset-x-0 top-0 h-72 overflow-hidden pointer-events-none"></div>
+          <div class="p-7 md:p-9 border-b border-white/10 bg-gradient-to-br from-blue-600/18 to-violet-600/12">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+              <div class="mastery-grade">${grade}</div>
+              <div class="flex-1"><div class="text-[10px] uppercase tracking-[.22em] font-extrabold text-sky-300">Simulation Debrief</div><h3 class="text-3xl font-black mt-1">${s.score}% Clinical Mastery</h3><p class="text-slate-300 text-sm mt-2">${data.label} injection workflow completed.</p></div>
+              <button onclick="closeEliteSummary()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"><span class="material-symbols-outlined">close</span></button>
+            </div>
+          </div>
+          <div class="p-7 md:p-9 grid md:grid-cols-2 gap-5">
+            <div class="rounded-2xl border border-emerald-400/20 bg-emerald-500/8 p-5"><div class="flex items-center gap-2 text-emerald-300 font-extrabold"><span class="material-symbols-outlined">workspace_premium</span>Strengths</div><ul class="mt-3 space-y-2 text-sm text-slate-300"><li>✓ Completed the full safety sequence</li><li>✓ Identified the ${data.label} landmark zone</li><li>✓ ${angleText}</li></ul></div>
+            <div class="rounded-2xl border border-sky-400/20 bg-sky-500/8 p-5"><div class="flex items-center gap-2 text-sky-300 font-extrabold"><span class="material-symbols-outlined">clinical_notes</span>Technique Feedback</div><ul class="mt-3 space-y-2 text-sm text-slate-300"><li>• Needle selection: ${s.needle}</li><li>• Insertion angle: ${s.angle}°</li><li>• ${depthText}</li></ul></div>
+          </div>
+          <div class="px-7 md:px-9 pb-8 flex flex-col sm:flex-row gap-3"><button class="elite-action secondary" onclick="closeEliteSummary()"><span class="material-symbols-outlined">visibility</span>Review 3D Model</button><button class="elite-action" onclick="resetEliteLab()"><span class="material-symbols-outlined">replay</span>Practice Another Site</button></div>
+        </div>`;
+      modal.classList.add('show');
+      launchEliteConfetti();
+    }
+
+    function closeEliteSummary() {
+      const modal=document.getElementById('elite-summary'); if (modal) modal.classList.remove('show');
+    }
+
+    function launchEliteConfetti() {
+      const layer=document.getElementById('confetti-layer'); if (!layer) return;
+      layer.innerHTML='';
+      const colors=['#38bdf8','#818cf8','#34d399','#fbbf24','#f472b6'];
+      for(let i=0;i<42;i++){
+        const p=document.createElement('span'); p.className='confetti-piece'; p.style.left=`${Math.random()*100}%`; p.style.top=`${-10-Math.random()*80}px`; p.style.background=colors[i%colors.length]; p.style.animationDelay=`${Math.random()*.45}s`; layer.appendChild(p);
+      }
+    }
+
+    function hideSimMsg() {
+      const msg=document.getElementById('sim-msg'); if (!msg) return;
+      if (eliteToastTimer) clearTimeout(eliteToastTimer);
+      msg.classList.remove('show'); eliteToastTimer=null;
+    }
+
+    function showSimMsg(text,color='bg-blue-600') {
+      const msg=document.getElementById('sim-msg'); if (!msg) return;
+      if (eliteToastTimer) clearTimeout(eliteToastTimer);
+      msg.className=`elite-toast ${color} show`; msg.innerText=text;
+      eliteToastTimer=setTimeout(()=>{msg.classList.remove('show');eliteToastTimer=null;},1450);
+    }
+
+    // --- Quiz Logic ---
+    function checkAnswer(step, choice, btn) {
+      const feedback = document.getElementById('quiz-feedback');
+      const feedbackText = document.getElementById('feedback-text');
+
+      // For demo, correct answer is B
+      if (choice === 'B') {
+        btn.classList.add('bg-green-100', 'border-green-500', 'text-green-700');
+        feedback.classList.remove('hidden', 'bg-red-50', 'border-red-200');
+        feedback.classList.add('bg-green-50', 'border-green-200');
+        feedbackText.innerText = "Correct! Current guidelines recommend early initiation even after the first episode to protect neuroplasticity and prevent functional decline.";
+      } else {
+        btn.classList.add('bg-red-100', 'border-red-500', 'text-red-700');
+        feedback.classList.remove('hidden', 'bg-green-50', 'border-green-200');
+        feedback.classList.add('bg-red-50', 'border-red-200');
+        feedbackText.innerText = "Not quite. Remember, the 'Reaction Gap' occurs because clinicians often wait too long. Guidelines favor early intervention.";
+      }
+    }
+
+    // Initial Progress
+    updateProgress();
+    showSection('intro');
+  
+  </script>
+</body>
+</html>
