@@ -845,7 +845,7 @@ window.THREE = THREE; window.GLTFLoader = GLTFLoader; window.dispatchEvent(new E
     </div>
 
     <div class="chart-popup-grid">
-      <div class="chart-card"><strong>Patient</strong><span id="chart-patient-name">Alex Carter</span></div>
+      <div class="chart-card"><strong>Patient</strong><span id="chart-patient-name">Pending patient</span></div>
       <div class="chart-card"><strong>Date of Birth</strong><span id="chart-dob">07/18/1989</span></div>
       <div class="chart-card"><strong>Medical Record #</strong><span id="chart-mrn">MRN-482931</span></div>
       <div class="chart-card"><strong>Allergies</strong><span id="chart-allergies">No known drug allergies</span></div>
@@ -951,7 +951,26 @@ function selectedMedicationLabel(){
   return medications[state.selectedMedication] ? medications[state.selectedMedication].label : "None";
 }
 
-const state={site:"",step:1,chartReviewed:false,orderedSite:randomOrderedSite(),orderedMedication:randomOrderedMedication(),selectedMedication:"",educationFeedback:"",cleaned:false,injected:false,aftercare:false,angle:0,needleX:50,needleY:50,dragging:false,swabX:50,swabY:50,swabDragging:false,cleanCoverage:{},popupNeedleX:54,popupNeedleY:18,popupAngle:0,popupDragging:false,popupSubmitted:false};
+const patientPool=[
+  {name:"Alex Carter",dob:"07/18/1989",mrn:"MRN-482931"},
+  {name:"Jordan Ellis",dob:"03/22/1978",mrn:"MRN-614208"},
+  {name:"Morgan Reed",dob:"11/04/1992",mrn:"MRN-739516"},
+  {name:"Taylor Brooks",dob:"05/30/1984",mrn:"MRN-258047"},
+  {name:"Casey Morgan",dob:"09/12/1971",mrn:"MRN-906314"},
+  {name:"Riley Bennett",dob:"01/27/1996",mrn:"MRN-351882"},
+  {name:"Jamie Parker",dob:"12/09/1981",mrn:"MRN-447209"},
+  {name:"Avery Nelson",dob:"06/16/1975",mrn:"MRN-820663"}
+];
+function randomPatient(){
+  const values = new Uint32Array(1);
+  if(window.crypto && window.crypto.getRandomValues){
+    window.crypto.getRandomValues(values);
+    return patientPool[values[0] % patientPool.length];
+  }
+  return patientPool[Math.floor(Math.random() * patientPool.length)];
+}
+
+const state={site:"",step:1,chartReviewed:false,orderedSite:randomOrderedSite(),orderedMedication:randomOrderedMedication(),selectedMedication:"",patient:randomPatient(),educationFeedback:"",cleaned:false,injected:false,aftercare:false,angle:0,needleX:50,needleY:50,dragging:false,swabX:50,swabY:50,swabDragging:false,cleanCoverage:{},popupNeedleX:54,popupNeedleY:18,popupAngle:0,popupDragging:false,popupSubmitted:false};
 let scene,camera,renderer,patient;
 function b64ToBlobUrl(b64,mime="model/gltf-binary"){const bin=atob(b64),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return URL.createObjectURL(new Blob([bytes],{type:mime}))}
 function initThree(){const stage=document.getElementById("stage"),canvas=document.getElementById("patient-canvas");scene=new THREE.Scene();scene.background=new THREE.Color(0x071225);camera=new THREE.PerspectiveCamera(35,stage.clientWidth/stage.clientHeight,.01,100);camera.position.set(.08,0,2.85);renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(stage.clientWidth,stage.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;scene.add(new THREE.HemisphereLight(0xffffff,0x243047,2.4));const key=new THREE.DirectionalLight(0xffffff,2.6);key.position.set(1.8,2.7,2.2);scene.add(key);const fill=new THREE.DirectionalLight(0x8ec5ff,1.25);fill.position.set(-2,.8,1.8);scene.add(fill);new GLTFLoader().load(b64ToBlobUrl(window.__PATIENT_GLB_BASE64),gltf=>{patient=gltf.scene;patient.position.set(0,-.05,0);patient.scale.setScalar(0.82);patient.traverse(o=>{if(o.isMesh&&o.material){o.material.side=THREE.DoubleSide;o.material.needsUpdate=true}});scene.add(patient);setView("right");animate()});window.addEventListener("resize",resizeThree);bindNeedleDrag();bindSwabCleaning();bindPopupNeedleDrag()}
@@ -1354,15 +1373,22 @@ function orderedSiteLabel(){
 function fillChartPopup(){
   const orderedSiteName = orderedSiteLabel();
   const orderedMedicationName = orderedMedicationLabel();
+  const patient = state.patient || randomPatient();
   const chartSite = document.getElementById("chart-site");
   const chartMedication = document.getElementById("chart-medication");
+  const chartName = document.getElementById("chart-patient-name");
+  const chartDob = document.getElementById("chart-dob");
+  const chartMrn = document.getElementById("chart-mrn");
   const chartTitle = document.getElementById("chart-popup-title");
   const chartCopy = document.getElementById("chart-popup-copy");
   const checks = document.querySelectorAll(".chart-check-input");
   if(chartSite) chartSite.textContent = orderedSiteName;
   if(chartMedication) chartMedication.textContent = orderedMedicationName;
+  if(chartName) chartName.textContent = patient.name;
+  if(chartDob) chartDob.textContent = patient.dob;
+  if(chartMrn) chartMrn.textContent = patient.mrn;
   if(chartTitle) chartTitle.textContent = "Review Patient Chart — Medication and Site Order";
-  if(chartCopy) chartCopy.textContent = `Review the patient chart checklist first. Use the ordered medication, ${orderedMedicationName}, and ordered site, ${orderedSiteName}, to make the correct selections.`;
+  if(chartCopy) chartCopy.textContent = `Review ${patient.name}'s chart checklist first. Use the ordered medication, ${orderedMedicationName}, and ordered site, ${orderedSiteName}, to make the correct selections.`;
   checks.forEach(check => check.checked = false);
 }
 function openChartPopup(){
@@ -1526,10 +1552,10 @@ function bindNeedleDrag(){const needle=document.getElementById("needle"),stage=d
 function getStepContent(){if(!state.chartReviewed)return[1,0,"Review patient chart","Open the chart checklist first. The medication and ordered injection site must be reviewed before selection.","Review Chart","description"];if(!state.selectedMedication)return[2,18,"Select ordered medication",`The chart order lists ${orderedMedicationLabel()}. Select the matching medication before choosing the injection site.`,`Select Medication`,"medication"];if(!state.site)return[3,34,"Select ordered injection site",`The chart order lists ${orderedSiteLabel()}. Select the matching location before cleaning.`,`Select ${orderedSiteLabel()}`,"my_location"];if(!currentSite().allowed)return[3,34,"Choose an approved site","Dorsogluteal is review-only in this trainer. Select another site.","Select a Site","warning"];if(!state.cleaned)return[4,52,"Clean the site","Rub across the blue injection site a few times before inserting the needle.","Rub Site with Swab","clean_hands"];if(!state.injected)return[5,78,"Inject in skin layer popup","Use the popup to choose the injection depth and angle, then submit the attempt.","Open Injection Layers","vaccines"];if(!state.aftercare)return[6,94,"Aftercare and document","Apply gauze, dispose sharps, and document the administration.","Finish","edit_note"];return[6,100,"Training complete","The simplified injection practice is complete.","Restart","check_circle"]}
 function renderStep(){const [step,pct,title,copy,label,icon]=getStepContent();state.step=step;document.getElementById("step-pill").textContent=`Step ${step} of 6`;document.getElementById("step-title").textContent=title;document.getElementById("step-copy").textContent=copy;document.getElementById("primary-label").textContent=label;document.getElementById("primary-icon").textContent=icon;document.getElementById("progress-fill").style.width=`${pct}%`}
 function primaryAction(){if(!state.chartReviewed){openChartPopup();toast("Review the patient chart checklist before selecting medication and site.");return}if(!state.selectedMedication){toast(`Select the ordered medication from the chart: ${orderedMedicationLabel()}.`);return}if(!state.site||!currentSite().allowed){toast(`Select the ordered site from the chart: ${orderedSiteLabel()}.`);return}else if(!state.cleaned){toast("Rub across the blue injection site with the swab until the bar reaches 100%.");return}else if(!state.injected){openSkinPopup();toast("Use the skin layer popup to choose your injection depth and angle.");return}else if(!state.aftercare){state.aftercare=true;setEducationFeedback("");toast("Aftercare and documentation completed.")}else{resetTrainer();return}render()}
-function renderSummary(){const site=currentSite();document.getElementById("status-summary").innerHTML=`<strong>Chart Reviewed:</strong> ${state.chartReviewed?"Yes":"No"}<br><strong>Medication Order:</strong> ${orderedMedicationLabel()}<br><strong>Selected Medication:</strong> ${selectedMedicationLabel()}<br><strong>Current Chart Order:</strong> ${orderedSiteLabel()}<br><strong>Selected Site:</strong> ${site?site.label:"None"}<br><strong>Cleaned:</strong> ${state.cleaned?"Yes":"No"}<br><strong>Injection:</strong> ${state.injected?"Complete":"Not complete"}<br><strong>Aftercare:</strong> ${state.aftercare?"Complete":"Not complete"}`;document.getElementById("needle-instructions").textContent=state.step===5?"The injection is completed in the skin layer popup. Drag the popup needle and adjust the angle there.":state.step===1?"Review the chart first because medication and injection location may be different each time the trainer opens.":state.step===2?"Select the medication that matches the chart order before choosing the injection site.":"The skin layer popup appears after cleaning so the learner can practice depth and angle."}
+function renderSummary(){const site=currentSite();document.getElementById("status-summary").innerHTML=`<strong>Patient:</strong> ${state.patient?state.patient.name:"Pending"}<br><strong>Chart Reviewed:</strong> ${state.chartReviewed?"Yes":"No"}<br><strong>Medication Order:</strong> ${orderedMedicationLabel()}<br><strong>Selected Medication:</strong> ${selectedMedicationLabel()}<br><strong>Current Chart Order:</strong> ${orderedSiteLabel()}<br><strong>Selected Site:</strong> ${site?site.label:"None"}<br><strong>Cleaned:</strong> ${state.cleaned?"Yes":"No"}<br><strong>Injection:</strong> ${state.injected?"Complete":"Not complete"}<br><strong>Aftercare:</strong> ${state.aftercare?"Complete":"Not complete"}`;document.getElementById("needle-instructions").textContent=state.step===5?"The injection is completed in the skin layer popup. Drag the popup needle and adjust the angle there.":state.step===1?"Review the chart first because medication and injection location may be different each time the trainer opens.":state.step===2?"Select the medication that matches the chart order before choosing the injection site.":"The skin layer popup appears after cleaning so the learner can practice depth and angle."}
 function render(){renderMedications();renderSites();renderStep();updateTarget();updateNeedle();updateSwabCleaning();updatePopupNeedle();renderSummary();renderEducationFeedback()}
-function resetTrainer(){state.site="";state.orderedSite=randomOrderedSite();state.orderedMedication=randomOrderedMedication();state.selectedMedication="";state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeChartPopup();closeSkinPopup();setView("right");render();toast("Trainer reset. Review the patient chart to begin.")}
-window.addEventListener("three-ready",()=>{state.orderedSite=randomOrderedSite();state.orderedMedication=randomOrderedMedication();initThree();render();setTimeout(openChartPopup,500)});if(window.THREE&&window.GLTFLoader){state.orderedSite=randomOrderedSite();state.orderedMedication=randomOrderedMedication();initThree();render();setTimeout(openChartPopup,500)}
+function resetTrainer(){state.site="";state.orderedSite=randomOrderedSite();state.orderedMedication=randomOrderedMedication();state.selectedMedication="";state.patient=randomPatient();state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeChartPopup();closeSkinPopup();setView("right");render();toast("Trainer reset. Review the patient chart to begin.")}
+window.addEventListener("three-ready",()=>{state.orderedSite=randomOrderedSite();state.orderedMedication=randomOrderedMedication();state.patient=randomPatient();initThree();render();setTimeout(openChartPopup,500)});if(window.THREE&&window.GLTFLoader){state.orderedSite=randomOrderedSite();state.orderedMedication=randomOrderedMedication();state.patient=randomPatient();initThree();render();setTimeout(openChartPopup,500)}
 </script>
 </body>
 </html>
