@@ -2271,6 +2271,13 @@ body:not(.learning-mode) .debrief-score{
 }
 </style>
 
+
+<style id="rwce-cme-storage-status-style">
+.cme-storage-status{margin:12px 0 0;padding:10px 12px;border-radius:12px;background:#f8fbff;border:1px solid #dbe7f1;color:#52657a;font-size:10.5px;line-height:1.45;text-align:left}
+.cme-storage-status.success{background:#ecfdf5;border-color:#bbf7d0;color:#166534}
+.cme-storage-status.error{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+</style>
+
 </head>
 <body class="learning-mode">
 
@@ -3994,7 +4001,7 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
     <div class="cme-eval-actions"><div id="cme-eval-error" class="cme-eval-error">Please complete all required questions.</div><button type="button" class="cme-eval-btn" onclick="closeCMEEvaluation()">Return to Debrief</button><button type="button" class="cme-eval-btn primary" onclick="submitCMEEvaluation()">Submit Evaluation &amp; Complete Activity</button></div>
   </div>
 </div>
-<div id="cme-complete" class="cme-complete-backdrop" role="dialog" aria-modal="true"><div class="cme-complete-card"><div class="cme-complete-icon"><span class="material-symbols-outlined">verified</span></div><h2>Activity Complete</h2><p>Your evaluation has been submitted and this learning activity is now complete.</p><div class="cme-complete-meta">Certificate of completion will be sent within 24 hours. Pharmacists’ credits will be reported automatically to CPE Monitor. Questions or concerns may be directed to <strong>Michelle@realworldce.org</strong>.</div><button type="button" class="cme-eval-btn primary" onclick="resetTrainer();closeCMEComplete()">Start New Patient Scenario</button></div></div>
+<div id="cme-complete" class="cme-complete-backdrop" role="dialog" aria-modal="true"><div class="cme-complete-card"><div class="cme-complete-icon"><span class="material-symbols-outlined">verified</span></div><h2>Activity Complete</h2><p>Your evaluation has been submitted and this learning activity is now complete.</p><div class="cme-complete-meta">Certificate of completion will be sent within 24 hours. Pharmacists’ credits will be reported automatically to CPE Monitor. Questions or concerns may be directed to <strong>Michelle@realworldce.org</strong>.</div><div id="cme-storage-status" class="cme-storage-status">Your responses are saved in this browser. When launched through the Real World CE LMS, they will also be sent securely to the CME/CE reporting database.</div><button type="button" class="cme-eval-btn primary" onclick="resetTrainer();closeCMEComplete()">Start New Patient Scenario</button></div></div>
 
 
 <script id="cme-evaluation-script">
@@ -4020,6 +4027,93 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
   window.updateCMEEvaluationProgress=function(){const req=[...document.querySelectorAll("#cme-eval-form .cme-eval-q[data-required]")];const done=req.filter(answered).length;const fill=document.getElementById("cme-eval-progress-fill");if(fill)fill.style.width=`${req.length?(done/req.length)*100:0}%`};
   window.submitCMEEvaluation=function(){const req=[...document.querySelectorAll("#cme-eval-form .cme-eval-q[data-required]")];let first=null;req.forEach(q=>{const ok=answered(q);q.classList.toggle("invalid",!ok);if(!ok&&!first)first=q});const biasNo=document.querySelector('input[name="q15"][value="No"]:checked');const q16=document.querySelector('.cme-eval-q[data-name="q16"]');const biasText=q16?.querySelector('[name="q16"]');if(biasNo&&(!biasText||!biasText.value.trim())){q16.classList.add("invalid");if(!first)first=q16}else if(q16)q16.classList.remove("invalid");const err=document.getElementById("cme-eval-error");if(first){if(err)err.classList.add("active");first.scrollIntoView({behavior:"smooth",block:"center"});return}if(err)err.classList.remove("active");const fd=new FormData(document.getElementById("cme-eval-form"));const result={};for(const [k,v] of fd.entries()){if(result[k]!==undefined)result[k]=Array.isArray(result[k])?[...result[k],v]:[result[k],v];else result[k]=v}result.completedAt=new Date().toISOString();try{localStorage.setItem("rwce-lai-cme-evaluation",JSON.stringify(result))}catch(e){}const m=document.getElementById("cme-evaluation");if(m)m.classList.remove("active");const c=document.getElementById("cme-complete");if(c)c.classList.add("active")};
   document.addEventListener("DOMContentLoaded",initCMEEvaluation);
+})();
+</script>
+
+
+<script id="rwce-cme-supabase-bridge">
+(() => {
+  const originalSubmit = window.submitCMEEvaluation;
+  if (typeof originalSubmit !== 'function') return;
+
+  function storageStatus(message, type = '') {
+    const node = document.getElementById('cme-storage-status');
+    if (!node) return;
+    node.textContent = message;
+    node.classList.remove('success','error');
+    if (type) node.classList.add(type);
+  }
+
+  function collectSimulationSummary() {
+    try {
+      if (typeof state === 'undefined') return {};
+      return {
+        medication: state.selectedMedication || state.medication || '',
+        preparation_method: state.selectedPrepMethod || '',
+        preparation_completed: Boolean(state.prepCompleted),
+        site: state.site || '',
+        cleaned: Boolean(state.cleaned),
+        injected: Boolean(state.injected),
+        aftercare_completed: Boolean(state.aftercare),
+        mistakes: Number(state.mistakeCount || 0),
+        preparation_mistakes: Number(state.prepMistakes || 0),
+        injection_attempts: Number(state.injectionAttempts || 0)
+      };
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function createSubmissionId() {
+    try { return crypto.randomUUID(); }
+    catch (error) { return `${Date.now()}-${Math.random().toString(36).slice(2)}`; }
+  }
+
+  window.submitCMEEvaluation = function submitCMEEvaluationWithReporting() {
+    originalSubmit();
+
+    const complete = document.getElementById('cme-complete');
+    if (!complete?.classList.contains('active')) return;
+
+    let responses = {};
+    try { responses = JSON.parse(localStorage.getItem('rwce-lai-cme-evaluation') || '{}') || {}; }
+    catch (error) { responses = {}; }
+
+    const existingId = String(responses.submissionId || responses.submission_id || '').trim();
+    const submissionId = existingId || createSubmissionId();
+    responses.submissionId = submissionId;
+    try { localStorage.setItem('rwce-lai-cme-evaluation', JSON.stringify(responses)); } catch (error) {}
+
+    const payload = {
+      submission_id: submissionId,
+      activity_id: 'lai-injection-live-event',
+      activity_title: 'Getting to the Point: LAI Preparation & Administration',
+      learner_first_name: responses.learner_first_name || '',
+      learner_last_name: responses.learner_last_name || '',
+      learner_email: responses.learner_email || '',
+      completed_at: responses.completedAt || new Date().toISOString(),
+      responses,
+      simulation: collectSimulationSummary(),
+      source_url: window.location.href
+    };
+
+    if (window.parent && window.parent !== window) {
+      storageStatus('Saving your CME/CE evaluation to Real World CE…');
+      window.parent.postMessage({ type: 'rwce-live-event-evaluation', payload }, '*');
+    } else {
+      storageStatus('Responses are saved in this browser. Launch this trainer from the Real World CE LMS to store them in the central CME/CE reporting database.', 'error');
+    }
+  };
+
+  window.addEventListener('message', event => {
+    const data = event?.data;
+    if (!data || data.type !== 'rwce-live-event-evaluation-saved') return;
+    if (data.ok) {
+      storageStatus('Evaluation successfully stored in the Real World CE CME/CE reporting database.', 'success');
+    } else {
+      storageStatus(data.message || 'The database save could not be confirmed. Your responses remain saved in this browser.', 'error');
+    }
+  });
 })();
 </script>
 
