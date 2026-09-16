@@ -2181,6 +2181,96 @@ body:not(.learning-mode) .debrief-score{
 }
 </style>
 
+
+<style id="cme-evaluation-styles">
+.cme-eval-backdrop{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(8,25,48,.72);backdrop-filter:blur(12px)}
+.cme-eval-backdrop.active{display:flex}.cme-eval-card{width:min(980px,96vw);max-height:94vh;overflow:auto;border-radius:24px;background:#fff;border:1px solid #dbe6f1;box-shadow:0 32px 100px rgba(5,29,61,.30);padding:0}
+.cme-eval-head{position:sticky;top:0;z-index:3;padding:22px 24px 18px;background:linear-gradient(135deg,#0b2f67,#1677ff);color:#fff;border-radius:24px 24px 0 0}.cme-eval-head h2{margin:5px 0 6px;font-size:27px;letter-spacing:-.035em}.cme-eval-head p{margin:0;color:#dcecff;font-size:11.5px;line-height:1.55}.cme-eval-progress{margin-top:14px;height:6px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden}.cme-eval-progress>div{height:100%;width:0;background:#fff;transition:width .2s ease}
+.cme-eval-body{padding:22px 24px 26px;background:#f8fbfe}.cme-eval-q{padding:17px 18px;margin-bottom:11px;border-radius:16px;background:#fff;border:1px solid #e1eaf3;box-shadow:0 5px 18px rgba(19,54,91,.04)}.cme-eval-q.invalid{border-color:#fca5a5;background:#fffafa}.cme-eval-q h3{margin:0 0 11px;font-size:12.2px;line-height:1.48;color:#102e54}.cme-required{color:#dc2626;font-weight:900}.cme-options{display:grid;gap:7px}.cme-options.cols{grid-template-columns:repeat(5,minmax(0,1fr))}.cme-option{display:flex;align-items:center;gap:8px;min-height:42px;padding:9px 10px;border-radius:11px;border:1px solid #dfe8f1;background:#fbfdff;color:#43566d;font-size:10.5px;font-weight:700;cursor:pointer}.cme-option:hover{border-color:#93c5fd;background:#eff6ff}.cme-option input{accent-color:#1677ff}.cme-grid-check{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.cme-input,.cme-textarea{width:100%;border:1px solid #d7e2ed;border-radius:11px;background:#fff;color:#0f2746;padding:11px 12px;font:inherit;font-size:11px;outline:none}.cme-input:focus,.cme-textarea:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.10)}.cme-textarea{min-height:115px;resize:vertical}.cme-char{margin-top:5px;text-align:right;color:#94a3b8;font-size:8.5px}.cme-eval-note{margin:14px 0;padding:12px 13px;border-radius:13px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;font-size:10.5px;line-height:1.5}.cme-eval-actions{position:sticky;bottom:0;display:flex;justify-content:flex-end;gap:9px;padding:15px 24px;background:rgba(255,255,255,.97);border-top:1px solid #e2e8f0;backdrop-filter:blur(10px)}.cme-eval-btn{min-height:43px;padding:0 17px;border-radius:11px;border:1px solid #d7e2ed;background:#fff;color:#334155;font-weight:900;font-size:10.5px;cursor:pointer}.cme-eval-btn.primary{background:linear-gradient(135deg,#0f6fe9,#278eff);border-color:#0f6fe9;color:#fff}.cme-eval-error{display:none;margin-right:auto;align-self:center;color:#b91c1c;font-size:10px;font-weight:800}.cme-eval-error.active{display:block}
+.cme-complete-backdrop{position:fixed;inset:0;z-index:520;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(8,25,48,.72);backdrop-filter:blur(12px)}.cme-complete-backdrop.active{display:flex}.cme-complete-card{width:min(620px,94vw);padding:28px;border-radius:24px;background:#fff;border:1px solid #dbe6f1;box-shadow:0 32px 100px rgba(5,29,61,.30);text-align:center}.cme-complete-icon{width:58px;height:58px;border-radius:17px;margin:0 auto 14px;display:grid;place-items:center;background:#ecfdf5;border:1px solid #bbf7d0;color:#15803d}.cme-complete-card h2{margin:0 0 8px;font-size:28px;color:#0b2f67;letter-spacing:-.04em}.cme-complete-card p{margin:0;color:#64748b;font-size:11.5px;line-height:1.6}.cme-complete-meta{margin:18px 0;padding:13px;border-radius:13px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;font-size:10.5px;line-height:1.5;text-align:left}
+@media(max-width:720px){.cme-eval-backdrop{padding:8px}.cme-eval-card{width:100%;max-height:97vh;border-radius:18px}.cme-eval-head{padding:18px 16px 15px;border-radius:18px 18px 0 0}.cme-eval-head h2{font-size:22px}.cme-eval-body{padding:14px}.cme-eval-q{padding:14px}.cme-options.cols{grid-template-columns:1fr}.cme-grid-check{grid-template-columns:1fr}.cme-eval-actions{padding:12px 14px;flex-direction:column}.cme-eval-error{margin:0}.cme-eval-btn{width:100%}}
+</style>
+
+
+<style id="rwce-chart-readability-retry">
+/* Make patient chart easier to read */
+.chart-popup{
+  color:#0f2746 !important;
+}
+.chart-popup-title{
+  color:#0b2f67 !important;
+  font-weight:900 !important;
+}
+.chart-popup-copy{
+  color:#475569 !important;
+  font-weight:600 !important;
+  font-size:12px !important;
+  line-height:1.6 !important;
+}
+.chart-card{
+  background:#ffffff !important;
+  border:1px solid #d7e3ef !important;
+}
+.chart-card strong{
+  color:#176dcc !important;
+  font-weight:900 !important;
+  font-size:9px !important;
+  letter-spacing:.06em !important;
+}
+.chart-card span{
+  color:#0f2746 !important;
+  font-weight:800 !important;
+  font-size:12px !important;
+  line-height:1.45 !important;
+}
+.chart-check-item{
+  background:#ffffff !important;
+  border:1px solid #dce6f0 !important;
+}
+.chart-check-item strong{
+  color:#153b66 !important;
+  font-weight:900 !important;
+  font-size:11px !important;
+}
+.chart-check-item span{
+  color:#40556e !important;
+  font-weight:650 !important;
+  font-size:10.5px !important;
+  line-height:1.5 !important;
+}
+.chart-checklist-note{
+  color:#334155 !important;
+  font-weight:650 !important;
+  background:#f8fbfe !important;
+  border:1px solid #dbe7f1 !important;
+}
+.chart-progress-strip{
+  color:#334155 !important;
+}
+.chart-progress-strip strong{
+  color:#0b2f67 !important;
+}
+.retry-scenario-btn{
+  background:linear-gradient(135deg,#eef6ff,#e3f0ff) !important;
+  border:1px solid #b9d8ff !important;
+  color:#0b5fc4 !important;
+  font-weight:900 !important;
+}
+.retry-scenario-btn:hover{
+  background:linear-gradient(135deg,#dcecff,#cfe5ff) !important;
+  border-color:#8fc2ff !important;
+  transform:translateY(-1px);
+}
+@media(max-width:640px){
+  .debrief-actions{
+    gap:8px !important;
+  }
+  .debrief-actions .skin-popup-btn{
+    width:100% !important;
+  }
+}
+</style>
+
 </head>
 <body class="learning-mode">
 
@@ -2605,7 +2695,11 @@ body:not(.learning-mode) .debrief-score{
       <div><small>Injection attempts</small><strong id="debrief-attempts">—</strong></div>
     </div>
     <div class="debrief-note" id="debrief-note"><span class="material-symbols-outlined">lightbulb</span><span>Strong sequence. Continue practicing until verification and technique are automatic.</span></div>
-    <div class="debrief-actions"><button class="skin-popup-btn secondary" onclick="closeDebrief()">Close</button><button class="skin-popup-btn primary" onclick="resetTrainer()"><span class="material-symbols-outlined">refresh</span>New Patient Scenario</button></div>
+    <div class="debrief-actions">
+  <button class="skin-popup-btn secondary" onclick="closeDebrief()">Close / Review Scenario</button>
+  <button class="skin-popup-btn retry-scenario-btn" onclick="retryDifferentScenario()"><span class="material-symbols-outlined">shuffle</span>Try a Different Scenario</button>
+  <button class="skin-popup-btn primary" onclick="openCMEEvaluation()"><span class="material-symbols-outlined">fact_check</span>Continue to CME Evaluation</button>
+</div>
   </div>
 </div>
 <div id="toast" class="toast"></div>
@@ -3717,6 +3811,40 @@ function openDebrief(){
 }
 function closeDebrief(){const popup=document.getElementById("debrief-popup");if(popup)popup.classList.remove("active")}
 function render(){renderMedications();renderPreparationMethods();renderSites();renderStep();updateTarget();updateNeedle();updateSwabCleaning();updatePopupNeedle();renderSummary();renderEducationFeedback()}
+function retryDifferentScenario(){
+  closeDebrief();
+  state.site="";
+  assignRandomScenario();
+  state.selectedMedication="";
+  state.selectedPrepMethod="";
+  state.prepCompleted=false;
+  state.prepStepIndex=0;
+  state.prepMistakes=0;
+  state.educationFeedback="";
+  state.step=1;
+  state.chartReviewed=false;
+  state.cleaned=false;
+  state.injected=false;
+  state.aftercare=false;
+  state.angle=0;
+  state.needleX=50;
+  state.needleY=50;
+  state.dragging=false;
+  state.swabDragging=false;
+  state.cleanCoverage={};
+  state.mistakeCount=0;
+  state.injectionAttempts=0;
+  state.popupSubmitted=false;
+  document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());
+  closePrepPopup();
+  closeChartPopup();
+  closeSkinPopup();
+  setView("right");
+  render();
+  if(typeof applyResponsiveStageHeight==="function") applyResponsiveStageHeight();
+  setTimeout(openChartPopup,260);
+  toast("A different patient scenario has been loaded. Begin with chart verification.");
+}
 function resetTrainer(){state.site="";assignRandomScenario();state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.prepMistakes=0;state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};state.mistakeCount=0;state.injectionAttempts=0;state.popupSubmitted=false;document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeDebrief();closePrepPopup();closeChartPopup();closeSkinPopup();setView("right");render();applyResponsiveStageHeight();setTimeout(openChartPopup,260);toast("New patient scenario loaded. Begin with chart verification.")}
 function applyResponsiveStageHeight(){
   const stage=document.getElementById("stage");
@@ -3803,6 +3931,95 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
     // Keep the trainer initialization intact, but the module remains on top until launch.
     lmGo(0);
   });
+})();
+</script>
+
+
+<div id="cme-evaluation" class="cme-eval-backdrop" role="dialog" aria-modal="true" aria-labelledby="cme-eval-title">
+  <div class="cme-eval-card">
+    <div class="cme-eval-head">
+      <div style="font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#dbeafe">CME / CE Activity Evaluation</div>
+      <h2 id="cme-eval-title">Activity Evaluation</h2>
+      <p>Please complete all required questions. The activity will be marked complete after the evaluation is submitted.</p>
+      <div class="cme-eval-progress"><div id="cme-eval-progress-fill"></div></div>
+    </div>
+    <form id="cme-eval-form" class="cme-eval-body" novalidate>
+      <div style="margin:0 0 14px;padding:14px 15px;border-radius:14px;background:#eef6ff;border:1px solid #cfe3fb">
+        <div style="font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#176dcc">Learner Information</div>
+        <div style="margin-top:4px;font-size:10.5px;color:#64748b;line-height:1.45">Please enter the name and email address that should be associated with this activity completion.</div>
+      </div>
+
+      <div class="cme-eval-q" data-required="text" data-name="learner_first_name">
+        <h3>First Name <span class="cme-required">*</span></h3>
+        <input class="cme-input" name="learner_first_name" maxlength="100" autocomplete="given-name" placeholder="First name">
+        <div class="cme-char">0 / 100</div>
+      </div>
+
+      <div class="cme-eval-q" data-required="text" data-name="learner_last_name">
+        <h3>Last Name <span class="cme-required">*</span></h3>
+        <input class="cme-input" name="learner_last_name" maxlength="100" autocomplete="family-name" placeholder="Last name">
+        <div class="cme-char">0 / 100</div>
+      </div>
+
+      <div class="cme-eval-q" data-required="email" data-name="learner_email">
+        <h3>Email Address <span class="cme-required">*</span></h3>
+        <input class="cme-input" type="email" name="learner_email" maxlength="250" autocomplete="email" placeholder="name@example.com">
+        <div class="cme-char">0 / 250</div>
+      </div>
+
+      <div class="cme-eval-q" data-required="radio" data-name="q1"><h3>1. How relevant was the content of this activity to your professional practice? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q2"><h3>2. How effective were the organization, format, and presentation of the activity in supporting your learning? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q3"><h3>3. How effective was the faculty member or presenter in teaching the content? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q4"><h3>4. How well did this activity meet your expectations and learning needs? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q5"><h3>5. How well did this activity help you achieve the stated learning objectives? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q6"><h3>6. How well did this activity support your professional growth by enhancing your knowledge, strengthening your competence, and improving your ability to apply what you learned in practice? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q7"><h3>7. How would you rate your confidence in applying what you learned from this activity to your professional practice? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q8"><h3>8. How useful were the skills and concepts presented in this activity to your professional practice or work responsibilities? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q9"><h3>9. How useful were the ideas, tools, resources, or strategies provided in this activity? <span class="cme-required">*</span></h3><div class="cme-options cols"></div></div>
+      <div class="cme-eval-q" data-required="checkbox" data-name="q10"><h3>10. What barriers may affect your ability to apply what you learned from this activity? Please select all that apply. <span class="cme-required">*</span></h3><div class="cme-grid-check" id="q10-options"></div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q11"><h3>11. On a scale of 1 to 5, with 5 being the highest, how do you rank the overall quality of this educational activity? <span class="cme-required">*</span></h3><div class="cme-options cols" id="q11-options"></div></div>
+      <div class="cme-eval-q" data-required="text" data-name="q12"><h3>12. How long did you participate in this webinar? Please enter your answer in minutes. <span class="cme-required">*</span></h3><input class="cme-input" name="q12" maxlength="500" inputmode="numeric" placeholder="Minutes"><div class="cme-char">0 / 500</div></div>
+      <div class="cme-eval-q" data-required="text" data-name="q13"><h3>13. Based on what you learned, what changes will you make in your practice within the next 30 days? <span class="cme-required">*</span></h3><textarea class="cme-textarea" name="q13" maxlength="2000"></textarea><div class="cme-char">0 / 2000</div></div>
+      <div class="cme-eval-q" data-required="text" data-name="q14"><h3>14. When you make the changes you just mentioned, how do you expect your patient outcomes to improve? <span class="cme-required">*</span></h3><textarea class="cme-textarea" name="q14" maxlength="2000"></textarea><div class="cme-char">0 / 2000</div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q15"><h3>15. Was this activity free of commercial bias? Please select one. <span class="cme-required">*</span></h3><div class="cme-options" id="q15-options"></div></div>
+      <div class="cme-eval-q" data-name="q16"><h3>16. If you answered No, please describe the perceived bias. Free-text response; leave blank if Yes.</h3><input class="cme-input" name="q16" maxlength="500"><div class="cme-char">0 / 500</div></div>
+      <div class="cme-eval-q" data-name="q17"><h3>17. What is the most important thing you learned from this activity?</h3><input class="cme-input" name="q17" maxlength="500"><div class="cme-char">0 / 500</div></div>
+      <div class="cme-eval-q" data-name="q18"><h3>18. For pharmacists only: What is your NABP e-Profile ID (ePID)?</h3><input class="cme-input" name="q18" maxlength="500"><div class="cme-char">0 / 500</div></div>
+      <div class="cme-eval-q" data-name="q19"><h3>19. For pharmacists only: What is your date of birth? Enter the month and day only (MM/DD).</h3><input class="cme-input" name="q19" maxlength="500" placeholder="MM/DD"><div class="cme-char">0 / 500</div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q20"><h3>20. Please rate your current knowledge of Tardive dyskinesia (TD) <span class="cme-required">*</span></h3><div class="cme-options" id="q20-options"></div></div>
+      <div class="cme-eval-q" data-required="text" data-name="q21"><h3>21. How did you hear about this event? <span class="cme-required">*</span></h3><input class="cme-input" name="q21" maxlength="500"><div class="cme-char">0 / 500</div></div>
+      <div class="cme-eval-q" data-required="radio" data-name="q22"><h3>22. Do you understand that your certificate of completion will be sent within 24 hours, pharmacists’ credits will be reported automatically to CPE Monitor, and any questions or concerns should be directed to Michelle@realworldce.org? <span class="cme-required">*</span></h3><div class="cme-options" id="q22-options"></div></div>
+      <div class="cme-eval-note">First name, last name, and email address are required for activity completion. Required questions are marked with an asterisk. Pharmacist-specific fields are optional unless required by your accreditation workflow.</div>
+    </form>
+    <div class="cme-eval-actions"><div id="cme-eval-error" class="cme-eval-error">Please complete all required questions.</div><button type="button" class="cme-eval-btn" onclick="closeCMEEvaluation()">Return to Debrief</button><button type="button" class="cme-eval-btn primary" onclick="submitCMEEvaluation()">Submit Evaluation &amp; Complete Activity</button></div>
+  </div>
+</div>
+<div id="cme-complete" class="cme-complete-backdrop" role="dialog" aria-modal="true"><div class="cme-complete-card"><div class="cme-complete-icon"><span class="material-symbols-outlined">verified</span></div><h2>Activity Complete</h2><p>Your evaluation has been submitted and this learning activity is now complete.</p><div class="cme-complete-meta">Certificate of completion will be sent within 24 hours. Pharmacists’ credits will be reported automatically to CPE Monitor. Questions or concerns may be directed to <strong>Michelle@realworldce.org</strong>.</div><button type="button" class="cme-eval-btn primary" onclick="resetTrainer();closeCMEComplete()">Start New Patient Scenario</button></div></div>
+
+
+<script id="cme-evaluation-script">
+(function(){
+  const rating=["Excellent","Good","Fair","Poor","Very Poor"];
+  const barriers=["Cost","Lack of experience","Lack of resources","Lack of time to assess or counsel patients","Technical skills","Lack of consensus or professional guidelines","Reimbursement or insurance issues","Patient adherence or compliance issues","No barriers","Other"];
+  const radioHTML=(name,opts)=>opts.map(v=>`<label class="cme-option"><input type="radio" name="${name}" value="${v}"><span>${v}</span></label>`).join("");
+  const checkHTML=(name,opts)=>opts.map(v=>`<label class="cme-option"><input type="checkbox" name="${name}" value="${v}"><span>${v}</span></label>`).join("");
+  window.initCMEEvaluation=function(){
+    for(let i=1;i<=9;i++){const q=document.querySelector(`.cme-eval-q[data-name="q${i}"] .cme-options`);if(q&&!q.children.length)q.innerHTML=radioHTML(`q${i}`,rating)}
+    const q10=document.getElementById("q10-options");if(q10&&!q10.children.length)q10.innerHTML=checkHTML("q10",barriers);
+    const q11=document.getElementById("q11-options");if(q11&&!q11.children.length)q11.innerHTML=radioHTML("q11",["5","4","3","2","1"]);
+    const q15=document.getElementById("q15-options");if(q15&&!q15.children.length)q15.innerHTML=radioHTML("q15",["Yes","No"]);
+    const q20=document.getElementById("q20-options");if(q20&&!q20.children.length)q20.innerHTML=radioHTML("q20",["Limited","Moderate","Advanced","Expert"]);
+    const q22=document.getElementById("q22-options");if(q22&&!q22.children.length)q22.innerHTML=radioHTML("q22",["Yes","No"]);
+    document.querySelectorAll("#cme-eval-form input,#cme-eval-form textarea").forEach(el=>{if(el.dataset.bound)return;el.dataset.bound="1";el.addEventListener("input",updateCMEEvaluationProgress);el.addEventListener("change",updateCMEEvaluationProgress);if(el.matches("input[type=text],input[type=email],textarea")){el.addEventListener("input",()=>{const counter=el.parentElement.querySelector(".cme-char");if(counter)counter.textContent=`${el.value.length} / ${el.maxLength||500}`})}});
+    updateCMEEvaluationProgress();
+  };
+  window.openCMEEvaluation=function(){initCMEEvaluation();const d=document.getElementById("debrief-popup");if(d)d.classList.remove("active");const m=document.getElementById("cme-evaluation");if(m)m.classList.add("active");document.body.style.overflow="hidden"};
+  window.closeCMEEvaluation=function(){const m=document.getElementById("cme-evaluation");if(m)m.classList.remove("active");document.body.style.overflow="";if(typeof openDebrief==="function")openDebrief()};
+  window.closeCMEComplete=function(){const m=document.getElementById("cme-complete");if(m)m.classList.remove("active");document.body.style.overflow=""};
+  function answered(q){const type=q.dataset.required,name=q.dataset.name;if(!type)return true;if(type==="radio"||type==="checkbox")return !!q.querySelector(`input[name="${name}"]:checked`);if(type==="text"){const el=q.querySelector(`[name="${name}"]`);return !!el&&!!el.value.trim()}if(type==="email"){const el=q.querySelector(`[name="${name}"]`);if(!el||!el.value.trim())return false;return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim())}return true}
+  window.updateCMEEvaluationProgress=function(){const req=[...document.querySelectorAll("#cme-eval-form .cme-eval-q[data-required]")];const done=req.filter(answered).length;const fill=document.getElementById("cme-eval-progress-fill");if(fill)fill.style.width=`${req.length?(done/req.length)*100:0}%`};
+  window.submitCMEEvaluation=function(){const req=[...document.querySelectorAll("#cme-eval-form .cme-eval-q[data-required]")];let first=null;req.forEach(q=>{const ok=answered(q);q.classList.toggle("invalid",!ok);if(!ok&&!first)first=q});const biasNo=document.querySelector('input[name="q15"][value="No"]:checked');const q16=document.querySelector('.cme-eval-q[data-name="q16"]');const biasText=q16?.querySelector('[name="q16"]');if(biasNo&&(!biasText||!biasText.value.trim())){q16.classList.add("invalid");if(!first)first=q16}else if(q16)q16.classList.remove("invalid");const err=document.getElementById("cme-eval-error");if(first){if(err)err.classList.add("active");first.scrollIntoView({behavior:"smooth",block:"center"});return}if(err)err.classList.remove("active");const fd=new FormData(document.getElementById("cme-eval-form"));const result={};for(const [k,v] of fd.entries()){if(result[k]!==undefined)result[k]=Array.isArray(result[k])?[...result[k],v]:[result[k],v];else result[k]=v}result.completedAt=new Date().toISOString();try{localStorage.setItem("rwce-lai-cme-evaluation",JSON.stringify(result))}catch(e){}const m=document.getElementById("cme-evaluation");if(m)m.classList.remove("active");const c=document.getElementById("cme-complete");if(c)c.classList.add("active")};
+  document.addEventListener("DOMContentLoaded",initCMEEvaluation);
 })();
 </script>
 
