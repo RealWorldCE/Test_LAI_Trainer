@@ -4715,7 +4715,7 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
     const pct=Math.round((correct/6)*100), pass=correct>=5;
     lmState.quizPassed=pass; save();
     if(window.parent && window.parent !== window){
-      window.parent.postMessage({type:'rwce-lai-assessment',phase:'knowledge_check',payload:{
+      window.rwceAssessmentSavePending?.('knowledge_check');window.parent.postMessage({type:'rwce-lai-assessment',phase:'knowledge_check',payload:{
         assessment:'LAI preparation and administration',question_count:6,correct:correct,score:pct,
         submitted_at:new Date().toISOString(),passed:pass,
         answers:Array.from({length:6},(_,i)=>lmState.answers[i]??null),
@@ -4950,7 +4950,7 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
  function updateAssessmentStatus(){const el=document.getElementById('rwce-test-status');if(el)el.textContent='Pre-test: '+(results.pre?results.pre.score+'%':'Not completed')+' · Post-test: '+(results.post?results.post.score+'%':'Not completed')+(results.pre&&results.post?' · Gain: '+(results.post.score-results.pre.score)+' points':'')};
  window.__rwceResetTests=()=>{if(!window.confirm('Reset pre-test and post-test scores in this browser? Only use this for testing; it will erase local assessment results.'))return;results={};answers={};save();show('pre')};
  const safe=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
- function notify(when,data){if(window.parent&&window.parent!==window){window.parent.postMessage({type:'rwce-lai-assessment',phase:when,payload:{...data,assessment:'LAI preparation and administration',question_count:questions.length,question_details:questions.map((q,i)=>({number:i+1,question:q[0],options:q[1].map((text,j)=>({value:j,text})),selected_value:data.answers?.[i]??null,selected_text:q[1][data.answers?.[i]]??'',correct_value:q[2],correct_text:q[1][q[2]],is_correct:data.question_correct?.[i]===true})),pre_score:results.pre?.score??null,post_score:results.post?.score??null,knowledge_gain_points:results.pre&&results.post?results.post.score-results.pre.score:null}},'*')}}
+ function notify(when,data){if(window.parent&&window.parent!==window){window.rwceAssessmentSavePending?.(when);window.parent.postMessage({type:'rwce-lai-assessment',phase:when,payload:{...data,assessment:'LAI preparation and administration',question_count:questions.length,question_details:questions.map((q,i)=>({number:i+1,question:q[0],options:q[1].map((text,j)=>({value:j,text})),selected_value:data.answers?.[i]??null,selected_text:q[1][data.answers?.[i]]??'',correct_value:q[2],correct_text:q[1][q[2]],is_correct:data.question_correct?.[i]===true})),pre_score:results.pre?.score??null,post_score:results.post?.score??null,knowledge_gain_points:results.pre&&results.post?results.post.score-results.pre.score:null}},'*')}}
  function show(what){phase=what;answers={};$('rwce-assessment').hidden=false;document.body.style.overflow='hidden';draw()}
  function hide(){ $('rwce-assessment').hidden=true;document.body.style.overflow='';phase=null }
  function draw(){
@@ -4982,6 +4982,24 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
   // Retain stored results for reporting without requiring login; LMS can listen for the assessment message.
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initializeAssessment);else initializeAssessment();
+})();
+</script>
+
+<style id="rwce-assessment-save-style">
+#rwce-assessment-save-status{position:fixed;bottom:16px;right:16px;z-index:2147483646;max-width:min(420px,calc(100vw - 32px));padding:12px 16px;border-radius:12px;background:#172b41;color:#eff6ff;border:1px solid #60a5fa;box-shadow:0 12px 28px #0007;font:600 12px/1.5 Inter,Arial,sans-serif;display:none}
+#rwce-assessment-save-status[data-state="error"]{border-color:#f87171;color:#fee2e2}
+#rwce-assessment-save-status[data-state="ok"]{border-color:#34d399;color:#d1fae5}
+</style>
+<div id="rwce-assessment-save-status" role="status" aria-live="polite"></div>
+<script>
+(function(){
+  const msg=document.getElementById('rwce-assessment-save-status');
+  window.rwceAssessmentSavePending=function(phase){msg.style.display='block';msg.dataset.state='pending';msg.textContent='Saving '+phase.replace(/_/g,' ')+' to the LMS database…';};
+  window.addEventListener('message',function(e){
+    if(e.source!==window.parent || e.data?.type!=='rwce-assessment-storage') return;
+    msg.style.display='block';msg.dataset.state=e.data.ok?'ok':'error';
+    msg.textContent=e.data.ok?'Assessment saved to the LMS database.':('Assessment was NOT saved to the LMS database: '+(e.data.message||'Unknown error'));
+  });
 })();
 </script>
 </body>
