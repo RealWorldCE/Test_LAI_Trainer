@@ -4719,7 +4719,8 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
         assessment:'LAI preparation and administration',question_count:6,correct:correct,score:pct,
         submitted_at:new Date().toISOString(),passed:pass,
         answers:Array.from({length:6},(_,i)=>lmState.answers[i]??null),
-        question_correct:Array.from(document.querySelectorAll('.lm-question'),el=>lmState.answers[Number(el.dataset.q)]===el.dataset.answer)
+        question_correct:Array.from({length:6},(_,i)=>{const el=document.querySelector(`.lm-question[data-q="${i}"]`);return !!el && lmState.answers[i]===el.dataset.answer}),
+        question_details:Array.from({length:6},(_,i)=>{const el=document.querySelector(`.lm-question[data-q="${i}"]`);const opts=Array.from(el?.querySelectorAll('.lm-option')||[]).map(n=>({value:n.querySelector('input')?.value||'',text:n.querySelector('span')?.textContent?.trim()||''}));const pick=lmState.answers[i]??null;const expected=el?.dataset.answer||null;return {number:i+1,question:el?.querySelector('h3')?.textContent?.trim()||'',options:opts,selected_value:pick,selected_text:opts.find(o=>o.value===pick)?.text||'',correct_value:expected,correct_text:opts.find(o=>o.value===expected)?.text||'',is_correct:pick===expected}})
       }},'*');
     }
     const box=document.getElementById('lm-scorebox'); box?.classList.add('active'); box?.classList.toggle('pass',pass); box?.classList.toggle('fail',!pass);
@@ -4949,7 +4950,7 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
  function updateAssessmentStatus(){const el=document.getElementById('rwce-test-status');if(el)el.textContent='Pre-test: '+(results.pre?results.pre.score+'%':'Not completed')+' · Post-test: '+(results.post?results.post.score+'%':'Not completed')+(results.pre&&results.post?' · Gain: '+(results.post.score-results.pre.score)+' points':'')};
  window.__rwceResetTests=()=>{if(!window.confirm('Reset pre-test and post-test scores in this browser? Only use this for testing; it will erase local assessment results.'))return;results={};answers={};save();show('pre')};
  const safe=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
- function notify(when,data){if(window.parent&&window.parent!==window){window.parent.postMessage({type:'rwce-lai-assessment',phase:when,payload:{...data,assessment:'LAI preparation and administration',question_count:questions.length,pre_score:results.pre?.score??null,post_score:results.post?.score??null,knowledge_gain_points:results.pre&&results.post?results.post.score-results.pre.score:null}},'*')}}
+ function notify(when,data){if(window.parent&&window.parent!==window){window.parent.postMessage({type:'rwce-lai-assessment',phase:when,payload:{...data,assessment:'LAI preparation and administration',question_count:questions.length,question_details:questions.map((q,i)=>({number:i+1,question:q[0],options:q[1].map((text,j)=>({value:j,text})),selected_value:data.answers?.[i]??null,selected_text:q[1][data.answers?.[i]]??'',correct_value:q[2],correct_text:q[1][q[2]],is_correct:data.question_correct?.[i]===true})),pre_score:results.pre?.score??null,post_score:results.post?.score??null,knowledge_gain_points:results.pre&&results.post?results.post.score-results.pre.score:null}},'*')}}
  function show(what){phase=what;answers={};$('rwce-assessment').hidden=false;document.body.style.overflow='hidden';draw()}
  function hide(){ $('rwce-assessment').hidden=true;document.body.style.overflow='';phase=null }
  function draw(){
