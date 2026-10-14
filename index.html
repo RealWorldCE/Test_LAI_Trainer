@@ -2777,6 +2777,25 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
 @media (max-width:600px){.debrief-score-explanation{font-size:12px}.debrief-score{gap:12px}.debrief-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:390px){.debrief-grid{grid-template-columns:minmax(0,1fr)}}
 </style>
+
+<style id="rwce-mobile-scroll-header-fix">
+/* Let both learning navigation bars scroll naturally on phones/tablets.
+   An earlier stylesheet forced the lesson bar to position:sticky!important. */
+@media (max-width: 900px) {
+  body.learning-mode .lm-shell .lm-nav,
+  body.learning-mode .lm-shell .lm-topbar {
+    position:relative!important;
+    top:auto!important;
+    bottom:auto!important;
+  }
+  body.learning-mode .lm-shell .lm-nav {z-index:1!important}
+  body.learning-mode .lm-shell .lm-topbar {z-index:1!important}
+  /* Prevent long lesson titles from crowding the small top bar. */
+  body.learning-mode .lm-topbar-left {min-width:0;flex:1 1 160px}
+  body.learning-mode #lm-current-label {overflow-wrap:anywhere}
+  body.learning-mode .lm-topbar>div:last-child {flex:0 1 auto;min-width:0}
+}
+</style>
 </head>
 <body class="learning-mode">
 <section id="rwce-assessment" role="dialog" aria-modal="true" aria-label="LAI pre-test and post-test" hidden><div class="rwce-assessment-shell"><div class="rwce-a-head"><div class="rwce-a-kicker">REAL WORLD CE · LAI PREPARATION & ADMINISTRATION</div><h2 id="rwce-a-title">Pre-Test</h2><p id="rwce-a-intro"></p><div class="rwce-a-stat"><span id="rwce-a-stage"></span><span id="rwce-a-count"></span></div><div class="rwce-a-track"><div id="rwce-a-progress"></div></div></div><div id="rwce-a-content"></div><div class="rwce-a-actions" id="rwce-a-actions"></div></div></section>
@@ -4906,7 +4925,18 @@ window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveS
     const txt=document.getElementById('lm-progress-text'); if(txt)txt.textContent=`${index+1} of 10`;
     const lbl=document.getElementById('lm-current-label'); if(lbl)lbl.textContent=labels[index];
     const status=document.getElementById('lm-status-text'); if(status)status.textContent=index===9?'Ready to simulate':index===8?'Assessment':'Learning';
-    document.querySelector('.lm-main')?.scrollTo({top:0,behavior:'smooth'});
+    if(window.matchMedia('(max-width: 900px)').matches){
+      // On mobile the fixed learning shell scrolls, not .lm-main.
+      // Place the new lesson header at the top without pinning it over content.
+      const shell=document.querySelector('.lm-shell');
+      const main=document.querySelector('.lm-main');
+      if(shell && main && !shell.classList.contains('hidden')){
+        const lessonTop=main.getBoundingClientRect().top-shell.getBoundingClientRect().top+shell.scrollTop;
+        shell.scrollTo({top:Math.max(0,lessonTop-6),behavior:'auto'});
+      }
+    }else{
+      document.querySelector('.lm-main')?.scrollTo({top:0,behavior:'smooth'});
+    }
   };
   window.lmNext=function(){ if(lmState.section<9){ if(lmState.section===8&&!lmState.quizPassed)return; lmGo(lmState.section+1);} };
   window.lmBack=function(){ if(lmState.section>0)lmGo(lmState.section-1); };
@@ -5372,11 +5402,36 @@ window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveS
 <script>
 (function(){
   const msg=document.getElementById('rwce-assessment-save-status');
-  window.rwceAssessmentSavePending=function(phase){msg.style.display='block';msg.dataset.state='pending';msg.textContent='Saving '+phase.replace(/_/g,' ')+' to the LMS database…';};
+  if(!msg)return;
+  let hideTimer=null, pendingTimer=null;
+  function clearTimers(){
+    clearTimeout(hideTimer);clearTimeout(pendingTimer);
+    hideTimer=null;pendingTimer=null;
+  }
+  function hide(){
+    msg.style.display='none';
+    msg.textContent='';
+    msg.removeAttribute('data-state');
+  }
+  function display(status,content,ms){
+    clearTimers();
+    msg.dataset.state=status;
+    msg.textContent=content;
+    msg.style.display='block';
+    if(ms)hideTimer=setTimeout(hide,ms);
+  }
+  window.rwceAssessmentSavePending=function(phase){
+    display('pending','Saving '+String(phase||'assessment').replace(/_/g,' ')+' to the LMS database…',0);
+    // If an LMS acknowledgement never arrives, do not show a permanent banner.
+    pendingTimer=setTimeout(()=>display('error','LMS save has not been confirmed. Please check your connection or contact support.',7000),12000);
+  };
   window.addEventListener('message',function(e){
-    if(e.source!==window.parent || e.data?.type!=='rwce-assessment-storage') return;
-    msg.style.display='block';msg.dataset.state=e.data.ok?'ok':'error';
-    msg.textContent=e.data.ok?'Assessment saved to the LMS database.':('Assessment was NOT saved to the LMS database: '+(e.data.message||'Unknown error'));
+    if(e.source!==window.parent || e.data?.type!=='rwce-assessment-storage')return;
+    if(e.data.ok){
+      display('ok','Assessment saved to the LMS database.',3000);
+    }else{
+      display('error','Assessment was NOT saved to the LMS database: '+(e.data.message||'Unknown error'),8000);
+    }
   });
 })();
 </script>
