@@ -2629,6 +2629,145 @@ body:not(.learning-mode) .debrief-score{
 #rwce-assessment{position:fixed;inset:0;z-index:10000;background:radial-gradient(circle at 16% 4%,#153958,#050e19 70%);color:#eaf5ff;overflow:auto;padding:30px 16px;font-family:Inter,system-ui,sans-serif}
 #rwce-assessment[hidden]{display:none!important}.rwce-assessment-shell{max-width:900px;margin:0 auto}.rwce-a-kicker{color:#66c5ff;letter-spacing:.16em;font-size:11px;font-weight:800;text-transform:uppercase}.rwce-a-head{border:1px solid #31516a;background:#0a1b2d;border-radius:18px;padding:24px;margin-bottom:18px}.rwce-a-head h2{font-size:clamp(23px,4vw,33px);margin:7px 0}.rwce-a-head p{color:#adc3d8;font-size:13px;line-height:1.6}.rwce-a-stat{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;color:#80ceff;font-weight:750;font-size:12px}.rwce-a-track{height:6px;background:#21364b;border-radius:8px;margin-top:13px;overflow:hidden}.rwce-a-track div{height:100%;background:linear-gradient(90deg,#329fec,#36c998);transition:width .2s}.rwce-a-question{background:#0b1c2d;border:1px solid #243d54;border-radius:15px;padding:18px 20px;margin:12px 0}.rwce-a-question h3{font-size:14px;line-height:1.5;margin:0 0 13px}.rwce-a-option{display:flex;align-items:flex-start;gap:12px;border:1px solid #334961;background:#0d2439;border-radius:10px;padding:12px;cursor:pointer;margin:7px 0;font-size:12px;line-height:1.45;color:#d7e6f5}.rwce-a-option:has(input:checked){border-color:#47baff;background:#123751}.rwce-a-option input{accent-color:#50b9ff;margin-top:3px}.rwce-a-option b{color:#83d1ff}.rwce-a-actions{display:flex;justify-content:flex-end;gap:10px;margin:22px 0 40px;flex-wrap:wrap}.rwce-a-btn{border:0;border-radius:10px;background:linear-gradient(110deg,#128bdc,#295bdc);color:white;padding:13px 23px;cursor:pointer;font-weight:800}.rwce-a-btn:disabled{opacity:.4;cursor:not-allowed}.rwce-a-result{background:#0c2633;border:1px solid #2b7466;border-radius:18px;padding:24px}.rwce-a-result h3{font-size:24px;margin:8px 0}.rwce-a-result strong{color:#7af0c5}.rwce-a-results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.rwce-a-results-grid div{background:#0c1b2a;border:1px solid #294559;border-radius:12px;padding:13px}.rwce-a-results-grid b{display:block;font-size:24px;margin-top:4px}.rwce-a-results-grid span{font-size:10px;color:#a8c4d9}.rwce-a-error{color:#ffb1ac;font-size:12px;margin:10px 0}@media(max-width:560px){.rwce-a-results-grid{grid-template-columns:1fr}.rwce-a-head{padding:17px}.rwce-a-question{padding:14px}}
 </style>
+<style id="lai-feedback-2026-fixes">
+/* Readability / accessibility overhaul based on clinical reviewer feedback */
+.lm-course-title p,.lm-nav-note,.lm-progress-head,.lm-nav-label,.lm-main .lm-card p,.lm-main .lm-step p,.lm-main .lm-method p,.lm-method-detail,.lm-seq span,.lm-sim-card p,.lm-ref,.lm-callout,.lm-main .lm-lead,.lm-hero>p{font-size:clamp(13px,1vw,16px)!important;line-height:1.65!important;color:#dae8f6!important}
+.lm-question h3{font-size:17px!important;line-height:1.5!important}.lm-option span{font-size:15px!important;color:#eff7ff!important;line-height:1.5!important}.lm-qfeedback,.lm-scorebox span{font-size:14px!important}.lm-btn,.lm-nav-label,.lm-exit,.lm-method-detail,.lm-step h3,.lm-card h3{font-size:14px!important}.lm-method h3{font-size:17px!important}.lm-stat strong{font-size:14px!important}.lm-main .lm-callout{color:#e2edf8!important}.popup-angle-hint{max-width:350px;font-size:13px!important;background:#101f34;color:#fff;line-height:1.5}.popup-readout,.popup-readout strong,.popup-readout span,.layer-info-card span,.popup-controls .layer-info-card strong{font-size:14px!important;line-height:1.5!important;color:#f1f7ff!important}.popup-layer{font-size:12px!important}.chart-check-item span,.chart-check-item strong,.chart-checklist-note{font-size:14px!important}.decision-option span,.decision-option strong{font-size:14px!important}.skin-popup-copy,.chart-popup-copy{font-size:14px!important;color:#e1ebfa!important}
+@media(max-width:600px){.popup-angle-hint{max-width:210px;font-size:11px!important}.lm-option span{font-size:14px!important}}
+</style>
+
+<style id="rwce-accessible-contrast-fix">
+/* Legibility correction for light-surface learning UI. Do not change dark hero palette. */
+.lm-shell .lm-course-title p{color:#243f61!important;font-size:13px!important;line-height:1.6!important;font-weight:600!important}
+.lm-shell .lm-course-title h1{color:#092b5c!important}
+.lm-shell .lm-progress-head,.lm-shell .lm-progress-head span{color:#183f72!important;font-size:12px!important;font-weight:900!important}
+.lm-shell .lm-progress-head strong{color:#095bc9!important;font-size:12px!important}
+.lm-shell .lm-nav-btn{color:#223d61!important}
+.lm-shell .lm-nav-btn .lm-nav-label{color:#193c66!important;font-size:13px!important;font-weight:800!important;line-height:1.4!important}
+.lm-shell .lm-nav-btn.active .lm-nav-label{color:#063f92!important}
+.lm-shell .lm-nav-btn .lm-nav-icon{color:#2661a8!important}
+.lm-shell .lm-nav-note{color:#674717!important;font-size:12px!important}
+.lm-shell .lm-nav-note strong{color:#65420d!important}
+.lm-shell .lm-callout{color:#143a69!important;font-size:15px!important;line-height:1.65!important}
+.lm-shell .lm-callout strong{color:#12357a!important;font-size:16px!important}
+.lm-shell .lm-callout.safety{color:#185a3d!important}
+.lm-shell .lm-callout.safety strong{color:#155331!important}
+.lm-shell .lm-callout.warn{color:#803c14!important}
+.lm-shell .lm-callout.warn strong{color:#72340b!important}
+.lm-shell .lm-topbar-left{color:#244568!important;font-size:12px!important}
+.lm-shell .lm-status{color:#17633c!important;font-size:11px!important;background:#e7fbef!important;border-color:#ade7c0!important}
+.lm-shell .lm-exit{color:#34465f!important;font-size:13px!important}
+.lm-shell .lm-lead,.lm-shell .lm-main .lm-card p,.lm-shell .lm-main .lm-step p,.lm-shell .lm-main .lm-method p,.lm-shell .lm-method-detail,.lm-shell .lm-seq span,.lm-shell .lm-sim-card p,.lm-shell .lm-ref{color:#334963!important;font-size:14px!important;line-height:1.65!important}
+.lm-shell .lm-hero>p{color:#f0f7ff!important;font-size:16px!important;line-height:1.7!important}
+.lm-shell .lm-hero .lm-eyebrow{color:#edf6ff!important}
+.lm-shell .lm-hero .lm-stat small{color:#d8efff!important;font-size:11px!important}
+.lm-shell .lm-hero .lm-stat strong{color:#fff!important;font-size:14px!important}
+.lm-shell #rwce-test-status{color:#eaf6ff!important;font-size:13px!important}
+.lm-shell #rwce-test-access>div:first-child{color:#a5e0ff!important;font-size:12px!important}
+.lm-shell #rwce-test-access button{font-size:14px!important}
+@media(max-width:600px){.lm-shell .lm-callout{font-size:14px!important}.lm-shell .lm-callout strong{font-size:15px!important}.lm-shell .lm-hero>p{font-size:15px!important}}
+</style>
+
+<style id="rwce-mobile-phone-upgrade">
+/* Mobile-first usability improvements; desktop layout retained. */
+@media (max-width: 900px) {
+  html,body {width:100%;max-width:100%;overflow-x:hidden}
+  .lm-shell,.lm-main,.lm-inner,.app,.side,.stage {min-width:0;max-width:100%}
+  .lm-nav-list {overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  .lm-topbar {gap:8px;flex-wrap:wrap}
+  .lm-hero h2,.lm-section h2 {overflow-wrap:break-word}
+  .lm-option,.rwce-a-option,.cme-option,.site-button {touch-action:manipulation}
+  .lm-option {min-height:52px;align-items:center}
+  .lm-option span {font-size:15px!important;line-height:1.48!important}
+  .lm-question h3 {font-size:17px!important}
+  .app {display:grid;grid-template-columns:minmax(0,1fr)!important;gap:12px;padding:10px}
+  .side {max-height:none!important;overflow:visible!important;display:block;padding:16px}
+  .side>*+* {margin-top:12px}
+  .site-button {min-height:48px}
+  .site-button strong {font-size:14px!important}
+  .site-button span,.record-row,.milestone-list>div,.side .copy {font-size:13px!important;line-height:1.5!important}
+  .summary,.step-card {padding:14px!important}
+  .stage {min-height:790px!important;height:790px;overflow:hidden}
+  .skin-popup-backdrop,.chart-popup-backdrop,.debrief-backdrop,.cme-eval-backdrop {padding:10px;align-items:center}
+  .skin-popup,.chart-popup,.prep-popup,.debrief-card,.cme-eval-card {box-sizing:border-box;width:min(100%,760px)!important;max-height:calc(100dvh - 20px)!important;overflow-y:auto!important;overscroll-behavior:contain}
+  .skin-popup-grid,.chart-popup-grid,.prep-popup-grid,.debrief-grid {grid-template-columns:minmax(0,1fr)!important}
+  .decision-option-grid,.prep-action-grid,.popup-readout-grid {grid-template-columns:minmax(0,1fr)!important}
+  .skin-popup-btn,.cme-eval-btn,.prep-action-btn {min-height:46px}
+  .popup-controls,.popup-injection-stage {min-width:0}
+  .popup-slider-row {grid-template-columns:58px minmax(0,1fr) 44px;gap:8px}
+  .popup-slider-row input {min-width:0;width:100%;height:32px}
+  .chart-check-item,.decision-option,.lm-option {overflow-wrap:anywhere}
+}
+@media (max-width: 600px) {
+  body {font-size:15px}
+  button,select,input,textarea {max-width:100%}
+  .lm-inner {width:calc(100% - 20px)!important;padding:14px 0 25px!important}
+  .lm-nav {position:relative!important;top:auto!important}
+  .lm-nav-btn {min-height:42px}
+  .lm-hero {padding:20px!important}
+  .lm-hero h2 {font-size:clamp(26px,7vw,36px)!important;line-height:1.1!important}
+  .lm-hero>p,.lm-lead,.lm-card p,.lm-step p,.lm-method-detail,.lm-callout {font-size:14px!important;line-height:1.55!important}
+  .lm-stat-row,.lm-grid-2,.lm-grid-3,.lm-methods,.lm-sequence,.lm-sim-milestones,.lm-visual-strip,.lm-visual-strip.triplet {grid-template-columns:minmax(0,1fr)!important}
+  .lm-card,.lm-method,.lm-question {min-height:0;padding:16px!important}
+  .lm-step {grid-template-columns:42px minmax(0,1fr)!important}
+  .lm-footer-nav {display:flex;flex-wrap:wrap;gap:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))!important}
+  .lm-footer-nav .lm-btn {flex:1 1 145px;min-height:48px}
+  .rwce-a-question {padding:16px}
+  .rwce-a-question h3 {font-size:16px}
+  .rwce-a-option {font-size:14px;min-height:48px}
+  .rwce-a-actions {flex-direction:column}
+  .rwce-a-actions button {width:100%;min-height:48px}
+  .app {padding:8px!important;gap:10px}
+  .side {padding:14px!important}
+  .brand-block h1 {font-size:23px!important}
+  .step-title {font-size:21px!important}
+  .step-pill,.phase-status,.label,.kicker,.record-status {font-size:11px!important}
+  .button,.small-button {min-height:48px!important;font-size:14px!important}
+  .stage {min-height:810px!important;height:810px!important;border-radius:18px}
+  .toolbar {top:9px!important;left:9px!important;right:9px!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px!important}
+  .toolbar button {width:100%;min-width:0!important;min-height:43px!important;height:auto!important;padding:7px 5px!important;font-size:11px!important;line-height:1.2;justify-content:center;white-space:normal}
+  .toolbar button:first-child {grid-column:span 3}
+  .stage-hud {top:116px!important;left:9px!important;right:9px!important;width:auto!important;max-width:none!important;padding:9px 11px!important}
+  .safety-banner {top:213px!important;left:9px!important;right:9px!important;width:auto!important;max-width:none!important;padding:8px 10px!important}
+  .safety-banner strong {font-size:12px!important}
+  .safety-banner span {font-size:11px!important}
+  .needle-feedback {top:287px!important;left:9px!important;right:9px!important;width:auto!important;max-width:none!important;font-size:12px!important;line-height:1.4!important}
+  .coach-card {bottom:9px!important;left:9px!important;right:9px!important;transform:none!important;width:auto!important;max-width:none!important;padding:11px!important}
+  .coach-title {font-size:15px!important}
+  .coach-card>.copy {font-size:12px!important}
+  .coach-grid {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+  .coach-item {padding:7px 5px!important;min-width:0;gap:4px!important;flex-direction:column;align-items:flex-start}
+  .coach-item small {font-size:10px!important}
+  .coach-item strong {font-size:11px!important;white-space:normal!important;overflow-wrap:anywhere;max-width:100%!important}
+  .cleaning-meter {bottom:200px!important;left:9px!important;right:9px!important;width:auto!important;max-width:none!important;transform:none!important}
+  .cleaning-meter-copy,.cleaning-meter-title {font-size:12px!important}
+  .site-target {width:64px!important;height:64px!important}
+  .needle {touch-action:none}
+  .swab-tool,.popup-needle {touch-action:none}
+  .skin-popup,.chart-popup,.prep-popup,.debrief-card {padding:15px!important;border-radius:17px!important}
+  .skin-popup-head,.chart-popup-head {gap:8px}
+  .skin-popup-title,.chart-popup-title {font-size:21px!important}
+  .skin-popup-copy,.chart-popup-copy {font-size:14px!important;line-height:1.5!important}
+  .skin-popup-close {width:42px!important;height:42px!important;flex-shrink:0}
+  .skin-3d-stage {min-height:270px!important}
+  .skin-stack {transform:rotateX(57deg) rotateZ(-32deg) scale(.75)!important}
+  .popup-injection-stage {min-height:330px!important}
+  .popup-angle-hint {position:relative!important;left:auto!important;bottom:auto!important;margin:8px!important;max-width:none!important;font-size:11px!important;padding:7px!important;pointer-events:none}
+  .popup-readout,.popup-readout span,.layer-info-card span {font-size:13px!important}
+  .skin-popup-actions,.debrief-actions {display:flex;flex-direction:column-reverse!important;gap:8px}
+  .skin-popup-actions button,.debrief-actions button {width:100%;min-height:46px}
+  .chart-check-item strong,.chart-check-item span {font-size:13px!important}
+  .toast {bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;font-size:13px!important}
+}
+@media (max-width:380px) {
+  .stage {min-height:850px!important;height:850px!important}
+  .toolbar button {font-size:10px!important}
+  .stage-hud {top:116px!important}
+  .safety-banner {top:223px!important}
+  .needle-feedback {top:300px!important}
+  .coach-grid {grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+</style>
 </head>
 <body class="learning-mode">
 <section id="rwce-assessment" role="dialog" aria-modal="true" aria-label="LAI pre-test and post-test" hidden><div class="rwce-assessment-shell"><div class="rwce-a-head"><div class="rwce-a-kicker">REAL WORLD CE · LAI PREPARATION & ADMINISTRATION</div><h2 id="rwce-a-title">Pre-Test</h2><p id="rwce-a-intro"></p><div class="rwce-a-stat"><span id="rwce-a-stage"></span><span id="rwce-a-count"></span></div><div class="rwce-a-track"><div id="rwce-a-progress"></div></div></div><div id="rwce-a-content"></div><div class="rwce-a-actions" id="rwce-a-actions"></div></div></section>
@@ -2662,9 +2801,9 @@ body:not(.learning-mode) .debrief-score{
 
   <main class="lm-main">
     <div class="lm-inner">
-      <div class="lm-topbar"><div class="lm-topbar-left"><span class="material-symbols-outlined" style="font-size:16px">medical_services</span><span id="lm-current-label">Course Introduction</span></div><div style="display:flex;gap:8px;align-items:center"><span class="lm-status"><i></i><span id="lm-status-text">Learning</span></span><button class="lm-exit" onclick="lmJumpToSimulation()">Open Simulation</button></div></div>
+      <div class="lm-topbar"><div class="lm-topbar-left"><span class="material-symbols-outlined" style="font-size:16px">medical_services</span><span id="lm-current-label">Course Introduction</span></div><div style="display:flex;gap:8px;align-items:center"><span class="lm-status"><i></i><span id="lm-status-text">Learning</span></span><button class="lm-exit" onclick="lmJumpToSimulation()">Go to Simulation</button></div></div>
 
-      <section class="lm-section active" data-lm-section="0">
+      <section class="lm-section active" data-lm-section="0"><div class="lm-callout"><span class="material-symbols-outlined">info</span><div><strong>How to use this trainer:</strong> Read each learning section and use the Continue button at the bottom. Complete the Knowledge Check to unlock the clinical simulation. The top-right “Go to Simulation” button takes you to the Knowledge Check until it has been passed. You may return to the simulation later without repeating the pretest.</div></div>
         <div class="lm-hero">
           <div class="lm-eyebrow"><span class="material-symbols-outlined">school</span>Course Introduction</div>
           <h2>Getting to the Point:<br>LAI Preparation & Administration</h2>
@@ -3059,7 +3198,7 @@ body:not(.learning-mode) .debrief-score{
 </aside>
 <section class="panel stage" id="stage">
 <canvas id="patient-canvas"></canvas>
-<div class="toolbar"><button id="view-right" class="active" onclick="setView('right')"><span class="material-symbols-outlined">view_sidebar</span>Side</button><button id="view-front" onclick="setView('front')"><span class="material-symbols-outlined">person</span>Front</button><button id="view-back" onclick="setView('back')"><span class="material-symbols-outlined">person_4</span>Back</button><button id="view-ventro" onclick="setView('ventro')"><span class="material-symbols-outlined">3d_rotation</span>Ventro</button></div>
+<div class="toolbar"><button type="button" onclick="retryCurrentPatient()" title="Restart this patient without changing the case">Retry Same Patient</button><button id="view-right" class="active" onclick="setView('right')"><span class="material-symbols-outlined">view_sidebar</span>Side</button><button id="view-front" onclick="setView('front')"><span class="material-symbols-outlined">person</span>Front</button><button id="view-back" onclick="setView('back')"><span class="material-symbols-outlined">person_4</span>Back</button><button id="view-ventro" onclick="setView('ventro')"><span class="material-symbols-outlined">3d_rotation</span>Ventro</button></div>
 <div class="stage-hud" id="stage-hud"><div class="hud-eyebrow">Active Patient</div><div class="hud-patient"><span class="material-symbols-outlined">person</span><strong id="hud-patient-name">Patient pending</strong></div><div class="hud-meta"><span id="hud-order">Chart review required</span><span class="hud-divider"></span><span id="hud-phase">Phase 1 · Verify</span></div></div>
 <div class="safety-banner" id="safety-banner"><span class="material-symbols-outlined">verified_user</span><div><strong>Clinical safety sequence</strong><span>Verify the chart before making administration decisions.</span></div></div>
 <div class="needle-feedback" id="needle-feedback">Select a site to begin.</div>
@@ -3097,7 +3236,7 @@ body:not(.learning-mode) .debrief-score{
     <div class="decision-option-grid" id="medication-popup-list"></div>
     <div class="decision-popup-feedback" id="medication-popup-feedback"></div>
     <div class="skin-popup-actions">
-      <button class="skin-popup-btn secondary" onclick="closeMedicationSelectionPopup()">Close</button>
+      <button class="skin-popup-btn secondary" onclick="closeMedicationSelectionPopup();openChartPopup()">Back to Patient Chart</button>
     </div>
   </div>
 </div>
@@ -3177,7 +3316,7 @@ body:not(.learning-mode) .debrief-score{
           <div class="popup-layer popup-subq">Subcutaneous Tissue</div>
           <div class="popup-layer popup-muscle">Muscle</div>
           <div id="popup-muscle-target" class="popup-muscle-target"></div>
-          <div class="popup-angle-hint"><strong>Angle control:</strong> the needle starts at 0°. Drag the back of the needle to rotate it. You can also use Shift + drag, the mouse wheel, Q / E, or the slider. The target is hidden, so choose the correct layer yourself.</div>
+          <div class="popup-angle-hint"><strong>Angle control:</strong> the needle starts at 0°. Drag the back of the needle to rotate it. You can also use Shift + drag, the mouse wheel, Q / E, or the slider. Move the needle TIP vertically into the intended tissue layer, then use the angle slider. The tip position (not the syringe body) determines depth.</div>
           <div id="popup-needle" class="popup-needle" aria-label="Draggable injection needle">
             <div class="needle-plunger angle-handle-back" title="Drag the back of the needle to adjust angle"></div>
             <div class="needle-barrel"></div>
@@ -3191,7 +3330,7 @@ body:not(.learning-mode) .debrief-score{
       <div class="popup-controls">
         <div class="layer-info-card">
           <strong>How to complete the injection</strong>
-          <span>Move the needle and adjust the injection angle from 0° to the correct angle/depth. Drag the back of the needle to adjust angle, or use Shift + drag, mouse wheel, Q/E, or the slider. The full muscle layer is accepted as the correct depth.</span>
+          <span>Move the needle and adjust the injection angle from 0° to the correct angle/depth. Drag the back of the needle to adjust angle, or use Shift + drag, mouse wheel, Q/E, or the slider. For IM, position the needle tip within the muscle region; for SC, position the tip in the yellow subcutaneous region. Set the angle with the slider, then select Submit Injection Attempt. A specific correction appears if the attempt needs adjustment.</span>
         </div>
 
         <div class="popup-slider-row">
@@ -3251,6 +3390,7 @@ body:not(.learning-mode) .debrief-score{
       <div class="chart-card"><strong>Allergies</strong><span id="chart-allergies">No known drug allergies</span></div>
       <div class="chart-card"><strong>Body Habitus</strong><span id="chart-body-habitus">Standard</span></div>
       <div class="chart-card"><strong>Medication Order</strong><span id="chart-medication">Pending medication order</span></div>
+      <div class="chart-card"><strong>Ordered Dose / Strength</strong><span>Verify the prescribed dose and available strength against the source order before administration; no dose is supplied by this demonstration case.</span></div>
       <div class="chart-card"><strong>Route</strong><span id="chart-route">Deep intramuscular (IM)</span></div>
       <div class="chart-card"><strong>Ordered Site</strong><span id="chart-site">Deltoid</span></div>
       <div class="chart-card"><strong>Administration Notes</strong><span id="chart-notes">Verify patient, medication, dose, route, and site before site preparation.</span></div>
@@ -3285,7 +3425,7 @@ body:not(.learning-mode) .debrief-score{
         <input class="chart-check-input" type="checkbox" data-check="route">
         <div>
           <strong>Verify route and technique</strong>
-          <span>Confirm the ordered route is deep intramuscular (IM) and that the procedure requires appropriate injection technique.</span>
+          <span>Confirm the ordered route is IM and that the procedure requires appropriate injection technique.</span>
         </div>
       </label>
 
@@ -3357,12 +3497,11 @@ const medications={
   paliperidone:{label:"INVEGA SUSTENNA® (paliperidone palmitate)",note:"Ready-to-use prefilled LAI suspension.",prepMethod:"vigorous_shaking"},
   risperidone:{label:"PERSERIS® (risperidone)",note:"Two-syringe extended-release system for subcutaneous administration.",prepMethod:"syringe_coupling"},
   haloperidol:{label:"Haloperidol Decanoate",note:"Oil-based depot solution supplied in a vial.",prepMethod:"straight_draw"},
-  semaglutide:{label:"Semaglutide",note:"Subcutaneous medication option; follow the ordered product/device instructions.",prepMethod:"sc_device"},
-  insulinGlargine:{label:"Insulin Glargine",note:"Subcutaneous medication option; follow the ordered product/device instructions.",prepMethod:"sc_device"}
+  uzedy:{label:"UZEDY® (risperidone)",note:"Extended-release subcutaneous risperidone injection; follow product-specific instructions.",prepMethod:"sc_device"}
 };
 const imMedicationPool=["aripiprazole","paliperidone","haloperidol"];
-const subcutaneousMedicationPool=["risperidone","semaglutide","insulinGlargine"];
-const subcutaneousThighMedicationPool=["semaglutide","insulinGlargine"];
+const subcutaneousMedicationPool=["risperidone","uzedy"];
+const subcutaneousThighMedicationPool=["uzedy"];
 function medicationPoolForSite(siteKey){
   if(siteKey === "subcutaneousThigh") return subcutaneousThighMedicationPool;
   if(siteKey === "subcutaneous") return subcutaneousMedicationPool;
@@ -3496,6 +3635,24 @@ function randomBodyHabitus(){
 const initialOrderedSite=randomOrderedSite();
 const initialPatient={...randomPatient(), bodyHabitus: randomBodyHabitus()};
 const state={site:"",step:1,chartReviewed:false,orderedSite:initialOrderedSite,orderedMedication:randomOrderedMedication(initialOrderedSite),selectedMedication:"",selectedPrepMethod:"",prepCompleted:false,prepStepIndex:0,prepMistakes:0,patient:initialPatient,educationFeedback:"",cleaned:false,injected:false,aftercare:false,finished:false,angle:0,needleX:50,needleY:50,dragging:false,swabX:50,swabY:50,swabDragging:false,cleanCoverage:{},popupNeedleX:54,popupNeedleY:18,popupAngle:0,popupDragging:false,popupSubmitted:false,mistakeCount:0,injectionAttempts:0,currentView:"right"};
+// Maintain the active fictional patient and step when a learner reloads the trainer.
+const LAI_SCENARIO_KEY="rwce_lai_scenario_v2";
+try{
+  const saved=JSON.parse(localStorage.getItem(LAI_SCENARIO_KEY)||"null");
+  if(saved && saved.patient && medications[saved.orderedMedication] && sites[saved.orderedSite] &&
+     medicationPoolForSite(saved.orderedSite).includes(saved.orderedMedication)){
+    const fields=["orderedSite","orderedMedication","patient","chartReviewed","selectedMedication","selectedPrepMethod","prepCompleted","prepStepIndex","site","cleaned","injected","aftercare","finished","cleanCoverage","popupNeedleX","popupNeedleY","popupAngle","currentView"];
+    fields.forEach(k=>{if(Object.prototype.hasOwnProperty.call(saved,k))state[k]=saved[k]});
+  }
+}catch(err){console.warn("Scenario restore skipped",err)}
+function saveLAIScenario(){
+  try{
+    const fields=["orderedSite","orderedMedication","patient","chartReviewed","selectedMedication","selectedPrepMethod","prepCompleted","prepStepIndex","site","cleaned","injected","aftercare","finished","cleanCoverage","popupNeedleX","popupNeedleY","popupAngle","currentView"];
+    const snapshot={};fields.forEach(k=>snapshot[k]=state[k]);
+    localStorage.setItem(LAI_SCENARIO_KEY,JSON.stringify(snapshot));
+  }catch(err){}
+}
+window.addEventListener("pagehide",saveLAIScenario);
 function assignRandomScenario(){
   const nextSite = randomOrderedSite();
   state.orderedSite = nextSite;
@@ -3505,6 +3662,7 @@ function assignRandomScenario(){
     ? randomBodyHabitus()
     : {label:"Standard IM landmarking",scAngle:90,teaching:"Use standard intramuscular landmarking for this scenario."};
   state.patient = {...patient, bodyHabitus: habitus};
+  saveLAIScenario();
 }
 let scene,camera,renderer,patient;
 function b64ToBlobUrl(b64,mime="model/gltf-binary"){const bin=atob(b64),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return URL.createObjectURL(new Blob([bytes],{type:mime}))}
@@ -3530,7 +3688,7 @@ function injectionProfile(siteKey){
     pendingFeedback:`The angle starts at 0°. Choose the depth and angle, then submit the attempt. For this subcutaneous site in the trainer, the correct target is the subcutaneous layer at about ${habitus.scAngle}°.`,
     popupIntro:`Guide the needle through the skin layers and choose the correct depth and angle yourself. For this subcutaneous site in the trainer, keep the needle in subcutaneous tissue at about ${habitus.scAngle}°. ${habitus.teaching}`,
     chartMedicationCopy:"Confirm the ordered subcutaneous medication before preparing or administering the injection.",
-    chartRouteCopy:`Confirm the ordered route is subcutaneous (SC) and that the medication should remain in subcutaneous tissue rather than the muscle layer. ${habitus.teaching}`,
+    chartRouteCopy:`Confirm the ordered route is SC and that the medication should remain in subcutaneous tissue rather than the muscle layer. ${habitus.teaching}`,
     chartNotes:`Use the ordered subcutaneous site and keep the medication in subcutaneous tissue. Body habitus guidance: ${habitus.label}; target angle ${habitus.scAngle}°.`,
     step5Copy:`Use the popup to place the needle into the subcutaneous layer at about ${habitus.scAngle}°, then submit the attempt.`,
     safetyInjectCopy:`Use the tissue-layer view to control angle and depth for a subcutaneous injection at about ${habitus.scAngle}°.`,
@@ -3548,8 +3706,8 @@ function injectionProfile(siteKey){
     pendingFeedback:"The angle starts at 0°. Choose the depth and angle, then submit the attempt. Apply your training to decide the correct technique. If the selection is incorrect, the trainer will explain why.",
     popupIntro:"Guide the needle through the skin layers and choose the correct depth and angle yourself. Apply what you have learned to complete the injection correctly.",
     chartMedicationCopy:"Confirm the ordered long-acting injectable medication and that it is intended for deep IM administration.",
-    chartRouteCopy:"Confirm the ordered route is deep intramuscular (IM) and that the procedure requires appropriate injection technique.",
-    chartNotes:"Verify patient, medication, dose, route, and site before site preparation.",
+    chartRouteCopy:"Confirm the ordered route is IM and that the procedure requires appropriate injection technique.",
+    chartNotes:"Verify patient, medication, prescribed dose/strength, route, and site. This demonstration chart does not supply an authorized dose: confirm the dose from the actual medication order and prescribing information before real-world administration.",
     step5Copy:"Use the popup to choose the injection depth and angle, then submit the attempt based on your training.",
     safetyInjectCopy:"Use the tissue-layer view to control angle and depth before submission.",
     passFeedback:"Correct. Your injection technique matched the intended intramuscular route, so the trainer will move to the next step.",
@@ -3634,7 +3792,7 @@ function renderMedicationSelectionPopup(){
     b.onclick=()=>selectMedication(key);
     list.appendChild(b);
   });
-  if(!state.educationFeedback)setDecisionPopupFeedback("medication-popup-feedback","");
+  setDecisionPopupFeedback("medication-popup-feedback","");
 }
 
 function preparationMethodKeys(){
@@ -3751,7 +3909,7 @@ function selectMedication(key){
   }
   if(key!==state.orderedMedication){
     state.mistakeCount = (state.mistakeCount || 0) + 1;
-    const message=`<strong>Medication needs correction:</strong> medication selection must match the chart order before administration. This protects against giving the wrong product and helps ensure the correct route, site, and procedure instructions are followed.`;
+    const message=`<strong>Medication needs correction:</strong> You selected ${medications[key]?.label || "a different medication"}. The patient chart orders ${orderedMedicationLabel()}. Return to the chart to verify medication, dose, route and site, then retry.`;
     setEducationFeedback(message);
     setDecisionPopupFeedback("medication-popup-feedback",message,"bad");
     toast(`${medications[key].label} does not match the medication order in the chart. Recheck the chart and try again.`);
@@ -3938,7 +4096,7 @@ function choosePrepAction(actionId){
   if(f){f.className="prep-feedback active good";f.textContent="Correct. Continue to the next preparation action.";}
 }
 function resetPreparationSequence(){
-  if(!state.selectedPrepMethod) return;
+  if(!state.selectedPrepMethod){const feedback=document.getElementById("prep-feedback");if(feedback){feedback.className="prep-feedback";feedback.textContent="";}renderPrepPopup();toast("Choose the correct preparation method to try again.");return;}
   state.prepStepIndex=0;
   state.prepCompleted=false;
   render();
@@ -3998,7 +4156,7 @@ function updatePopupNeedle(){
   needle.classList.toggle("active", !!state.cleaned && !state.injected);
   needle.style.left = `${state.popupNeedleX}%`;
   needle.style.top = `${state.popupNeedleY}%`;
-  needle.style.transform = `translate(-50%, -128px) rotate(${state.popupAngle - 90}deg)`;
+  needle.style.transform = `translate(-50%, -128px) rotate(${state.popupAngle}deg)`;
 
   angleVal.textContent = `${state.popupAngle}°`;
 
@@ -4136,6 +4294,7 @@ function completePopupInjection(){
     toast("Clean the site first.");
     return;
   }
+  if(!state.site || state.site!==state.orderedSite){toast("Choose the ordered injection site first.");openSiteSelectionPopup();return;}
 
   state.popupSubmitted = true;
   state.injectionAttempts = (state.injectionAttempts || 0) + 1;
@@ -4143,7 +4302,7 @@ function completePopupInjection(){
 
   if(!review.passed){
     updatePopupNeedle();
-    toast("Attempt needs correction. Review the feedback in the popup and adjust your technique.");
+    toast(review.feedback || "Adjust needle depth and angle, then resubmit.");
     return;
   }
 
@@ -4368,7 +4527,7 @@ function selectSite(key){
   if(!state.prepCompleted){openPrepPopup();toast("Complete medication preparation before selecting the injection site.");return}
   if(key!==state.orderedSite){
     state.mistakeCount=(state.mistakeCount||0)+1;
-    const message=siteEducationReason(key);
+    const message=siteEducationReason(key)+` <strong>Required site:</strong> ${orderedSiteLabel()}. You can retry the selection without restarting the case.`;
     setEducationFeedback(message);
     setDecisionPopupFeedback("site-popup-feedback",message,"bad");
     toast(`${sites[key].label} does not match the ordered site in the chart. Review the coaching feedback and try again.`);
@@ -4627,7 +4786,7 @@ function openDebrief(){
   popup.classList.add("active");
 }
 function closeDebrief(){const popup=document.getElementById("debrief-popup");if(popup)popup.classList.remove("active")}
-function render(){renderMedications();renderPreparationMethods();renderSites();renderStep();renderDecisionLaunchers();updateTarget();updateNeedle();updateSwabCleaning();updatePopupNeedle();renderSummary();renderEducationFeedback()}
+function render(){renderMedications();renderPreparationMethods();renderSites();renderStep();renderDecisionLaunchers();updateTarget();updateNeedle();updateSwabCleaning();updatePopupNeedle();renderSummary();renderEducationFeedback();saveLAIScenario()}
 function retryDifferentScenario(){
   closeDebrief();
   state.site="";
@@ -4664,6 +4823,9 @@ function retryDifferentScenario(){
   setTimeout(openChartPopup,260);
   toast("A different patient scenario has been loaded. Begin with chart verification.");
 }
+function retryCurrentPatient(){
+  state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.site="";state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;state.cleanCoverage={};state.popupSubmitted=false;setEducationFeedback("");closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeSkinPopup();render();openChartPopup();toast("Retrying the same patient and medication order.");
+}
 function resetTrainer(){state.site="";assignRandomScenario();state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.prepMistakes=0;state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};state.mistakeCount=0;state.injectionAttempts=0;state.popupSubmitted=false;document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeChartPopup();closeSkinPopup();setView("right");render();applyResponsiveStageHeight();setTimeout(openChartPopup,260);toast("New patient scenario loaded. Begin with chart verification.")}
 function applyResponsiveStageHeight(){
   const stage=document.getElementById("stage");
@@ -4676,7 +4838,7 @@ function applyResponsiveStageHeight(){
 }
 window.addEventListener("resize", applyResponsiveStageHeight);
 window.addEventListener("orientationchange", ()=>setTimeout(applyResponsiveStageHeight, 120));
-window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)});if(window.THREE&&window.GLTFLoader){assignRandomScenario();initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)}
+window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)});if(window.THREE&&window.GLTFLoader){initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)}
 </script>
 
 <script>
@@ -4748,7 +4910,7 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
     setTimeout(()=>{try{openChartPopup?.();}catch(e){}},250);
   };
   window.lmJumpToSimulation=function(){
-    if(lmState.quizPassed){lmGo(9);}else{lmGo(8);}
+    if(lmState.quizPassed){lmLaunchSimulation();}else{lmGo(8);}
   };
   window.openLearningModule=function(){
     document.body.classList.add('learning-mode');
@@ -4941,7 +5103,7 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
 <script id="rwce-matched-prepost">
 (()=>{
  'use strict';
- const questions=[["Before preparing a long-acting injectable (LAI) medication, what is the most important initial step?", ["Select the injection site", "Verify the patient's identity, medication order, and prescribed formulation", "Prepare the syringe and needle", "Clean the injection site"], 1], ["Why is it important to verify the specific LAI formulation before administration?", ["All LAI medications require the same preparation", "The formulation determines the required preparation, administration route, and injection technique", "All LAI medications are administered into the same muscle", "The formulation only determines the medication's storage temperature"], 1], ["Which preparation method is used for the INVEGA SUSTENNA® prefilled suspension in the injection trainer?", ["Manual reconstitution using a vial and diluent", "Mixing medication between two connected syringes", "Vigorous shaking of the prefilled suspension according to product instructions", "Drawing an oil-based solution directly from a vial"], 2], ["Which preparation technique is required for the ABILIFY MAINTENA® vial-kit formulation?", ["Reconstituting the medication with the specified diluent", "Administering the medication directly without mixing", "Using a closed-system two-syringe mixing procedure", "Shaking a prefilled suspension without adding diluent"], 0], ["Which route of administration is used for PERSERIS® (risperidone)?", ["Intramuscular", "Intravenous", "Intradermal", "Subcutaneous"], 3], ["Which factor is most important when selecting an appropriate LAI injection site?", ["The healthcare professional's preferred injection location", "The patient's dominant side", "The medication's approved administration sites and patient-specific considerations", "The injection site used most frequently at the facility"], 2], ["What is the primary purpose of proper skin preparation before an LAI injection?", ["Increase medication absorption", "Reduce the risk of introducing microorganisms during injection", "Reduce the amount of medication required", "Prevent all injection-site discomfort"], 1], ["During an intramuscular injection, what tissue should the needle reach to deliver the medication correctly?", ["Epidermis", "Dermis", "Subcutaneous tissue", "Muscle tissue"], 3], ["What is the most appropriate action immediately after using an injection needle?", ["Recap the needle before disposal", "Place the used needle on the work surface", "Dispose of the needle in an approved sharps container", "Save the needle until documentation is complete"], 2], ["Which action is essential after completing an LAI administration?", ["Document the medication, dose, administration site, route, date/time, and relevant patient response", "Document only the medication name", "Schedule the next injection without documenting the current administration", "Complete documentation only if the patient experiences an adverse reaction"], 0]];
+ const questions=[["Before preparing a long-acting injectable (LAI) medication, what is the most important initial step?", ["Select the injection site", "Verify the patient's identity, medication order, and prescribed formulation", "Prepare the syringe and needle", "Clean the injection site"], 1], ["Why is it important to verify the specific LAI formulation before administration?", ["Most LAI medications require similar preparation steps", "The formulation determines the required preparation, administration route, and injection technique", "LAI medications indicated for schizophrenia are typically administered into the same muscle", "The formulation only determines the medication's storage temperature"], 1], ["Which preparation method is used for the INVEGA SUSTENNA® prefilled suspension in the injection trainer?", ["Manual reconstitution using a vial and diluent", "Mixing medication between two connected syringes", "Vigorous shaking of the prefilled suspension according to product instructions", "Drawing an oil-based solution directly from a vial"], 2], ["Which preparation technique is required for the ABILIFY MAINTENA® vial-kit formulation?", ["Reconstituting the medication with the specified diluent", "Administering the medication directly without mixing", "Using a closed-system two-syringe mixing procedure", "Shaking a prefilled suspension without adding diluent"], 0], ["Which route of administration is used for PERSERIS® (risperidone)?", ["Intramuscular", "Intravenous", "Intradermal", "Subcutaneous"], 3], ["Which factor is most important when selecting an appropriate LAI injection site?", ["The healthcare professional's preferred injection location", "The patient's dominant side", "The medication's approved administration sites and patient-specific considerations", "The injection site used most frequently at the facility"], 2], ["What is the primary purpose of proper skin preparation before an LAI injection?", ["Increasing medication absorption", "Reducing the risk of introducing microorganisms during injection", "Reducing the amount of medication required", "Preventing injection-site discomfort"], 1], ["What needle angle is generally used for intramuscular injection when administering an appropriate LAI product?", ["15°", "30°", "45°", "90°"], 3], ["What is the most appropriate action immediately after using an injection needle?", ["Recapping the needle before disposal", "Placing the used needle on the work surface", "Disposing of the needle in an approved sharps container", "Saving the needle until documentation is complete"], 2], ["Which action is essential after completing an LAI administration?", ["Documenting the medication, dose, route, site, date/time, and patient response", "Documenting the medication and dose now, but postponing the site and route entries", "Scheduling the next dose before completing the administration record", "Completing the medication record without assessing and recording the patient response"], 0]];
  const storeKey='rwce_lai_matched_pre_post_v1';
  let results={};try{results=JSON.parse(localStorage.getItem(storeKey)||'{}')||{}}catch(e){}
  let phase=null, answers={};
@@ -4989,6 +5151,147 @@ window.addEventListener("three-ready",()=>{assignRandomScenario();initThree();re
 #rwce-assessment-save-status{position:fixed;bottom:16px;right:16px;z-index:2147483646;max-width:min(420px,calc(100vw - 32px));padding:12px 16px;border-radius:12px;background:#172b41;color:#eff6ff;border:1px solid #60a5fa;box-shadow:0 12px 28px #0007;font:600 12px/1.5 Inter,Arial,sans-serif;display:none}
 #rwce-assessment-save-status[data-state="error"]{border-color:#f87171;color:#fee2e2}
 #rwce-assessment-save-status[data-state="ok"]{border-color:#34d399;color:#d1fae5}
+
+
+/* ===== Knowledge Check readability fix ===== */
+.lm-question h3{color:#16283d!important}
+.lm-option{
+  background:#ffffff!important;
+  border:1px solid #d7e2ec!important;
+}
+.lm-option span{
+  font-size:15px!important;
+  color:#4a6178!important;
+  line-height:1.5!important;
+}
+.lm-option:hover{
+  background:#f7fbff!important;
+  border-color:#9bc4ee!important;
+}
+.lm-option input{
+  accent-color:#1d74e7!important;
+}
+.lm-option:has(input:checked){
+  background:#edf5ff!important;
+  border-color:#67a5ea!important;
+  box-shadow:0 0 0 2px rgba(29,116,231,.08) inset!important;
+}
+.lm-option:has(input:checked) span{
+  color:#153a63!important;
+  font-weight:700!important;
+}
+.lm-qfeedback{color:#2c4560!important}
+
+
+
+/* ===== Injection trainer contrast upgrade ===== */
+.side .copy,
+#step-copy,
+#needle-instructions,
+.brand-block .copy{
+  color:#dfeaf6!important;
+}
+.brand-sub,
+.phase-status,
+.simulation-badges span,
+.site-button span,
+.record-row span,
+.milestone-list>div,
+.milestone-list b,
+.milestone-list i,
+.safety-banner span,
+.coach-item small,
+.chart-progress-strip>div:first-child,
+.skin-popup-copy,
+.chart-popup-copy,
+#prep-note,
+.cleaning-meter-copy{
+  color:#c6d7e8!important;
+}
+.summary,
+#status-summary,
+.education-feedback .edu-copy,
+.coach-title,
+.coach-item strong,
+.record-row strong,
+.milestone-list>div.done,
+.popup-layer,
+.popup-angle-hint,
+.popup-readout,
+.popup-readout span,
+.layer-info-card span,
+.chart-card span,
+.chart-check-item span,
+.chart-checklist-note,
+#prep-action-copy{
+  color:#edf5fd!important;
+}
+.kicker,
+.label,
+.summary-head .kicker,
+.education-feedback .edu-title,
+.coach-chip,
+.skin-popup .kicker,
+.chart-popup .kicker{
+  color:#8ed4ff!important;
+}
+.site-button strong,
+.step-title,
+.safety-banner strong,
+.chart-popup-title,
+.skin-popup-title,
+.layer-info-card strong,
+.chart-card strong,
+.chart-check-item strong,
+#coach-title,
+#primary-label,
+#record-status,
+#phase-status-text{
+  color:#f5fbff!important;
+}
+.site-button{
+  background:rgba(255,255,255,.055)!important;
+  border-color:rgba(198,221,243,.14)!important;
+}
+.site-button.active{
+  background:rgba(43,121,255,.20)!important;
+  border-color:rgba(94,180,255,.55)!important;
+}
+.site-button.blocked{
+  background:rgba(127,29,29,.28)!important;
+}
+.summary,
+.step-card,
+.coach-card,
+.safety-banner,
+.cleaning-meter{
+  border-color:rgba(179,214,244,.20)!important;
+}
+.record-row{
+  border-bottom:1px solid rgba(255,255,255,.09)!important;
+}
+.milestone-list>div{
+  border-bottom:1px solid rgba(255,255,255,.08)!important;
+}
+.coach-item{
+  background:rgba(255,255,255,.06)!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+.chart-card,
+.chart-check-item,
+.layer-info-card,
+.popup-readout{
+  background:rgba(255,255,255,.07)!important;
+  border-color:rgba(255,255,255,.11)!important;
+}
+.decision-option span,
+.decision-option strong{
+  color:#eef6ff!important;
+}
+.prep-note{
+  color:#e9f3ff!important;
+}
+
 </style>
 <div id="rwce-assessment-save-status" role="status" aria-live="polite"></div>
 <script>
