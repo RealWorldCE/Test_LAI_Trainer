@@ -2835,6 +2835,79 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
 }
 @media(max-width:380px){.mobile-cleaning-workspace{top:255px;padding:10px}.mobile-cleaning-workspace .touch-zone{height:165px}.mobile-cleaning-workspace .touch-title{font-size:15px}}
 </style>
+
+<style id="rwce-mobile-verification-and-simulation-visibility">
+.chart-review-actions #chart-continue-button:disabled{opacity:.55;cursor:not-allowed}
+.chart-review-actions #chart-continue-button:not(:disabled){background:linear-gradient(135deg,#0871e3,#175bd0)!important;color:#fff!important}
+#rwce-mobile-details-toggle{display:none}
+@media(max-width:768px){
+  /* Six checkboxes must remain visible and a completion button reachable in scrollable mobile dialog. */
+  #chart-popup .chart-popup{max-height:calc(100dvh - 16px)!important;overflow-y:auto!important;overscroll-behavior:contain}
+  #chart-popup .chart-check-item{min-height:58px;padding:10px 12px!important;touch-action:manipulation}
+  #chart-popup .chart-check-input{width:20px;height:20px;flex:0 0 20px;accent-color:#1569dc;cursor:pointer}
+  #chart-popup .chart-review-actions{position:sticky;bottom:-16px;z-index:12;display:flex!important;flex-direction:column-reverse!important;gap:6px!important;margin:12px -15px -15px!important;padding:10px 15px calc(10px + env(safe-area-inset-bottom,0px))!important;background:#fff!important;border-top:1px solid #d3e1ef;box-shadow:0 -10px 18px rgba(10,37,74,.07)}
+  #chart-popup .chart-review-actions button{width:100%;min-height:46px!important;font-size:13px!important}
+  /* Keep the steps/necessary decision launchers but reclaim room before the 3D patient. */
+  .app{padding:5px!important;gap:6px!important}
+  .side{gap:7px!important;padding:9px!important;max-height:none!important}
+  .side .brand-block{padding:0!important}
+  .side .rwce-sim-brand{margin-bottom:0!important}
+  .side .rwce-sim-logo{max-height:28px!important;width:auto!important}
+  .side .brand-block>h1,.side .brand-block>p.copy,.side .simulation-badges{display:none!important}
+  .side .step-card{padding:10px!important}
+  .side .step-title{font-size:17px!important;margin-top:5px!important}
+  .side .step-card p.copy{font-size:12px!important;line-height:1.35!important;margin:4px 0!important}
+  .side .step-card .progress{margin-top:7px!important}
+  .side .step-card button.button{min-height:40px!important;margin-top:7px!important}
+  .side .popup-decision-card{margin:0!important;padding:7px 9px!important;min-height:0!important}
+  .side .popup-decision-row{gap:8px!important;padding:3px 0!important}
+  .side .popup-decision-row>div span{display:none!important}
+  .side .popup-decision-card .label{margin:0 0 3px!important;font-size:10px!important}
+  .side .popup-decision-launch{min-height:38px!important;padding:5px 11px!important}
+  #rwce-mobile-details-toggle{display:block;width:100%;padding:8px 10px;background:#102d53;color:#fff;font-weight:800;border:1px solid #5da8ee;border-radius:10px;font-size:12px;min-height:38px}
+  .side:not(.show-mobile-details) .decision-ledger,.side:not(.show-mobile-details) .milestone-card{display:none!important}
+  .stage{min-height:620px!important;height:620px!important;overflow:hidden!important}
+  /* Less UI covers the 3D anatomy. Verification status remains in the step card. */
+  .stage .stage-hud,.stage .safety-banner,.stage .needle-feedback{display:none!important}
+  .stage .toolbar{top:7px!important;left:7px!important;right:7px!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important}
+  .stage .toolbar button{min-height:40px!important;padding:5px 3px!important;font-size:10px!important;white-space:nowrap!important;line-height:1!important}
+  .stage .toolbar button:first-child{grid-column:1 / -1;min-height:33px!important;padding:3px!important}
+  .stage .coach-card{bottom:7px!important;left:7px!important;right:7px!important;width:auto!important;padding:9px!important}
+  .stage .coach-grid{display:none!important}
+  .stage .coach-card>.copy{font-size:12px!important;line-height:1.35!important;margin-top:4px!important}
+  .stage .coach-title{font-size:13px!important}
+  .stage .mobile-cleaning-workspace{top:97px!important;left:7px!important;right:7px!important;padding:11px!important}
+  .stage .mobile-cleaning-workspace .touch-zone{height:150px!important}
+  .stage .cleaning-meter{display:none!important}
+  .stage #swab-tool{display:none!important}
+}
+@media(max-width:380px){.stage{height:590px!important;min-height:590px!important}.stage .mobile-cleaning-workspace{top:90px!important}}
+</style>
+<style id="rwce-mobile-visual-finishing">
+@media(max-width:768px){
+ body:not(.learning-mode) .side {min-height:0!important;height:auto!important;align-self:start!important;gap:6px!important;overflow:visible!important}
+ body:not(.learning-mode) .side .brand-row{height:31px!important;max-height:31px!important;min-height:0!important;padding:0!important;margin:0!important;align-items:center!important}
+ body:not(.learning-mode) .side .rwce-sim-logo{height:28px!important;max-height:28px!important;width:200px!important;max-width:200px!important;object-fit:contain!important;object-position:left center!important}
+ body:not(.learning-mode) .side .step-card{margin:2px 0 0!important;padding:9px!important;border-radius:12px!important;min-height:0!important}
+ body:not(.learning-mode) .side .step-card p.copy{font-size:12px!important;line-height:1.3!important;max-height:44px;overflow:hidden}
+ body:not(.learning-mode) .side .step-card .button {font-size:12px!important;min-height:41px!important;margin-top:5px!important;color:#fff!important}
+ body:not(.learning-mode) .side .step-card .material-symbols-outlined {display:none!important}
+ body:not(.learning-mode) .side .step-title{font-size:17px!important;margin-top:5px!important;color:#102e55!important}
+ body:not(.learning-mode) .side .phase-status {color:#2f5a80!important}
+ body:not(.learning-mode) .side .popup-decision-card{padding:7px 9px!important;border-radius:11px!important;background:#f5faff!important;border:1px solid #dbe7f5!important}
+ body:not(.learning-mode) .side .popup-decision-card .label {color:#0f62ba!important}
+ body:not(.learning-mode) .side .popup-decision-row strong{color:#123350!important;font-size:12px!important}
+ body:not(.learning-mode) .side .popup-decision-row .popup-decision-launch{background:#125cb8!important;border-color:#125cb8!important;color:white!important;opacity:1!important;min-height:40px!important;padding:5px 8px!important;font-size:12px!important}
+ body:not(.learning-mode) .side .popup-decision-row .material-symbols-outlined{display:none!important}
+ body:not(.learning-mode) .side #rwce-mobile-details-toggle{margin:0!important}
+ body:not(.learning-mode) .side>.small-button{margin:0!important;min-height:38px!important;font-size:12px!important;background:#edf5ff!important;color:#153b62!important;border:1px solid #bfdaef!important;font-weight:800!important}
+ body:not(.learning-mode) .side>.small-button .material-symbols-outlined{display:none!important}
+ body:not(.learning-mode) .stage .toolbar .material-symbols-outlined{display:none!important}
+ body:not(.learning-mode) .stage .toolbar button{color:#f1f7ff!important;font-size:11px!important}
+ body:not(.learning-mode) .stage .coach-card .coach-title{color:#f8fbff!important}
+ body:not(.learning-mode) .stage .coach-card .copy{color:#d9e8f7!important}
+}
+</style>
 </head>
 <body class="learning-mode">
 <section id="rwce-assessment" role="dialog" aria-modal="true" aria-label="LAI pre-test and post-test" hidden><div class="rwce-assessment-shell"><div class="rwce-a-head"><div class="rwce-a-kicker">REAL WORLD CE · LAI PREPARATION & ADMINISTRATION</div><h2 id="rwce-a-title">Pre-Test</h2><p id="rwce-a-intro"></p><div class="rwce-a-stat"><span id="rwce-a-stage"></span><span id="rwce-a-count"></span></div><div class="rwce-a-track"><div id="rwce-a-progress"></div></div></div><div id="rwce-a-content"></div><div class="rwce-a-actions" id="rwce-a-actions"></div></div></section>
@@ -3248,6 +3321,7 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
   </div>
   <div class="site-list locked" id="site-list" data-lock-text="Complete medication preparation first." style="display:none"></div>
 </div>
+<button id="rwce-mobile-details-toggle" type="button" aria-expanded="false" aria-controls="status-summary milestone-list" onclick="const side=this.closest('.side');const open=side.classList.toggle('show-mobile-details');this.setAttribute('aria-expanded',open);this.textContent=open?'Hide decision record and milestones':'View decision record and milestones';">View decision record and milestones</button>
 <div class="summary decision-ledger"><div class="summary-head"><div class="kicker">Clinical Decision Record</div><span class="record-status" id="record-status">Active</span></div><div id="status-summary" class="mt-2">No site selected.</div></div>
 <div class="summary education-feedback" id="education-feedback"><div class="edu-title">Coaching Feedback</div><div class="edu-copy" id="education-feedback-copy"></div></div>
 <div class="summary milestone-card"><div class="kicker">Simulation Milestones</div><div class="milestone-list" id="milestone-list">
@@ -3553,8 +3627,9 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
       Check each verification item. When the final item is checked, the trainer will automatically continue to medication selection.
     </div>
 
-    <div class="skin-popup-actions">
+    <div class="skin-popup-actions chart-review-actions">
       <button class="skin-popup-btn secondary" onclick="closeChartPopup()">Close</button>
+      <button id="chart-continue-button" class="skin-popup-btn primary" type="button" onclick="confirmChartReview()" disabled>Verify all 6 items to continue</button>
     </div>
   </div>
 </div>
@@ -4637,21 +4712,39 @@ function bindPopupNeedleDrag(){
 }
 
 
+function updateChartChecklistProgress(){
+  const checks=[...document.querySelectorAll(".chart-check-input")];
+  const done=checks.filter(c=>c.checked).length;
+  const txt=document.getElementById("chart-progress-text");
+  const fill=document.getElementById("chart-progress-fill");
+  const button=document.getElementById("chart-continue-button");
+  if(txt) txt.textContent=`${done} / ${checks.length}`;
+  if(fill) fill.style.width=`${checks.length?(done/checks.length)*100:0}%`;
+  if(button){button.disabled=!(checks.length>0&&done===checks.length);button.textContent=button.disabled?`Verify all ${checks.length} items to continue`:'Continue to Medication Selection';}
+  return checks.length>0&&done===checks.length;
+}
 function bindEliteInteractions(){
-  if(window.__eliteBound) return; window.__eliteBound=true;
-  const updateChecklist=()=>{
-    const checks=[...document.querySelectorAll(".chart-check-input")];
-    const done=checks.filter(c=>c.checked).length;
-    const txt=document.getElementById("chart-progress-text"), fill=document.getElementById("chart-progress-fill");
-    if(txt)txt.textContent=`${done} / ${checks.length}`;
-    if(fill)fill.style.width=`${checks.length?(done/checks.length)*100:0}%`;
-    if(!state.chartReviewed && checks.length>0 && done===checks.length){
-      toast("Chart verification complete. Moving automatically to medication selection.");
-      setTimeout(()=>{ if(!state.chartReviewed) confirmChartReview(); },350);
+  if(window.__eliteBound)return;
+  window.__eliteBound=true;
+  // Bind independently of THREE, WebGL, GLTF loading, or canvas rendering.
+  document.querySelectorAll(".chart-check-input").forEach(check=>check.addEventListener("change",()=>{
+    const complete=updateChartChecklistProgress();
+    if(complete&&!state.chartReviewed&&!window.__rwceChartAdvanceQueued){
+      window.__rwceChartAdvanceQueued=true;
+      setTimeout(()=>{
+        window.__rwceChartAdvanceQueued=false;
+        if(!state.chartReviewed&&updateChartChecklistProgress())confirmChartReview();
+      },400);
     }
-  };
-  document.querySelectorAll(".chart-check-input").forEach(c=>c.addEventListener("change",updateChecklist)); updateChecklist();
-  window.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(document.getElementById("debrief-popup")?.classList.contains("active"))closeDebrief();else if(document.getElementById("prep-popup")?.classList.contains("active"))closePrepPopup();else if(document.getElementById("skin-popup")?.classList.contains("active"))closeSkinPopup();else if(document.getElementById("chart-popup")?.classList.contains("active"))closeChartPopup()});
+  }));
+  updateChartChecklistProgress();
+  window.addEventListener("keydown",e=>{
+    if(e.key!=="Escape")return;
+    if(document.getElementById("debrief-popup")?.classList.contains("active"))closeDebrief();
+    else if(document.getElementById("prep-popup")?.classList.contains("active"))closePrepPopup();
+    else if(document.getElementById("skin-popup")?.classList.contains("active"))closeSkinPopup();
+    else if(document.getElementById("chart-popup")?.classList.contains("active"))closeChartPopup();
+  });
 }
 function orderedSiteLabel(){
   return sites[state.orderedSite] ? sites[state.orderedSite].label : "Ordered site";
@@ -4688,10 +4781,13 @@ function fillChartPopup(){
   if(medCopy) medCopy.textContent = profile.chartMedicationCopy;
   if(routeCopy) routeCopy.textContent = profile.chartRouteCopy;
   if(finalCopy) finalCopy.textContent = `I have reviewed the chart and verified the patient, medication, route (${profile.routeShort}), and site before cleaning the injection area.`;
-  checks.forEach(check => check.checked = false);
-  const progressText=document.getElementById("chart-progress-text"), progressFill=document.getElementById("chart-progress-fill");
-  if(progressText) progressText.textContent=`0 / ${checks.length}`;
-  if(progressFill) progressFill.style.width="0%";
+  // Only initialize the checklist once per scenario. Asynchronous 3D loading,
+  // returning to the chart, or a phone orientation change must not erase answers.
+  if(window.__rwceChartPreparedSession!==state.reportSessionId){
+    checks.forEach(check => check.checked=false);
+    window.__rwceChartPreparedSession=state.reportSessionId;
+  }
+  updateChartChecklistProgress();
 }
 function openChartPopup(){
   const popup = document.getElementById("chart-popup");
@@ -4713,6 +4809,8 @@ function focusWorkflowSection(id, delay=240){
   },delay);
 }
 function confirmChartReview(){
+  // Guard against duplicate mobile change/click events during auto-advance.
+  if(state.chartReviewed){closeChartPopup();return;}
   const checks = [...document.querySelectorAll(".chart-check-input")];
   const allChecked = checks.length > 0 && checks.every(check => check.checked);
   if(!allChecked){
@@ -5175,6 +5273,8 @@ function applyResponsiveStageHeight(){
 }
 window.addEventListener("resize", applyResponsiveStageHeight);
 window.addEventListener("orientationchange", ()=>setTimeout(applyResponsiveStageHeight, 120));
+// Checklist must work even when the 3D/WebGL asset is unavailable on mobile.
+bindEliteInteractions();
 window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)});if(window.THREE&&window.GLTFLoader){initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)}
 </script>
 
