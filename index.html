@@ -3576,7 +3576,7 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
       <div><small>Corrected choices</small><strong id="debrief-corrections">—</strong></div>
     </div>
     <div class="debrief-note" id="debrief-note"><span class="material-symbols-outlined">lightbulb</span><span>Strong sequence. Continue practicing until verification and technique are automatic.</span></div>
-    <div class="debrief-actions">
+    <div class="debrief-actions"><button class="skin-popup-btn secondary" type="button" onclick="window.rwceRetrySimulationSave?.()" title="Retry saving this simulation to the LMS">Retry LMS Save</button>
   <button class="skin-popup-btn secondary" onclick="closeDebrief()">Close / Review Scenario</button>
   <button class="skin-popup-btn retry-scenario-btn" onclick="retryDifferentScenario()"><span class="material-symbols-outlined">shuffle</span>Try a Different Scenario</button>
   <button class="skin-popup-btn primary" onclick="openCMEEvaluation()"><span class="material-symbols-outlined">fact_check</span>Continue to CME Evaluation</button>
@@ -3739,24 +3739,78 @@ function randomBodyHabitus(){
 
 const initialOrderedSite=randomOrderedSite();
 const initialPatient={...randomPatient(), bodyHabitus: randomBodyHabitus()};
-const state={site:"",step:1,chartReviewed:false,orderedSite:initialOrderedSite,orderedMedication:randomOrderedMedication(initialOrderedSite),selectedMedication:"",selectedPrepMethod:"",prepCompleted:false,prepStepIndex:0,prepMistakes:0,patient:initialPatient,educationFeedback:"",cleaned:false,injected:false,aftercare:false,finished:false,angle:0,needleX:50,needleY:50,dragging:false,swabX:50,swabY:50,swabDragging:false,cleanCoverage:{},popupNeedleX:54,popupNeedleY:18,popupAngle:0,popupDragging:false,popupSubmitted:false,mistakeCount:0,injectionAttempts:0,currentView:"right"};
+const state={site:"",step:1,chartReviewed:false,orderedSite:initialOrderedSite,orderedMedication:randomOrderedMedication(initialOrderedSite),selectedMedication:"",selectedPrepMethod:"",prepCompleted:false,prepStepIndex:0,prepMistakes:0,patient:initialPatient,educationFeedback:"",cleaned:false,injected:false,aftercare:false,finished:false,angle:0,needleX:50,needleY:50,dragging:false,swabX:50,swabY:50,swabDragging:false,cleanCoverage:{},popupNeedleX:54,popupNeedleY:18,popupAngle:0,popupDragging:false,popupSubmitted:false,mistakeCount:0,injectionAttempts:0,currentView:"right",reportSessionId:(self.crypto?.randomUUID?.()||"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.floor(Math.random()*16);return(c==="x"?r:(r&3|8)).toString(16)})),reportEvents:[],injectionReviews:[],reportAcknowledged:false,reportSending:false,reportCompletedAt:null};
 // Maintain the active fictional patient and step when a learner reloads the trainer.
 const LAI_SCENARIO_KEY="rwce_lai_scenario_v2";
 try{
   const saved=JSON.parse(localStorage.getItem(LAI_SCENARIO_KEY)||"null");
   if(saved && saved.patient && medications[saved.orderedMedication] && sites[saved.orderedSite] &&
      medicationPoolForSite(saved.orderedSite).includes(saved.orderedMedication)){
-    const fields=["orderedSite","orderedMedication","patient","chartReviewed","selectedMedication","selectedPrepMethod","prepCompleted","prepStepIndex","site","cleaned","injected","aftercare","finished","cleanCoverage","popupNeedleX","popupNeedleY","popupAngle","currentView"];
+    const fields=["orderedSite","orderedMedication","patient","chartReviewed","selectedMedication","selectedPrepMethod","prepCompleted","prepStepIndex","site","cleaned","injected","aftercare","finished","cleanCoverage","popupNeedleX","popupNeedleY","popupAngle","currentView","reportSessionId","reportEvents","injectionReviews","reportAcknowledged","reportCompletedAt"];
     fields.forEach(k=>{if(Object.prototype.hasOwnProperty.call(saved,k))state[k]=saved[k]});
   }
 }catch(err){console.warn("Scenario restore skipped",err)}
 function saveLAIScenario(){
   try{
-    const fields=["orderedSite","orderedMedication","patient","chartReviewed","selectedMedication","selectedPrepMethod","prepCompleted","prepStepIndex","site","cleaned","injected","aftercare","finished","cleanCoverage","popupNeedleX","popupNeedleY","popupAngle","currentView"];
+    const fields=["orderedSite","orderedMedication","patient","chartReviewed","selectedMedication","selectedPrepMethod","prepCompleted","prepStepIndex","site","cleaned","injected","aftercare","finished","cleanCoverage","popupNeedleX","popupNeedleY","popupAngle","currentView","reportSessionId","reportEvents","injectionReviews","reportAcknowledged","reportCompletedAt"];
     const snapshot={};fields.forEach(k=>snapshot[k]=state[k]);
     localStorage.setItem(LAI_SCENARIO_KEY,JSON.stringify(snapshot));
   }catch(err){}
 }
+
+// Auditable, learner-linked scenario data is delivered through the LMS iframe.
+// The trainer never writes to Supabase directly or accepts a learner user_id from the browser.
+function rwceAuditStep(action, values={}){
+  if(!Array.isArray(state.reportEvents))state.reportEvents=[];
+  state.reportEvents.push({at:new Date().toISOString(),step:state.step,action,...values});
+  if(state.reportEvents.length>150)state.reportEvents=state.reportEvents.slice(-150);
+  saveLAIScenario();
+}
+function rwceResetAudit(){
+  state.reportSessionId=self.crypto?.randomUUID?.()||"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.floor(Math.random()*16);return(c==="x"?r:(r&3|8)).toString(16)});
+  state.reportEvents=[];state.injectionReviews=[];state.reportAcknowledged=false;state.reportSending=false;state.reportCompletedAt=null;
+}
+function rwceSimulationPayload(){
+  const p=currentInjectionProfile();
+  const tries=Math.max(0,Number(state.injectionAttempts)||0);
+  const corrections=Math.max(0,Number(state.mistakeCount)||0);
+  const reviews=Array.isArray(state.injectionReviews)?state.injectionReviews:[];
+  return {
+    schema_version:1,scenario_id:state.reportSessionId,course_key:'lai-injection-trainer',
+    activity_title:'Getting to the Point: LAI Preparation & Administration',
+    completed:!!state.finished,completed_at:state.finished?(state.reportCompletedAt||new Date().toISOString()):null,
+    // Fictional training patient: do not transmit DOB or MRN.
+    patient_case:String(state.patient?.name||'Training patient'),
+    medication:{ordered_key:state.orderedMedication,ordered_label:orderedMedicationLabel(),selected_key:state.selectedMedication||null,route:p.routeShort||null},
+    preparation:{selected_method:state.selectedPrepMethod||null,expected_method:orderedPreparationMethod(),completed:!!state.prepCompleted,errors:Math.max(0,Number(state.prepMistakes)||0)},
+    site:{ordered_key:state.orderedSite,ordered_label:orderedSiteLabel(),selected_key:state.site||null,selected_label:currentSite()?.label||null},
+    cleaning:{completed:!!state.cleaned,coverage_percent:Math.round(cleaningPercent())},
+    injection:{attempts:tries,first_attempt_success:!!state.injected&&tries===1,passed:!!state.injected,score_percent:state.injected?Math.max(0,100-Math.max(0,tries-1)*10):null,angle_deg:Number(state.popupAngle),target_angle_deg:Number(p.targetAngle),tip_depth_percent:Number(state.popupNeedleY),actual_layer:popupLayerName(),expected_layer:p.expectedLayer,reviews:reviews.slice(-50)},
+    clinical:{corrections,decision_score_percent:Math.max(0,100-corrections*7)},
+    milestones:{chart_verified:!!state.chartReviewed,medication_matched:!!state.selectedMedication,preparation_completed:!!state.prepCompleted,site_selected:!!state.site,site_cleaned:!!state.cleaned,injected:!!state.injected,aftercare_documented:!!state.aftercare},
+    event_log:(state.reportEvents||[]).slice(-150),source_url:window.location.href,
+    submitted_at:new Date().toISOString()
+  };
+}
+function sendLAISimulationReport(force=false){
+  if(!state.reportSessionId || (!state.injectionAttempts && !state.finished))return;
+  if(state.reportAcknowledged&&!force)return;
+  if(!force && state.reportSending)return;
+  if(window.parent===window){if(state.finished)console.info('LAI simulation stored locally; launch inside the LMS to save it to Supabase.');return;}
+  state.reportSending=true;
+  window.rwceAssessmentSavePending?.('simulation');
+  const payload=rwceSimulationPayload();
+  window.parent.postMessage({type:'rwce-lai-simulation',phase:state.finished?'completed':'in_progress',payload},'*');
+  setTimeout(()=>{if(state.reportSending){state.reportSending=false;console.warn('LAI simulation save acknowledgement not received; retry from debrief or use the LMS viewer.')}},10000);
+}
+window.addEventListener('message',event=>{
+  if(event.source!==window.parent || event.data?.type!=='rwce-assessment-storage' || event.data?.phase!=='simulation')return;
+  if(event.data?.scenario_id!==state.reportSessionId)return;
+  state.reportSending=false;
+  if(event.data.ok && state.finished && event.data.completed){state.reportAcknowledged=true;saveLAIScenario()}
+});
+window.rwceRetrySimulationSave=()=>sendLAISimulationReport(true);
+
 window.addEventListener("pagehide",saveLAIScenario);
 function assignRandomScenario(){
   const nextSite = randomOrderedSite();
@@ -4014,12 +4068,14 @@ function selectMedication(key){
   }
   if(key!==state.orderedMedication){
     state.mistakeCount = (state.mistakeCount || 0) + 1;
+    rwceAuditStep("medication_selection",{selected:key,expected:state.orderedMedication,correct:false});
     const message=`<strong>Medication needs correction:</strong> You selected ${medications[key]?.label || "a different medication"}. The patient chart orders ${orderedMedicationLabel()}. Return to the chart to verify medication, dose, route and site, then retry.`;
     setEducationFeedback(message);
     setDecisionPopupFeedback("medication-popup-feedback",message,"bad");
     toast(`${medications[key].label} does not match the medication order in the chart. Recheck the chart and try again.`);
     return;
   }
+  rwceAuditStep("medication_selection",{selected:key,expected:state.orderedMedication,correct:true});
   state.selectedMedication=key;
   state.selectedPrepMethod="";
   state.prepCompleted=false;
@@ -4067,6 +4123,7 @@ function selectPreparationMethod(key){
   if(key!==correct){
     state.mistakeCount=(state.mistakeCount||0)+1;
     state.prepMistakes=(state.prepMistakes||0)+1;
+    rwceAuditStep("preparation_method",{selected:key,expected:correct,correct:false});
     const message=preparationMethodWhyWrong(key);
     setEducationFeedback(message);
     const feedback=document.getElementById("prep-feedback");
@@ -4074,6 +4131,7 @@ function selectPreparationMethod(key){
     toast("That preparation method does not match the ordered formulation. Review the coaching feedback and try again.");
     return;
   }
+  rwceAuditStep("preparation_method",{selected:key,expected:correct,correct:true});
   state.selectedPrepMethod=key;
   state.prepStepIndex=0;
   setEducationFeedback("");
@@ -4175,11 +4233,13 @@ function choosePrepAction(actionId){
   if(actionId!==expected.id){
     state.mistakeCount=(state.mistakeCount||0)+1;
     state.prepMistakes=(state.prepMistakes||0)+1;
+    rwceAuditStep("preparation_action",{selected:actionId,expected:expected.id,correct:false,sequence_index:state.prepStepIndex});
     const wrong=[...seq.distractors,...seq.steps].find(x=>x.id===actionId);
     if(feedback){feedback.className="prep-feedback active bad";feedback.textContent=`Not yet. ${wrong?.detail || "That action does not belong at this point in the preparation sequence."} Reassess the formulation and choose the next appropriate step.`;}
     toast("Preparation sequence needs correction. Review the explanation and try again.");
     return;
   }
+  rwceAuditStep("preparation_action",{selected:actionId,expected:expected.id,correct:true,sequence_index:state.prepStepIndex});
   state.prepStepIndex+=1;
   if(state.prepStepIndex>=seq.steps.length){
     state.prepCompleted=true;
@@ -4436,6 +4496,14 @@ function completePopupInjection(){
   state.popupSubmitted = true;
   state.injectionAttempts = (state.injectionAttempts || 0) + 1;
   const review = popupAttemptReview();
+  const injectionReview={number:state.injectionAttempts,at:new Date().toISOString(),passed:!!review.passed,
+    angle_deg:Number(state.popupAngle),target_angle_deg:Number(currentInjectionProfile().targetAngle),
+    tip_depth_percent:Number(state.popupNeedleY),layer:popupLayerName(),expected_layer:currentInjectionProfile().expectedLayer,
+    feedback:String(review.feedback||'').slice(0,1600)};
+  if(!Array.isArray(state.injectionReviews))state.injectionReviews=[];
+  state.injectionReviews.push(injectionReview);
+  rwceAuditStep("injection_attempt",injectionReview);
+  sendLAISimulationReport(true);
 
   if(!review.passed){
     updatePopupNeedle();
@@ -4652,6 +4720,7 @@ function confirmChartReview(){
     return;
   }
   state.chartReviewed = true;
+  rwceAuditStep("chart_verification",{correct:true,checklist_items:checks.length});
   closeChartPopup();
   render();
   toast("Patient chart checklist completed. Opening medication selection.");
@@ -4664,6 +4733,7 @@ function selectSite(key){
   if(!state.prepCompleted){openPrepPopup();toast("Complete medication preparation before selecting the injection site.");return}
   if(key!==state.orderedSite){
     state.mistakeCount=(state.mistakeCount||0)+1;
+    rwceAuditStep("site_selection",{selected:key,expected:state.orderedSite,correct:false});
     const message=siteEducationReason(key)+` <strong>Required site:</strong> ${orderedSiteLabel()}. You can retry the selection without restarting the case.`;
     setEducationFeedback(message);
     setDecisionPopupFeedback("site-popup-feedback",message,"bad");
@@ -4671,6 +4741,7 @@ function selectSite(key){
     return;
   }
   setEducationFeedback("");
+  rwceAuditStep("site_selection",{selected:key,expected:state.orderedSite,correct:true});
   state.site=key;
   state.cleaned=false;
   state.injected=false;
@@ -4856,6 +4927,7 @@ function bindMobileTouchCleaning(){
     updateMobileCleaningWorkspace();
     if(cleaningPercent()>=100 && !state.cleaned){
       state.cleaned=true;
+      rwceAuditStep("site_cleaning",{correct:true,coverage_percent:100});
       state.swabDragging=false;
       setEducationFeedback("");
       render();
@@ -4994,7 +5066,9 @@ function autoCompleteAftercare(){
   if(state.finished) return;
   state.aftercare=true;
   state.finished=true;
+  rwceAuditStep("scenario_completed",{injection_attempts:state.injectionAttempts,corrections:state.mistakeCount});
   setEducationFeedback("");
+  sendLAISimulationReport(true);
   render();
   toast("Scenario complete. Opening final debrief.");
   setTimeout(openDebrief,650);
@@ -5042,6 +5116,7 @@ function closeDebrief(){const popup=document.getElementById("debrief-popup");if(
 function render(){renderMedications();renderPreparationMethods();renderSites();renderStep();renderDecisionLaunchers();updateTarget();updateNeedle();updateSwabCleaning();updateMobileCleaningWorkspace();updatePopupNeedle();renderSummary();renderEducationFeedback();saveLAIScenario()}
 function retryDifferentScenario(){
   closeDebrief();
+  rwceResetAudit();
   state.site="";
   assignRandomScenario();
   state.selectedMedication="";
@@ -5078,6 +5153,7 @@ function retryDifferentScenario(){
   toast("A different patient scenario has been loaded. Begin with chart verification.");
 }
 function retryCurrentPatient(){
+  rwceResetAudit();
   state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.prepMistakes=0;
   state.site="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;
   state.cleanCoverage={};state.mistakeCount=0;state.injectionAttempts=0;state.popupSubmitted=false;
@@ -5087,7 +5163,7 @@ function retryCurrentPatient(){
   setEducationFeedback("");closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeSkinPopup();
   render();openChartPopup();toast("Retrying the same patient and medication order. Scores and attempts have been reset.");
 }
-function resetTrainer(){state.site="";assignRandomScenario();state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.prepMistakes=0;state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};state.mistakeCount=0;state.injectionAttempts=0;state.popupSubmitted=false;document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeChartPopup();closeSkinPopup();setView("right");render();applyResponsiveStageHeight();setTimeout(openChartPopup,260);toast("New patient scenario loaded. Begin with chart verification.")}
+function resetTrainer(){rwceResetAudit();state.site="";assignRandomScenario();state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.prepMistakes=0;state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};state.mistakeCount=0;state.injectionAttempts=0;state.popupSubmitted=false;document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeChartPopup();closeSkinPopup();setView("right");render();applyResponsiveStageHeight();setTimeout(openChartPopup,260);toast("New patient scenario loaded. Begin with chart verification.")}
 function applyResponsiveStageHeight(){
   const stage=document.getElementById("stage");
   if(!stage) return;
@@ -5312,7 +5388,9 @@ window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveS
         aftercare_completed: Boolean(state.aftercare),
         mistakes: Number(state.mistakeCount || 0),
         preparation_mistakes: Number(state.prepMistakes || 0),
-        injection_attempts: Number(state.injectionAttempts || 0)
+        injection_attempts: Number(state.injectionAttempts || 0),
+        scenario_id: state.reportSessionId,
+        injection_reviews: (state.injectionReviews||[]).slice(-50)
       };
     } catch (error) {
       return {};
