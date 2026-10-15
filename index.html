@@ -3390,6 +3390,7 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
     </div>
 
     <div class="skin-popup-grid">
+      <div class="popup-visual-column">
       <div class="popup-injection-stage" id="popup-injection-stage">
         <div class="popup-injection-layers">
           <div class="popup-layer popup-epidermis">Epidermis</div>
@@ -3397,7 +3398,6 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
           <div class="popup-layer popup-subq">Subcutaneous Tissue</div>
           <div class="popup-layer popup-muscle">Muscle</div>
           <div id="popup-muscle-target" class="popup-muscle-target"></div>
-          <div class="popup-angle-hint"><strong>Angle control:</strong> the needle starts at 0°. Drag the back of the needle to rotate it. You can also use Shift + drag, the mouse wheel, Q / E, or the slider. On a phone, use the Tip Depth and Angle sliders. On desktop, you may drag the needle or use the sliders. The tip position (not the syringe body) determines depth.</div>
           <div id="popup-needle" class="popup-needle" aria-label="Draggable injection needle">
             <div class="needle-plunger angle-handle-back" title="Drag the back of the needle to adjust angle"></div>
             <div class="needle-barrel"></div>
@@ -3406,6 +3406,22 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
             <div class="needle-tip"></div>
           </div>
         </div>
+      </div>
+      <div class="popup-angle-guide" id="popup-angle-guide" role="img" aria-label="Selected needle angle: 0 degrees measured from horizontal">
+        <div class="popup-angle-guide-label">
+          <strong>Needle angle guide</strong>
+          <span>Measured from the horizontal line</span>
+          <b id="popup-angle-guide-value">0°</b>
+        </div>
+        <svg viewBox="0 0 190 110" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <text x="90" y="13" class="popup-guide-zero-label">0° reference</text>
+          <line x1="44" y1="26" x2="144" y2="26" class="popup-guide-baseline"/>
+          <path id="popup-angle-guide-arc" d="" class="popup-guide-arc" />
+          <line id="popup-angle-guide-ray" x1="44" y1="26" x2="121" y2="26" class="popup-guide-ray"/>
+          <circle cx="44" cy="26" r="4" class="popup-guide-pivot"/>
+        </svg>
+      </div>
+      <div class="popup-angle-hint"><strong>Angle control:</strong> the needle starts on its side at 0° so the angle is easier to see. Drag the back of the needle to rotate it. You can also use Shift + drag, the mouse wheel, Q / E, or the slider. On a phone, use the Tip Depth and Angle sliders. On desktop, you may drag the needle or use the sliders. The tip position (not the syringe body) determines depth.</div>
       </div>
 
       <div class="popup-controls">
@@ -4232,6 +4248,26 @@ function popupDepthStatus(){
   if(y <= 90) return "IM depth";
   return "Too deep";
 }
+function updatePopupAngleGuide(){
+  const ray=document.getElementById("popup-angle-guide-ray");
+  const arc=document.getElementById("popup-angle-guide-arc");
+  const guide=document.getElementById("popup-angle-guide");
+  const value=document.getElementById("popup-angle-guide-value");
+  if(!ray || !arc || !guide || !value) return;
+  const deg=Math.max(0,Math.min(110,Number(state.popupAngle)||0));
+  const rad=deg*Math.PI/180;
+  const x=44, y=26;
+  const dx=Math.cos(rad), dy=Math.sin(rad);
+  ray.setAttribute("x2",(x+77*dx).toFixed(1));
+  ray.setAttribute("y2",(y+77*dy).toFixed(1));
+  if(deg>0){
+    const r=26;
+    arc.setAttribute("d",`M ${(x+r).toFixed(1)} ${y} A ${r} ${r} 0 0 1 ${(x+r*dx).toFixed(1)} ${(y+r*dy).toFixed(1)}`);
+  }else{arc.setAttribute("d","");}
+  value.textContent=`${Math.round(deg)}°`;
+  guide.setAttribute("aria-label",`Selected needle angle: ${Math.round(deg)} degrees measured from horizontal`);
+}
+
 function updatePopupNeedle(){
   const needle = document.getElementById("popup-needle");
   const angleVal = document.getElementById("popup-angle-value");
@@ -4245,9 +4281,10 @@ function updatePopupNeedle(){
   needle.classList.toggle("active", !!state.cleaned && !state.injected);
   needle.style.left = `${state.popupNeedleX}%`;
   needle.style.top = `${state.popupNeedleY}%`;
-  needle.style.transform = `translate(-50%, -128px) rotate(${state.popupAngle}deg)`;
+  needle.style.transform = `translate(-50%, -128px) rotate(${state.popupAngle-90}deg)`;
 
   angleVal.textContent = `${state.popupAngle}°`;
+  updatePopupAngleGuide();
   const depthSlider=document.getElementById("popup-depth-slider");
   if(depthSlider)depthSlider.value=state.popupNeedleY;
   const depthValue=document.getElementById("popup-depth-value");
@@ -5828,6 +5865,76 @@ body:not(.learning-mode) .debrief-card .debrief-note{
   body:not(.learning-mode) #chart-popup .chart-check-item strong{font-size:14px!important;}
 }
 
+
+/* Injection close-up: keep angle help below the anatomical model, not on top of it. */
+#skin-popup .popup-visual-column {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-self:end;
+  min-width:0;
+}
+#skin-popup .popup-visual-column .popup-injection-stage {
+  width:100%;
+  flex:0 0 auto;
+}
+body #skin-popup .popup-visual-column .popup-angle-hint {
+  display:block!important;
+  position:static!important;
+  inset:auto!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  box-sizing:border-box;
+  border-radius:13px!important;
+  background:#eff6ff!important;
+  border:1px solid #c9def5!important;
+  color:#193653!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  pointer-events:auto!important;
+}
+body:not(.learning-mode) #skin-popup .popup-visual-column .popup-angle-hint strong {
+  color:#124d94!important;
+}
+@media(max-width:820px) {
+  #skin-popup .popup-visual-column {gap:10px;align-self:stretch;}
+  body #skin-popup .popup-visual-column .popup-angle-hint {
+    font-size:13px!important;
+    padding:12px!important;
+  }
+}
+
+/* Needle angle visual guide: located below the anatomy so it never blocks the needle. */
+#skin-popup .popup-angle-guide{
+  box-sizing:border-box; width:100%; min-width:0; display:flex; align-items:center;
+  justify-content:space-between; gap:10px; padding:8px 12px;
+  background:#f7fbff; border:1px solid #c9def5; border-radius:13px;
+  color:#17365c; pointer-events:none;
+}
+#skin-popup .popup-angle-guide-label{display:flex; flex-direction:column; gap:4px; min-width:0;}
+#skin-popup .popup-angle-guide-label strong{color:#174f91!important;font-size:13px;line-height:1.2;font-weight:850;}
+#skin-popup .popup-angle-guide-label span{color:#35516e!important;font-size:11px;line-height:1.35;}
+#skin-popup .popup-angle-guide-label b{color:#0e458b!important;font-size:21px;line-height:1.12;font-weight:900;}
+#skin-popup .popup-angle-guide svg{display:block;width:165px;max-width:50%;height:92px;flex:0 0 auto;overflow:visible;}
+#skin-popup .popup-guide-zero-label{fill:#475f79;font-size:12px;font-weight:800;}
+#skin-popup .popup-guide-baseline{stroke:#7c97b6;stroke-width:2.5;stroke-dasharray:5 5;stroke-linecap:round;}
+#skin-popup .popup-guide-ray{stroke:#136bc2;stroke-width:4;stroke-linecap:round;}
+#skin-popup .popup-guide-arc{fill:none;stroke:#1293db;stroke-width:3;stroke-linecap:round;}
+#skin-popup .popup-guide-pivot{fill:#135fae;stroke:#fff;stroke-width:1.5;}
+@media(max-width:480px){
+  #skin-popup .popup-angle-guide{padding:8px 9px;gap:4px;}
+  #skin-popup .popup-angle-guide-label strong{font-size:12px;}
+  #skin-popup .popup-angle-guide-label span{font-size:10px;}
+  #skin-popup .popup-angle-guide svg{width:138px;height:82px;}
+}
 </style>
 <script>
 // Touch controls do not depend on the optional 3D model finishing download.
