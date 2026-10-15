@@ -2908,22 +2908,6 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
  body:not(.learning-mode) .stage .coach-card .copy{color:#d9e8f7!important}
 }
 </style>
-
-<style id="rwce-mobile-direct-cleaning-override">
-@media(max-width:768px){
-  .stage .mobile-cleaning-workspace,
-  .stage.touch-cleaning-active .mobile-cleaning-workspace{display:none!important}
-  .stage.touch-cleaning-active .cleaning-meter,
-  .stage .cleaning-meter.active{display:block!important}
-  .stage.touch-cleaning-active #swab-tool.active,
-  .stage #swab-tool.active{display:block!important}
-  .stage .cleaning-meter{left:8px!important;right:8px!important;bottom:84px!important;width:auto!important;transform:none!important;padding:10px 12px!important}
-  .stage #swab-tool{display:block!important;width:92px!important;height:42px!important;filter:drop-shadow(0 10px 16px rgba(2,6,23,.44))!important}
-  .stage #swab-tool .swab-pad{top:5px!important;width:40px!important;height:28px!important;border-radius:11px!important}
-  .stage #swab-tool .swab-handle{left:33px!important;top:16px!important;width:54px!important;height:7px!important}
-}
-</style>
-
 </head>
 <body class="learning-mode">
 <section id="rwce-assessment" role="dialog" aria-modal="true" aria-label="LAI pre-test and post-test" hidden><div class="rwce-assessment-shell"><div class="rwce-a-head"><div class="rwce-a-kicker">REAL WORLD CE · LAI PREPARATION & ADMINISTRATION</div><h2 id="rwce-a-title">Pre-Test</h2><p id="rwce-a-intro"></p><div class="rwce-a-stat"><span id="rwce-a-stage"></span><span id="rwce-a-count"></span></div><div class="rwce-a-track"><div id="rwce-a-progress"></div></div></div><div id="rwce-a-content"></div><div class="rwce-a-actions" id="rwce-a-actions"></div></div></section>
@@ -3270,7 +3254,7 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
       </section>
 
       <section class="lm-section" data-lm-section="8">
-        <div class="lm-eyebrow"><span class="material-symbols-outlined">quiz</span>Knowledge Check</div><h2>Apply the workflow before simulation</h2><p class="lm-lead">Answer all six questions. The module automatically scores the check when the final question is answered. Five of six correct (83%) unlocks the clinical simulation.</p>
+        <div class="lm-eyebrow"><span class="material-symbols-outlined">quiz</span>Knowledge Check</div><h2>Apply the workflow before simulation</h2><p class="lm-lead">Answer all six questions. The module scores the check when all six questions are answered. Five of six correct (83%) unlocks the clinical simulation. You can review your answers and retake the check, or continue when you are ready.</p>
         <div class="lm-check-grid" id="lm-check-grid">
           <div class="lm-question" data-q="0" data-answer="b"><div class="lm-qhead"><span class="lm-qnum">1</span><h3>Before preparing an LAI, what is the most important first action?</h3></div><div class="lm-options"><label class="lm-option"><input type="radio" name="lmq0" value="a" onchange="lmAnswer(0,this.value)"><span>Choose the largest available needle so the product will flow easily.</span></label><label class="lm-option"><input type="radio" name="lmq0" value="b" onchange="lmAnswer(0,this.value)"><span>Verify the patient, exact product/formulation, dose, route, site, timing, and product integrity.</span></label><label class="lm-option"><input type="radio" name="lmq0" value="c" onchange="lmAnswer(0,this.value)"><span>Open the package and determine the route from the components inside.</span></label></div><div class="lm-qfeedback">Preparation starts with verification. The exact formulation controls the preparation and administration pathway.</div></div>
           <div class="lm-question" data-q="1" data-answer="a"><div class="lm-qhead"><span class="lm-qnum">2</span><h3>Which preparation method matches the trainer's INVEGA SUSTENNA example?</h3></div><div class="lm-options"><label class="lm-option"><input type="radio" name="lmq1" value="a" onchange="lmAnswer(1,this.value)"><span>Vigorously shake the ready-to-use prefilled suspension according to product instructions.</span></label><label class="lm-option"><input type="radio" name="lmq1" value="b" onchange="lmAnswer(1,this.value)"><span>Add sterile diluent to a powder vial and withdraw the reconstituted medication.</span></label><label class="lm-option"><input type="radio" name="lmq1" value="c" onchange="lmAnswer(1,this.value)"><span>Connect a powder syringe and liquid syringe for 60 total cycles.</span></label></div><div class="lm-qfeedback">INVEGA SUSTENNA is supplied as a prefilled suspension; the trainer uses the vigorous-shaking pathway.</div></div>
@@ -3279,7 +3263,7 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
           <div class="lm-question" data-q="4" data-answer="c"><div class="lm-qhead"><span class="lm-qnum">5</span><h3>How should the injection site be selected?</h3></div><div class="lm-options"><label class="lm-option"><input type="radio" name="lmq4" value="a" onchange="lmAnswer(4,this.value)"><span>Use the same preferred site for every LAI.</span></label><label class="lm-option"><input type="radio" name="lmq4" value="b" onchange="lmAnswer(4,this.value)"><span>Choose whichever site is easiest to access after the medication is prepared.</span></label><label class="lm-option"><input type="radio" name="lmq4" value="c" onchange="lmAnswer(4,this.value)"><span>Use a site permitted for the exact product and route, taking patient factors and equipment requirements into account.</span></label></div><div class="lm-qfeedback">Route and site are product-specific. Patient weight/body habitus and product/device requirements can also affect equipment choice.</div></div>
           <div class="lm-question" data-q="5" data-answer="a"><div class="lm-qhead"><span class="lm-qnum">6</span><h3>Which action completes the safe administration workflow?</h3></div><div class="lm-options"><label class="lm-option"><input type="radio" name="lmq5" value="a" onchange="lmAnswer(5,this.value)"><span>Assess the patient/site, dispose of sharps safely, document the administration, and confirm follow-up.</span></label><label class="lm-option"><input type="radio" name="lmq5" value="b" onchange="lmAnswer(5,this.value)"><span>Return the used needle to the tray until documentation is finished.</span></label><label class="lm-option"><input type="radio" name="lmq5" value="c" onchange="lmAnswer(5,this.value)"><span>End the procedure as soon as the medication has been injected.</span></label></div><div class="lm-qfeedback">The workflow closes with patient assessment, immediate sharps safety, documentation, education, and the next-step plan.</div></div>
         </div>
-        <div class="lm-scorebox" id="lm-scorebox"><div><strong id="lm-score">0%</strong><span id="lm-score-copy">Complete all questions to continue.</span></div><button class="lm-btn" id="lm-retry-btn" onclick="lmRetryQuiz()" style="display:none"><span class="material-symbols-outlined">refresh</span>Retry</button></div>
+        <div class="lm-scorebox" id="lm-scorebox"><div><strong id="lm-score">0%</strong><span id="lm-score-copy">Complete all questions to continue.</span></div><button class="lm-btn" id="lm-retry-btn" onclick="lmRetryQuiz()" style="display:none"><span class="material-symbols-outlined">refresh</span>Retake Knowledge Check</button></div>
         <div class="lm-footer-nav"><button class="lm-btn" onclick="lmBack()"><span class="material-symbols-outlined">arrow_back</span>Back</button><button class="lm-btn primary" id="lm-quiz-next" onclick="lmNext()" disabled>Clinical Simulation<span class="material-symbols-outlined">arrow_forward</span></button></div>
       </section>
 
@@ -3305,7 +3289,14 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
 </div>
 
 <div class="app">
-<aside class="panel side">
+<aside class="panel side" id="rwce-sim-drawer" aria-label="Injection trainer controls">
+  <div class="rwce-mobile-drawer-heading"><strong>Trainer Controls</strong><button type="button" onclick="rwceMobileCloseMenu()" aria-label="Close trainer controls"><span aria-hidden="true">×</span></button></div>
+  <div class="rwce-mobile-view-picker"><strong>Patient camera view</strong><div class="rwce-mobile-view-buttons">
+    <button type="button" data-patient-view="right" onclick="setView('right');rwceMobileCloseMenu()">Side</button>
+    <button type="button" data-patient-view="front" onclick="setView('front');rwceMobileCloseMenu()">Front</button>
+    <button type="button" data-patient-view="back" onclick="setView('back');rwceMobileCloseMenu()">Back</button>
+    <button type="button" data-patient-view="ventro" onclick="setView('ventro');rwceMobileCloseMenu()">Ventro</button>
+  </div><button type="button" class="rwce-retry-mobile" onclick="retryCurrentPatient()">Retry Same Patient</button></div>
 <div class="brand-block">
   <div class="brand-row rwce-sim-brand"><img class="rwce-sim-logo" src="data:image/png;base64,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" alt="Real World CE"></div>
   <h1>IM / LAI Injection Trainer</h1>
@@ -3353,7 +3344,11 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
 <button class="small-button" onclick="resetTrainer()"><span class="material-symbols-outlined">restart_alt</span>Reset</button>
 <button class="small-button" onclick="openLearningModule()"><span class="material-symbols-outlined">school</span>Learning Module</button>
 </aside>
+<button id="rwce-mobile-menu-backdrop" type="button" aria-label="Close trainer controls" onclick="rwceMobileCloseMenu()"></button>
 <section class="panel stage" id="stage">
+<div class="rwce-mobile-model-loading" id="rwce-mobile-model-loading" role="status" aria-live="polite">Loading 3D patient view…</div>
+<div class="rwce-stage-topbar"><button type="button" id="rwce-mobile-menu-button" aria-controls="rwce-sim-drawer" aria-expanded="false" onclick="rwceMobileToggleMenu()"><span aria-hidden="true" class="rwce-menu-glyph">☰</span> Menu</button><div class="rwce-stage-step" id="rwce-stage-step">Step 1 of 8 · Review patient chart</div></div>
+<div class="rwce-mobile-action-dock"><div class="rwce-dock-info"><small>Next action</small><strong id="rwce-dock-title">Review patient chart</strong></div><button type="button" id="rwce-dock-button" onclick="rwceMobileContinue()">Review Chart</button></div>
 <canvas id="patient-canvas"></canvas>
 <div class="toolbar"><button type="button" onclick="retryCurrentPatient()" title="Restart this patient without changing the case">Retry Same Patient</button><button id="view-right" class="active" onclick="setView('right')"><span class="material-symbols-outlined">view_sidebar</span>Side</button><button id="view-front" onclick="setView('front')"><span class="material-symbols-outlined">person</span>Front</button><button id="view-back" onclick="setView('back')"><span class="material-symbols-outlined">person_4</span>Back</button><button id="view-ventro" onclick="setView('ventro')"><span class="material-symbols-outlined">3d_rotation</span>Ventro</button></div>
 <div class="stage-hud" id="stage-hud"><div class="hud-eyebrow">Active Patient</div><div class="hud-patient"><span class="material-symbols-outlined">person</span><strong id="hud-patient-name">Patient pending</strong></div><div class="hud-meta"><span id="hud-order">Chart review required</span><span class="hud-divider"></span><span id="hud-phase">Phase 1 · Verify</span></div></div>
@@ -3931,6 +3926,7 @@ function setView(view){
     else{patient.rotation.y=Math.PI;camera.position.set(0,0,3.05)}
   }
   updateTarget();
+  window.rwceMobileSyncView?.();
   const site=currentSite();
   if(site && !(site.targets ? site.targets[view] : view===site.view) && patient){
     const correctView=site.view==="right"?"Side":site.view.charAt(0).toUpperCase()+site.view.slice(1);
@@ -5018,20 +5014,36 @@ function updateSwabCleaning(){
   swab.style.left = (state.swabX || 50) + "%";
   swab.style.top = (state.swabY || 50) + "%";
   fill.style.width = cleaningPercent() + "%";
-  const copy = meter.querySelector('.cleaning-meter-copy');
-  if(copy){
-    copy.textContent = window.matchMedia('(max-width: 768px)').matches
-      ? 'Use your finger to move the swab directly over the highlighted site on the patient until the bar reaches 100%.'
-      : 'Rub the swab across the highlighted injection zone until the bar reaches 100%.';
-  }
 }
 
 
 function updateMobileCleaningWorkspace(){
   const stage=document.getElementById("stage");
   const panel=document.getElementById("mobile-cleaning-workspace");
-  if(stage) stage.classList.remove("touch-cleaning-active");
-  if(panel) panel.classList.remove("active");
+  if(!stage || !panel)return;
+  const site=currentSite();
+  const active=!!(site && site.allowed && state.chartReviewed && state.prepCompleted && !state.cleaned && !state.injected);
+  stage.classList.toggle("touch-cleaning-active",active);
+  panel.classList.toggle("active",active);
+  if(!active)return;
+  const siteName=document.getElementById("touch-selected-site");
+  if(siteName)siteName.textContent=site.label;
+  const percent=cleaningPercent();
+  const fill=document.getElementById("touch-clean-fill");
+  const value=document.getElementById("touch-clean-percent");
+  if(fill)fill.style.width=percent+"%";
+  if(value)value.textContent=percent+"%";
+  const grid=document.getElementById("touch-cell-grid");
+  if(grid){
+    if(!grid.children.length){
+      for(let row=0;row<3;row++)for(let col=0;col<4;col++){
+        const cell=document.createElement("div");
+        cell.className="touch-cell";cell.dataset.cleanKey=col+"-"+row;
+        grid.appendChild(cell);
+      }
+    }
+    Array.from(grid.children).forEach(cell=>cell.classList.toggle("done",!!state.cleanCoverage[cell.dataset.cleanKey]));
+  }
 }
 function bindMobileTouchCleaning(){
   const pad=document.getElementById("touch-clean-zone");
@@ -5111,8 +5123,6 @@ function bindSwabCleaning(){
   swab.addEventListener("pointerdown", (event) => {
     const site = currentSite();
     if(!site || !site.allowed || !state.chartReviewed || state.cleaned || state.injected) return;
-    event.preventDefault();
-    event.stopPropagation();
     state.swabDragging = true;
     swab.classList.add("dragging");
     swab.setPointerCapture?.(event.pointerId);
@@ -5121,7 +5131,6 @@ function bindSwabCleaning(){
 
   swab.addEventListener("pointermove", (event) => {
     if(!state.swabDragging) return;
-    event.preventDefault();
     moveSwabTo(event);
   });
 
@@ -5134,15 +5143,13 @@ function bindSwabCleaning(){
   stage.addEventListener("pointerdown", (event) => {
     const site = currentSite();
     if(!site || !site.allowed || !state.chartReviewed || state.cleaned || state.injected) return;
-    if(event.target.closest(".toolbar") || event.target.closest(".bottom-card") || event.target.closest(".cleaning-meter") || event.target.closest(".mobile-cleaning-workspace")) return;
-    event.preventDefault();
+    if(event.target.closest(".toolbar") || event.target.closest(".bottom-card") || event.target.closest(".cleaning-meter") || event.target.closest(".mobile-cleaning-workspace") || event.target.closest(".rwce-stage-topbar") || event.target.closest(".rwce-mobile-action-dock")) return;
     state.swabDragging = true;
     moveSwabTo(event);
   }, true);
 
   stage.addEventListener("pointermove", (event) => {
     if(!state.swabDragging) return;
-    event.preventDefault();
     moveSwabTo(event);
   }, true);
 
@@ -5303,7 +5310,7 @@ function retryCurrentPatient(){
   setEducationFeedback("");closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeSkinPopup();
   render();openChartPopup();toast("Retrying the same patient and medication order. Scores and attempts have been reset.");
 }
-function resetTrainer(){rwceResetAudit();state.site="";assignRandomScenario();state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.prepMistakes=0;state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};state.mistakeCount=0;state.injectionAttempts=0;state.popupSubmitted=false;document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeChartPopup();closeSkinPopup();setView("right");render();applyResponsiveStageHeight();setTimeout(openChartPopup,260);toast("New patient scenario loaded. Begin with chart verification.")}
+function resetTrainer(){rwceResetAudit();state.site="";assignRandomScenario();state.selectedMedication="";state.selectedPrepMethod="";state.prepCompleted=false;state.prepStepIndex=0;state.prepMistakes=0;state.educationFeedback="";state.step=1;state.chartReviewed=false;state.cleaned=false;state.injected=false;state.aftercare=false;state.finished=false;state.angle=0;state.needleX=50;state.needleY=50;state.dragging=false;state.swabDragging=false;state.cleanCoverage={};state.mistakeCount=0;state.injectionAttempts=0;state.popupSubmitted=false;document.querySelectorAll(".clean-dot").forEach(dot=>dot.remove());closeDebrief();closePrepPopup();closeMedicationSelectionPopup();closeSiteSelectionPopup();closeChartPopup();closeSkinPopup();setView("right");render();applyResponsiveStageHeight();if(window.innerWidth>768)setTimeout(openChartPopup,260);toast("New patient scenario loaded. Begin with chart verification.")}
 function applyResponsiveStageHeight(){
   const stage=document.getElementById("stage");
   if(!stage) return;
@@ -5317,13 +5324,13 @@ window.addEventListener("resize", applyResponsiveStageHeight);
 window.addEventListener("orientationchange", ()=>setTimeout(applyResponsiveStageHeight, 120));
 // Checklist must work even when the 3D/WebGL asset is unavailable on mobile.
 bindEliteInteractions();
-window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)});if(window.THREE&&window.GLTFLoader){initThree();render();applyResponsiveStageHeight();setTimeout(openChartPopup,500)}
+window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveStageHeight();setTimeout(()=>{if(window.innerWidth>768 && !document.body.classList.contains("learning-mode")) openChartPopup();},500)});if(window.THREE&&window.GLTFLoader){initThree();render();applyResponsiveStageHeight();setTimeout(()=>{if(window.innerWidth>768 && !document.body.classList.contains("learning-mode")) openChartPopup();},500)}
 </script>
 
 <script>
 (function(){
   const labels=["Course Introduction","Verify Order & Product","Preparation Methods","Prepare the Medication","Route, Site & Equipment","Prepare Patient & Site","Administer the Injection","Aftercare & Documentation","Knowledge Check","Clinical Simulation"];
-  window.lmState={section:0,maxVisited:0,answers:{},quizPassed:false};
+  window.lmState={section:0,maxVisited:0,answers:{},quizPassed:false,quizCompleted:false};
   function save(){try{localStorage.setItem('rwce_lai_learning_state',JSON.stringify(window.lmState))}catch(e){}}
   window.lmGo=function(index){
     index=Math.max(0,Math.min(9,Number(index)||0));
@@ -5356,6 +5363,7 @@ window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveS
   window.lmNext=function(){ if(lmState.section<9){ if(lmState.section===8&&!lmState.quizPassed)return; lmGo(lmState.section+1);} };
   window.lmBack=function(){ if(lmState.section>0)lmGo(lmState.section-1); };
   window.lmAnswer=function(q,val){
+    if(lmState.quizCompleted)return;
     lmState.answers[q]=val; save();
     if(Object.keys(lmState.answers).length<6)return;
     let correct=0;
@@ -5365,7 +5373,9 @@ window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveS
       el.classList.toggle('correct',ok); el.classList.toggle('incorrect',!ok);
     });
     const pct=Math.round((correct/6)*100), pass=correct>=5;
-    lmState.quizPassed=pass; save();
+    lmState.quizPassed=lmState.quizPassed||pass;
+    lmState.quizCompleted=true; save();
+    document.querySelectorAll('.lm-question input').forEach(i=>i.disabled=true);
     if(window.parent && window.parent !== window){
       window.rwceAssessmentSavePending?.('knowledge_check');window.parent.postMessage({type:'rwce-lai-assessment',phase:'knowledge_check',payload:{
         assessment:'LAI preparation and administration',question_count:6,correct:correct,score:pct,
@@ -5377,17 +5387,16 @@ window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveS
     }
     const box=document.getElementById('lm-scorebox'); box?.classList.add('active'); box?.classList.toggle('pass',pass); box?.classList.toggle('fail',!pass);
     const score=document.getElementById('lm-score'); if(score)score.textContent=pct+'%';
-    const copy=document.getElementById('lm-score-copy'); if(copy)copy.textContent=pass?`${correct} of 6 correct. Knowledge check passed — the clinical simulation is unlocked.`:`${correct} of 6 correct. Review the feedback and retry. Five correct answers are required to continue.`;
-    const retry=document.getElementById('lm-retry-btn'); if(retry)retry.style.display=pass?'none':'inline-flex';
-    const next=document.getElementById('lm-quiz-next'); if(next)next.disabled=!pass;
-    if(pass){setTimeout(()=>lmGo(9),900);}
+    const copy=document.getElementById('lm-score-copy'); if(copy)copy.textContent=pass?`${correct} of 6 correct. Passed! Review your answers, retake the check if you'd like, or select Clinical Simulation when you are ready.`:`${correct} of 6 correct. Review the feedback and retake the check. Five correct answers are required to unlock the simulation.`;
+    const retry=document.getElementById('lm-retry-btn'); if(retry)retry.style.display='inline-flex';
+    const next=document.getElementById('lm-quiz-next'); if(next)next.disabled=!lmState.quizPassed;
   };
   window.lmRetryQuiz=function(){
-    lmState.answers={}; lmState.quizPassed=false; save();
+    lmState.answers={}; lmState.quizCompleted=false; save();
     document.querySelectorAll('.lm-question').forEach(el=>el.classList.remove('correct','incorrect'));
-    document.querySelectorAll('.lm-question input').forEach(i=>i.checked=false);
+    document.querySelectorAll('.lm-question input').forEach(i=>{i.checked=false;i.disabled=false});
     const box=document.getElementById('lm-scorebox'); box?.classList.remove('active','pass','fail');
-    const next=document.getElementById('lm-quiz-next'); if(next)next.disabled=true;
+    const next=document.getElementById('lm-quiz-next'); if(next)next.disabled=!lmState.quizPassed;
     document.querySelector('.lm-main')?.scrollTo({top:0,behavior:'smooth'});
   };
   window.lmLaunchSimulation=function(){
@@ -5397,7 +5406,7 @@ window.addEventListener("three-ready",()=>{initThree();render();applyResponsiveS
     try{resizeThree?.();}catch(e){}
     try{applyResponsiveStageHeight?.();}catch(e){}
     window.scrollTo({top:0,behavior:'instant'});
-    setTimeout(()=>{try{openChartPopup?.();}catch(e){}},250);
+    setTimeout(()=>{if(window.innerWidth>768){try{openChartPopup?.();}catch(e){}}},250);
   };
   window.lmJumpToSimulation=function(){
     if(lmState.quizPassed){lmLaunchSimulation();}else{lmGo(8);}
@@ -6161,5 +6170,141 @@ body:not(.learning-mode) #skin-popup .popup-visual-column .popup-angle-hint stro
 if(typeof bindMobileTouchCleaning === "function")bindMobileTouchCleaning();
 if(typeof updateMobileCleaningWorkspace === "function")updateMobileCleaningWorkspace();
 </script>
+
+<style id="rwce-immersive-mobile-3d-layout">
+.rwce-mobile-drawer-heading,.rwce-mobile-view-picker,.rwce-stage-topbar,.rwce-mobile-action-dock,#rwce-mobile-menu-backdrop,.rwce-mobile-model-loading{display:none}
+@media (max-width:768px){
+  body:not(.learning-mode){height:100dvh!important;min-height:0!important;overflow:hidden!important;overscroll-behavior:none}
+  body:not(.learning-mode) .app{height:100dvh!important;min-height:0!important;display:block!important;width:100%!important;max-width:100%!important;padding:0!important;margin:0!important;overflow:hidden!important;position:relative!important}
+  body:not(.learning-mode) .app>.stage{display:block!important;position:relative!important;width:100%!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:0!important;border-radius:0!important;overflow:hidden!important;border:0!important}
+  body:not(.learning-mode) .app>.side{position:fixed!important;inset:0 auto 0 0!important;z-index:192!important;width:min(360px,90vw)!important;max-width:min(360px,90vw)!important;height:100dvh!important;max-height:100dvh!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;transform:translateX(-105%)!important;visibility:hidden!important;pointer-events:none!important;transition:transform .23s ease,visibility .23s!important;padding:14px!important;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;border-radius:0 18px 18px 0!important;background:#f5faff!important;box-shadow:6px 0 40px rgba(0,0,0,.30)!important}
+  body:not(.learning-mode) .app>.side.rwce-mobile-open{transform:translateX(0)!important;visibility:visible!important;pointer-events:auto!important}
+  body:not(.learning-mode) #rwce-mobile-menu-backdrop{position:fixed;inset:0;z-index:190;background:rgba(2,11,23,.61);border:0;width:100%;height:100%;display:none;cursor:pointer}
+  body:not(.learning-mode) #rwce-mobile-menu-backdrop.rwce-mobile-open{display:block!important}
+  body:not(.learning-mode) .rwce-mobile-drawer-heading{display:flex!important;align-items:center;justify-content:space-between;gap:10px;color:#13345a;padding:1px 0 9px;border-bottom:1px solid #d6e5f5;font-size:17px}
+  body:not(.learning-mode) .rwce-mobile-drawer-heading button{width:44px;height:44px;display:grid;place-items:center;background:#eaf4ff;border:1px solid #c6dbf1;border-radius:12px;color:#143861;cursor:pointer}
+  body:not(.learning-mode) .rwce-mobile-view-picker{display:block!important;margin:7px 0 4px;padding:10px;border:1px solid #bfd5ee;border-radius:13px;background:white;color:#164677}
+  body:not(.learning-mode) .rwce-mobile-view-picker>strong{font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  body:not(.learning-mode) .rwce-mobile-view-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px}
+  body:not(.learning-mode) .rwce-mobile-view-buttons button{min-height:45px;padding:8px;border:1px solid #bdd3ed;border-radius:10px;background:#edf5ff;color:#15395e;font-weight:800;cursor:pointer}
+  body:not(.learning-mode) .rwce-mobile-view-buttons button[aria-pressed="true"]{background:#156ed0;color:white;border-color:#156ed0}
+  body:not(.learning-mode) .rwce-retry-mobile{width:100%;margin-top:9px;min-height:44px;padding:8px 11px;border-radius:10px;background:#153d65;color:#fff;border:1px solid #4674a2;font-size:13px;font-weight:850;cursor:pointer}
+  body:not(.learning-mode) .stage .toolbar{display:none!important}
+  body:not(.learning-mode) .stage .stage-hud,body:not(.learning-mode) .stage .needle-feedback,body:not(.learning-mode) .stage .safety-banner,body:not(.learning-mode) .stage .coach-card{display:none!important}
+  body:not(.learning-mode) .rwce-mobile-model-loading{display:block;position:absolute;top:46%;left:15%;width:70%;text-align:center;color:#bcd5ea;font-size:13px;font-weight:700;pointer-events:none;z-index:3}
+  body:not(.learning-mode) .rwce-mobile-model-loading.hidden{display:none!important}
+  body:not(.learning-mode) .rwce-stage-topbar{display:flex!important;position:absolute;z-index:72;left:9px;right:9px;top:calc(9px + env(safe-area-inset-top,0px));gap:8px;align-items:center;pointer-events:none}
+  body:not(.learning-mode) #rwce-mobile-menu-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:102px;min-height:45px;padding:8px 12px;border-radius:13px;color:white;background:#1b6fcd;border:1px solid #88c4ff;box-shadow:0 9px 20px rgba(0,0,0,.22);font-weight:900;font-size:14px;pointer-events:auto;cursor:pointer}
+  body:not(.learning-mode) #rwce-mobile-menu-button .rwce-menu-glyph{font-size:23px;line-height:1;font-family:system-ui,sans-serif}
+  body:not(.learning-mode) .rwce-stage-step{max-width:calc(100% - 110px);padding:9px 12px;border:1px solid #416489;border-radius:12px;background:rgba(4,17,34,.89);color:#f4faff;font-size:11px;line-height:1.25;font-weight:750;pointer-events:none;overflow-wrap:anywhere}
+  body:not(.learning-mode) .rwce-mobile-action-dock{display:flex!important;position:absolute;z-index:67;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));gap:10px;align-items:center;justify-content:space-between;min-height:64px;padding:8px 9px 8px 12px;border-radius:15px;background:rgba(250,253,255,.96);box-shadow:0 5px 22px rgba(0,0,0,.3);border:1px solid #a4bdd5;color:#132d4d}
+  body:not(.learning-mode) .rwce-dock-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+  body:not(.learning-mode) .rwce-dock-info small{font-size:10px;color:#35628f;text-transform:uppercase;letter-spacing:.08em;font-weight:900}
+  body:not(.learning-mode) .rwce-dock-info strong{font-size:12px;line-height:1.2;color:#153452;overflow-wrap:anywhere}
+  body:not(.learning-mode) #rwce-dock-button{flex:0 0 auto;min-height:44px;max-width:46%;border:0;border-radius:10px;padding:9px 12px;color:white;background:#136bd1;font-size:12px;line-height:1.2;font-weight:850;cursor:pointer}
+  /* Only during the cleaning step: retain the proven touch pad as a short bottom sheet. */
+  body:not(.learning-mode) .stage .mobile-cleaning-workspace,body:not(.learning-mode) .stage.touch-cleaning-active .mobile-cleaning-workspace{top:auto!important;bottom:calc(84px + env(safe-area-inset-bottom,0px))!important;left:9px!important;right:9px!important;max-height:min(42dvh,305px)!important;overflow-y:auto!important;padding:9px!important;border-radius:15px!important}
+  body:not(.learning-mode) .stage .mobile-cleaning-workspace .touch-zone{height:clamp(102px,16dvh,130px)!important}
+  body:not(.learning-mode) .stage .mobile-cleaning-workspace .touch-description{font-size:11px!important;line-height:1.35!important;margin:3px 0 5px!important}
+  body:not(.learning-mode) .stage .mobile-cleaning-workspace .touch-title{font-size:14px!important;margin:1px 0 3px!important}
+  body:not(.learning-mode) .stage .mobile-cleaning-workspace .touch-help{font-size:10px!important;margin:4px 0 0!important}
+  body:not(.learning-mode) .stage .mobile-cleaning-workspace .touch-meter-row{margin-top:4px!important}
+}
+@media (max-width:360px){body:not(.learning-mode) .rwce-stage-step{font-size:10px}body:not(.learning-mode) #rwce-dock-button{padding:8px;font-size:11px}}
+@media (prefers-reduced-motion:reduce){.app>.side{transition:none!important}}
+</style>
+
+
+<script id="rwce-immersive-mobile-3d-controller">
+(function(){
+  const mobile=()=>window.innerWidth<=768;
+  window.rwceMobilePatientLoaded=function(){document.getElementById('rwce-mobile-model-loading')?.classList.add('hidden')};
+  const drawer=()=>document.getElementById('rwce-sim-drawer');
+  const button=()=>document.getElementById('rwce-mobile-menu-button');
+  const backdrop=()=>document.getElementById('rwce-mobile-menu-backdrop');
+  window.rwceMobileCloseMenu=function(){
+    drawer()?.classList.remove('rwce-mobile-open');
+    backdrop()?.classList.remove('rwce-mobile-open');
+    button()?.setAttribute('aria-expanded','false');
+    if(mobile()&&drawer())drawer().inert=true;
+  };
+  window.rwceMobileToggleMenu=function(){
+    if(!mobile() || document.body.classList.contains('learning-mode'))return;
+    const open=!drawer()?.classList.contains('rwce-mobile-open');
+    drawer()?.classList.toggle('rwce-mobile-open',open);
+    backdrop()?.classList.toggle('rwce-mobile-open',open);
+    button()?.setAttribute('aria-expanded',String(open));
+    if(drawer())drawer().inert=!open;
+    if(open)drawer()?.querySelector('.rwce-mobile-drawer-heading button')?.focus({preventScroll:true});
+    else button()?.focus({preventScroll:true});
+  };
+  window.rwceMobileSyncView=function(){
+    document.querySelectorAll('.rwce-mobile-view-buttons [data-patient-view]').forEach(b=>{
+      b.setAttribute('aria-pressed',String(b.dataset.patientView===(typeof state !== 'undefined' ? state.currentView : null)));
+    });
+  };
+  window.rwceMobileUpdateStep=function(){
+    const title=document.getElementById('step-title')?.textContent?.trim()||'Review patient chart';
+    const step=document.getElementById('step-pill')?.textContent?.trim()||'Step 1 of 8';
+    const instruction=document.getElementById('primary-label')?.textContent?.trim()||'Open Step';
+    const complete=!!(typeof state !== 'undefined' && state.finished);
+    const phase=document.getElementById('rwce-stage-step');
+    const dock=document.getElementById('rwce-dock-title');
+    const cta=document.getElementById('rwce-dock-button');
+    if(phase)phase.textContent=step;
+    if(dock)dock.textContent=title;
+    if(cta)cta.textContent=complete?'New Patient':(instruction==='Simulation Complete'?'New Patient':instruction);
+  };
+  window.rwceMobileContinue=function(){
+    if((typeof state !== 'undefined' && state.finished)){resetTrainer();return;}
+    if(typeof primaryAction==='function')primaryAction();
+  };
+  window.rwceMobileSyncShell=function(){
+    if(mobile()){
+      if(drawer()&&!drawer().classList.contains('rwce-mobile-open'))drawer().inert=true;
+    } else {window.rwceMobileCloseMenu();if(drawer())drawer().inert=false;}
+    window.rwceMobileUpdateStep();window.rwceMobileSyncView();
+    if(!document.body.classList.contains('learning-mode')){
+      try{applyResponsiveStageHeight();resizeThree();updateTarget();}catch(e){}
+    }
+  };
+  const priorLaunch=window.lmLaunchSimulation;
+  if(typeof priorLaunch==='function')window.lmLaunchSimulation=function(...args){
+    const result=priorLaunch.apply(this,args);
+    if(!document.body.classList.contains('learning-mode')){
+      try{render?.();}catch(e){console.warn('Simulation UI initialization deferred:',e)}
+      window.rwceMobileCloseMenu();
+      requestAnimationFrame(window.rwceMobileSyncShell);
+      setTimeout(window.rwceMobileSyncShell,150);
+    }
+    return result;
+  };
+  const priorLearn=window.openLearningModule;
+  if(typeof priorLearn==='function')window.openLearningModule=function(...args){
+    window.rwceMobileCloseMenu();
+    const result=priorLearn.apply(this,args);
+    if(drawer())drawer().inert=false;
+    return result;
+  };
+  drawer()?.addEventListener('click',event=>{
+    const target=event.target.closest('button');
+    if(!target || target.id==='rwce-mobile-details-toggle' || target.closest('.rwce-mobile-drawer-heading') || target.closest('.rwce-mobile-view-buttons'))return;
+    if(mobile())setTimeout(window.rwceMobileCloseMenu,0);
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape' && drawer()?.classList.contains('rwce-mobile-open')){
+      event.preventDefault();window.rwceMobileCloseMenu();
+    }
+  });
+  const title=document.getElementById('step-title');
+  if(title)new MutationObserver(window.rwceMobileUpdateStep).observe(title,{subtree:true,childList:true,characterData:true});
+  const pill=document.getElementById('step-pill');
+  if(pill)new MutationObserver(window.rwceMobileUpdateStep).observe(pill,{subtree:true,childList:true,characterData:true});
+  window.addEventListener('resize',()=>requestAnimationFrame(window.rwceMobileSyncShell));
+  window.addEventListener('orientationchange',()=>setTimeout(window.rwceMobileSyncShell,180));
+  window.rwceMobileSyncShell();
+})();
+</script>
+
 </body>
 </html>
