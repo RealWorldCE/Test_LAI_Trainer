@@ -2908,6 +2908,22 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
  body:not(.learning-mode) .stage .coach-card .copy{color:#d9e8f7!important}
 }
 </style>
+
+<style id="rwce-mobile-direct-cleaning-override">
+@media(max-width:768px){
+  .stage .mobile-cleaning-workspace,
+  .stage.touch-cleaning-active .mobile-cleaning-workspace{display:none!important}
+  .stage.touch-cleaning-active .cleaning-meter,
+  .stage .cleaning-meter.active{display:block!important}
+  .stage.touch-cleaning-active #swab-tool.active,
+  .stage #swab-tool.active{display:block!important}
+  .stage .cleaning-meter{left:8px!important;right:8px!important;bottom:84px!important;width:auto!important;transform:none!important;padding:10px 12px!important}
+  .stage #swab-tool{display:block!important;width:92px!important;height:42px!important;filter:drop-shadow(0 10px 16px rgba(2,6,23,.44))!important}
+  .stage #swab-tool .swab-pad{top:5px!important;width:40px!important;height:28px!important;border-radius:11px!important}
+  .stage #swab-tool .swab-handle{left:33px!important;top:16px!important;width:54px!important;height:7px!important}
+}
+</style>
+
 </head>
 <body class="learning-mode">
 <section id="rwce-assessment" role="dialog" aria-modal="true" aria-label="LAI pre-test and post-test" hidden><div class="rwce-assessment-shell"><div class="rwce-a-head"><div class="rwce-a-kicker">REAL WORLD CE · LAI PREPARATION & ADMINISTRATION</div><h2 id="rwce-a-title">Pre-Test</h2><p id="rwce-a-intro"></p><div class="rwce-a-stat"><span id="rwce-a-stage"></span><span id="rwce-a-count"></span></div><div class="rwce-a-track"><div id="rwce-a-progress"></div></div></div><div id="rwce-a-content"></div><div class="rwce-a-actions" id="rwce-a-actions"></div></div></section>
@@ -3900,10 +3916,27 @@ function assignRandomScenario(){
 }
 let scene,camera,renderer,patient;
 function b64ToBlobUrl(b64,mime="model/gltf-binary"){const bin=atob(b64),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return URL.createObjectURL(new Blob([bytes],{type:mime}))}
-function initThree(){const stage=document.getElementById("stage"),canvas=document.getElementById("patient-canvas");scene=new THREE.Scene();scene.background=new THREE.Color(0x071225);camera=new THREE.PerspectiveCamera(35,stage.clientWidth/stage.clientHeight,.01,100);camera.position.set(.08,0,2.85);renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(stage.clientWidth,stage.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;scene.add(new THREE.HemisphereLight(0xffffff,0x243047,2.4));const key=new THREE.DirectionalLight(0xffffff,2.6);key.position.set(1.8,2.7,2.2);scene.add(key);const fill=new THREE.DirectionalLight(0x8ec5ff,1.25);fill.position.set(-2,.8,1.8);scene.add(fill);new GLTFLoader().load(b64ToBlobUrl(window.__PATIENT_GLB_BASE64),gltf=>{patient=gltf.scene;patient.position.set(0,-.05,0);patient.scale.setScalar(0.82);patient.traverse(o=>{if(o.isMesh&&o.material){o.material.side=THREE.DoubleSide;o.material.needsUpdate=true}});scene.add(patient);setView("right");animate()});window.addEventListener("resize",resizeThree);bindNeedleDrag();bindSwabCleaning();bindMobileTouchCleaning();bindPopupNeedleDrag();bindEliteInteractions()}
+function initThree(){const stage=document.getElementById("stage"),canvas=document.getElementById("patient-canvas");scene=new THREE.Scene();scene.background=new THREE.Color(0x071225);camera=new THREE.PerspectiveCamera(35,stage.clientWidth/stage.clientHeight,.01,100);camera.position.set(.08,0,2.85);renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(stage.clientWidth,stage.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;scene.add(new THREE.HemisphereLight(0xffffff,0x243047,2.4));const key=new THREE.DirectionalLight(0xffffff,2.6);key.position.set(1.8,2.7,2.2);scene.add(key);const fill=new THREE.DirectionalLight(0x8ec5ff,1.25);fill.position.set(-2,.8,1.8);scene.add(fill);new GLTFLoader().load(b64ToBlobUrl(window.__PATIENT_GLB_BASE64),gltf=>{patient=gltf.scene;patient.position.set(0,-.05,0);patient.scale.setScalar(0.82);patient.traverse(o=>{if(o.isMesh&&o.material){o.material.side=THREE.DoubleSide;o.material.needsUpdate=true}});scene.add(patient);setView(sites[state.site]?.view || (state.chartReviewed ? sites[state.orderedSite]?.view : null) || state.currentView || "right");animate()});window.addEventListener("resize",resizeThree);bindNeedleDrag();bindSwabCleaning();bindMobileTouchCleaning();bindPopupNeedleDrag();bindEliteInteractions()}
 function resizeThree(){if(!renderer||!camera)return;const stage=document.getElementById("stage");camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();renderer.setSize(stage.clientWidth,stage.clientHeight)}
 function animate(){requestAnimationFrame(animate);if(renderer&&scene&&camera)renderer.render(scene,camera)}
-function setView(view){state.currentView=view;document.querySelectorAll(".toolbar button").forEach(b=>b.classList.remove("active"));const activeId=view==="ventro"?"view-ventro":`view-${view}`;const btn=document.getElementById(activeId);if(btn)btn.classList.add("active");if(!patient||!camera){updateTarget();return}if(view==="right"){patient.rotation.y=-Math.PI/2;camera.position.set(.08,0,2.85)}else if(view==="front"){patient.rotation.y=0;camera.position.set(0,0,3.05)}else if(view==="ventro"){patient.rotation.y=-2.42;camera.position.set(.14,0,3.0)}else{patient.rotation.y=Math.PI;camera.position.set(0,0,3.05)}updateTarget()}
+function setView(view){
+  state.currentView=view;
+  document.querySelectorAll(".toolbar button").forEach(b=>b.classList.remove("active"));
+  const activeId=view==="ventro"?"view-ventro":`view-${view}`;
+  const btn=document.getElementById(activeId);if(btn)btn.classList.add("active");
+  if(patient&&camera){
+    if(view==="right"){patient.rotation.y=-Math.PI/2;camera.position.set(.08,0,2.85)}
+    else if(view==="front"){patient.rotation.y=0;camera.position.set(0,0,3.05)}
+    else if(view==="ventro"){patient.rotation.y=-2.42;camera.position.set(.14,0,3.0)}
+    else{patient.rotation.y=Math.PI;camera.position.set(0,0,3.05)}
+  }
+  updateTarget();
+  const site=currentSite();
+  if(site && !(site.targets ? site.targets[view] : view===site.view) && patient){
+    const correctView=site.view==="right"?"Side":site.view.charAt(0).toUpperCase()+site.view.slice(1);
+    toast(`${site.label} is only marked in its anatomical view. Select ${correctView} to see the injection target.`);
+  }
+}
 function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("active");clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>el.classList.remove("active"),2400)}
 function currentSite(){return state.site?sites[state.site]:null}
 function injectionProfile(siteKey){
@@ -4865,7 +4898,27 @@ function selectSite(key){
     focusWorkflowSection("stage",120);
   },450);
 }
-function updateTarget(){const target=document.getElementById("site-target"),label=document.getElementById("site-label"),site=currentSite();if(!site){target.classList.remove("active","blocked","zone");return}const point=(site.targets&&site.targets[state.currentView])||site.target;const area=site.area&&site.area[state.currentView];target.style.left=`${point.x}%`;target.style.top=`${point.y}%`;if(area){target.classList.add("zone");target.style.width=`${area.width}%`;target.style.height=`${area.height}%`;target.style.borderRadius=area.shape==="rect"?"14px":"999px";}else{target.classList.remove("zone");target.style.width="74px";target.style.height="74px";target.style.borderRadius="999px";}target.classList.add("active");target.classList.toggle("blocked",!site.allowed);label.textContent=site.label}
+function updateTarget(){
+  const target=document.getElementById("site-target"),label=document.getElementById("site-label"),site=currentSite();
+  if(!target || !label)return;
+  if(!site){target.classList.remove("active","blocked","zone");return}
+  // Never reuse the original point on another anatomical view: e.g. an abdominal SC target
+  // must not appear over the lateral hip simply because the learner switched to Side.
+  const point=site.targets ? site.targets[state.currentView] : (state.currentView===site.view ? site.target : null);
+  if(!point){
+    target.classList.remove("active","blocked","zone");
+    target.setAttribute("aria-hidden","true");
+    return;
+  }
+  const area=site.area && site.area[state.currentView];
+  target.style.left=`${point.x}%`;
+  target.style.top=`${point.y}%`;
+  if(area){target.classList.add("zone");target.style.width=`${area.width}%`;target.style.height=`${area.height}%`;target.style.borderRadius=area.shape==="rect"?"14px":"999px";}
+  else{target.classList.remove("zone");target.style.width="74px";target.style.height="74px";target.style.borderRadius="999px";}
+  target.classList.add("active");target.classList.toggle("blocked",!site.allowed);
+  target.setAttribute("aria-hidden","false");
+  label.textContent=site.label;
+}
 function resetNeedleNearTarget(){const site=currentSite();state.needleX=site?Math.max(5,Math.min(95,site.target.x+7)):50;state.needleY=site?Math.max(5,Math.min(95,site.target.y+4)):50;state.angle=0;const s=document.getElementById("angle-slider");if(s)s.value=0;updateNeedle()}
 function setNeedleAngle(value){state.angle=Number(value);updateNeedle()}
 function placementScore(){const site=currentSite();if(!site)return 0;const dx=state.needleX-site.target.x,dy=state.needleY-site.target.y,dist=Math.sqrt(dx*dx+dy*dy);return Math.max(0,Math.min(100,Math.round(100-dist*7)))}
@@ -4965,36 +5018,20 @@ function updateSwabCleaning(){
   swab.style.left = (state.swabX || 50) + "%";
   swab.style.top = (state.swabY || 50) + "%";
   fill.style.width = cleaningPercent() + "%";
+  const copy = meter.querySelector('.cleaning-meter-copy');
+  if(copy){
+    copy.textContent = window.matchMedia('(max-width: 768px)').matches
+      ? 'Use your finger to move the swab directly over the highlighted site on the patient until the bar reaches 100%.'
+      : 'Rub the swab across the highlighted injection zone until the bar reaches 100%.';
+  }
 }
 
 
 function updateMobileCleaningWorkspace(){
   const stage=document.getElementById("stage");
   const panel=document.getElementById("mobile-cleaning-workspace");
-  if(!stage || !panel)return;
-  const site=currentSite();
-  const active=!!(site && site.allowed && state.chartReviewed && state.prepCompleted && !state.cleaned && !state.injected);
-  stage.classList.toggle("touch-cleaning-active",active);
-  panel.classList.toggle("active",active);
-  if(!active)return;
-  const siteName=document.getElementById("touch-selected-site");
-  if(siteName)siteName.textContent=site.label;
-  const percent=cleaningPercent();
-  const fill=document.getElementById("touch-clean-fill");
-  const value=document.getElementById("touch-clean-percent");
-  if(fill)fill.style.width=percent+"%";
-  if(value)value.textContent=percent+"%";
-  const grid=document.getElementById("touch-cell-grid");
-  if(grid){
-    if(!grid.children.length){
-      for(let row=0;row<3;row++)for(let col=0;col<4;col++){
-        const cell=document.createElement("div");
-        cell.className="touch-cell";cell.dataset.cleanKey=col+"-"+row;
-        grid.appendChild(cell);
-      }
-    }
-    Array.from(grid.children).forEach(cell=>cell.classList.toggle("done",!!state.cleanCoverage[cell.dataset.cleanKey]));
-  }
+  if(stage) stage.classList.remove("touch-cleaning-active");
+  if(panel) panel.classList.remove("active");
 }
 function bindMobileTouchCleaning(){
   const pad=document.getElementById("touch-clean-zone");
@@ -5074,6 +5111,8 @@ function bindSwabCleaning(){
   swab.addEventListener("pointerdown", (event) => {
     const site = currentSite();
     if(!site || !site.allowed || !state.chartReviewed || state.cleaned || state.injected) return;
+    event.preventDefault();
+    event.stopPropagation();
     state.swabDragging = true;
     swab.classList.add("dragging");
     swab.setPointerCapture?.(event.pointerId);
@@ -5082,6 +5121,7 @@ function bindSwabCleaning(){
 
   swab.addEventListener("pointermove", (event) => {
     if(!state.swabDragging) return;
+    event.preventDefault();
     moveSwabTo(event);
   });
 
@@ -5095,12 +5135,14 @@ function bindSwabCleaning(){
     const site = currentSite();
     if(!site || !site.allowed || !state.chartReviewed || state.cleaned || state.injected) return;
     if(event.target.closest(".toolbar") || event.target.closest(".bottom-card") || event.target.closest(".cleaning-meter") || event.target.closest(".mobile-cleaning-workspace")) return;
+    event.preventDefault();
     state.swabDragging = true;
     moveSwabTo(event);
   }, true);
 
   stage.addEventListener("pointermove", (event) => {
     if(!state.swabDragging) return;
+    event.preventDefault();
     moveSwabTo(event);
   }, true);
 
