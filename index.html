@@ -2796,6 +2796,45 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
   body.learning-mode .lm-topbar>div:last-child {flex:0 1 auto;min-width:0}
 }
 </style>
+
+<style id="rwce-mobile-clinical-touch-controls">
+/* Keep normal page scrolling outside the dedicated interactive surfaces. */
+.mobile-cleaning-workspace{display:none;position:absolute;z-index:53;top:265px;left:10px;right:10px;border:1px solid #98d7ff;border-radius:18px;padding:13px;background:#f8fcff;color:#102d53;box-shadow:0 16px 36px rgba(0,0,0,.42)}
+.mobile-cleaning-workspace .touch-kicker{color:#0b5ea6;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.09em}
+.mobile-cleaning-workspace .touch-title{font-size:17px;font-weight:900;line-height:1.2;color:#102d53;margin:3px 0 5px}
+.mobile-cleaning-workspace .touch-description{font-size:13px;line-height:1.4;color:#284863;margin:0 0 8px}
+.mobile-cleaning-workspace .touch-zone{height:165px;position:relative;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:15px;border:2px solid #1482da;overflow:hidden;background:repeating-linear-gradient(0deg,transparent 0,transparent calc(33.333% - 1px),rgba(4,83,146,.12) calc(33.333% - 1px),rgba(4,83,146,.12) 33.333%),repeating-linear-gradient(90deg,#dcedf8 0,#dcedf8 calc(25% - 1px),#afcfe6 calc(25% - 1px),#afcfe6 25%)}
+.mobile-cleaning-workspace .touch-cell-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));pointer-events:none}
+.mobile-cleaning-workspace .touch-cell{border:1px solid rgba(13,95,171,.18);transition:background .12s ease}
+.mobile-cleaning-workspace .touch-cell.done{background:rgba(22,163,74,.31)}
+.mobile-cleaning-workspace .touch-swab{position:absolute;z-index:3;left:12%;top:14%;width:80px;height:42px;transform:translate(-50%,-50%) rotate(-18deg);pointer-events:none;filter:drop-shadow(0 4px 5px rgba(6,31,61,.28))}
+.mobile-cleaning-workspace .touch-swab:before{content:"";position:absolute;left:6px;top:4px;width:36px;height:33px;border:2px solid #8daac1;background:white;border-radius:13px}
+.mobile-cleaning-workspace .touch-swab:after{content:"";position:absolute;left:40px;top:17px;width:40px;height:8px;background:#6c8eab;border-radius:8px}
+.mobile-cleaning-workspace .touch-zone-label{pointer-events:none;position:absolute;right:9px;top:9px;border-radius:9px;padding:5px 8px;background:rgba(255,255,255,.92);color:#114778;font-size:11px;font-weight:800}
+.mobile-cleaning-workspace .touch-meter-row{display:flex;justify-content:space-between;margin-top:9px;color:#163b5e;font-size:12px;font-weight:900}
+.mobile-cleaning-workspace .touch-progress{background:#d2e6f5;border-radius:100px;height:10px;overflow:hidden;margin-top:5px}
+.mobile-cleaning-workspace .touch-progress>div{height:100%;width:0;background:linear-gradient(90deg,#167ce8,#13a75a);transition:width .1s ease}
+.mobile-cleaning-workspace .touch-help{color:#385773;font-size:12px;line-height:1.4;margin:7px 0 0}
+.popup-slider-row.depth-slider-row{margin-top:12px}
+.popup-slider-row.depth-slider-row span:first-child{white-space:nowrap}
+#popup-depth-slider{touch-action:pan-x;height:38px;min-width:0}
+@media(max-width:768px){
+  /* Keep depth and angle controls immediately after the skin illustration on phones. */
+  #skin-popup .popup-controls{display:flex!important;flex-direction:column!important;gap:8px!important}
+  #skin-popup .popup-controls .popup-slider-row{order:-3!important}
+  #skin-popup .popup-controls .popup-readout-grid{order:-2!important}
+  #skin-popup .popup-controls>.layer-info-card:first-child{order:0!important}
+  #skin-popup .popup-controls>.layer-info-card:last-child{order:1!important}
+  #skin-popup .popup-angle-hint{display:none!important}
+  .mobile-cleaning-workspace.active{display:block!important}
+  .stage.touch-cleaning-active .safety-banner,.stage.touch-cleaning-active .needle-feedback,.stage.touch-cleaning-active .coach-card,.stage.touch-cleaning-active .cleaning-meter,.stage.touch-cleaning-active #swab-tool{display:none!important}
+  .stage.touch-cleaning-active .mobile-cleaning-workspace{display:block!important}
+  #popup-injection-stage .popup-injection-layers,#popup-injection-stage #popup-needle{touch-action:none!important}
+  .popup-slider-row{grid-template-columns:72px minmax(0,1fr) 48px!important}
+  .popup-slider-row input[type=range]{min-height:40px;touch-action:pan-x}
+}
+@media(max-width:380px){.mobile-cleaning-workspace{top:255px;padding:10px}.mobile-cleaning-workspace .touch-zone{height:165px}.mobile-cleaning-workspace .touch-title{font-size:15px}}
+</style>
 </head>
 <body class="learning-mode">
 <section id="rwce-assessment" role="dialog" aria-modal="true" aria-label="LAI pre-test and post-test" hidden><div class="rwce-assessment-shell"><div class="rwce-a-head"><div class="rwce-a-kicker">REAL WORLD CE · LAI PREPARATION & ADMINISTRATION</div><h2 id="rwce-a-title">Pre-Test</h2><p id="rwce-a-intro"></p><div class="rwce-a-stat"><span id="rwce-a-stage"></span><span id="rwce-a-count"></span></div><div class="rwce-a-track"><div id="rwce-a-progress"></div></div></div><div id="rwce-a-content"></div><div class="rwce-a-actions" id="rwce-a-actions"></div></div></section>
@@ -3242,6 +3281,20 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
   <div class="cleaning-bar"><div id="cleaning-fill"></div></div>
 </div>
 
+<div id="mobile-cleaning-workspace" class="mobile-cleaning-workspace" aria-label="Touchscreen injection-site cleaning practice">
+  <div class="touch-kicker">Touchscreen site preparation</div>
+  <div class="touch-title">Clean the selected injection site</div>
+  <p class="touch-description">For <strong id="touch-selected-site">the ordered site</strong>, swipe the swab across the highlighted practice area. You can also tap different squares. The selected site stays marked on the 3D patient.</p>
+  <div id="touch-clean-zone" class="touch-zone" role="group" aria-label="Swipe or tap across the cleaning zone to prepare the site">
+    <div class="touch-cell-grid" id="touch-cell-grid"></div>
+    <div id="touch-swab" class="touch-swab" aria-hidden="true"></div>
+    <span class="touch-zone-label">Injection zone</span>
+  </div>
+  <div class="touch-meter-row"><span>Site cleaning</span><span id="touch-clean-percent" aria-live="polite">0%</span></div>
+  <div class="touch-progress"><div id="touch-clean-fill"></div></div>
+  <p class="touch-help">Touch and drag, or tap several areas. Once the site is prepared, the needle technique screen opens automatically.</p>
+</div>
+
 <div id="needle" class="needle" aria-label="Draggable injection needle"><div class="needle-hub"></div><div class="needle-body"></div><div class="needle-tip"></div><div class="needle-point"></div></div>
 <div class="bottom-card coach-card"><div class="coach-head"><div><div class="kicker">Procedure Coach</div><div class="coach-title" id="coach-title">Ready for chart review</div></div><span class="coach-chip" id="coach-chip">VERIFY</span></div><div class="copy" id="needle-instructions">The simulation will guide you through one clinical decision at a time.</div><div class="coach-grid"><div class="coach-item"><span class="material-symbols-outlined">fact_check</span><div><small>Chart</small><strong id="coach-chart">Pending</strong></div></div><div class="coach-item"><span class="material-symbols-outlined">my_location</span><div><small>Site</small><strong id="placement-readout">Pending</strong></div></div><div class="coach-item"><span class="material-symbols-outlined">vaccines</span><div><small>Technique</small><strong id="technique-readout">Pending</strong></div></div></div><input id="angle-slider" type="range" min="0" max="110" value="0" oninput="setNeedleAngle(this.value)" hidden><span id="angle-value" hidden>0°</span></div>
 </section></div>
@@ -3344,7 +3397,7 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
           <div class="popup-layer popup-subq">Subcutaneous Tissue</div>
           <div class="popup-layer popup-muscle">Muscle</div>
           <div id="popup-muscle-target" class="popup-muscle-target"></div>
-          <div class="popup-angle-hint"><strong>Angle control:</strong> the needle starts at 0°. Drag the back of the needle to rotate it. You can also use Shift + drag, the mouse wheel, Q / E, or the slider. Move the needle TIP vertically into the intended tissue layer, then use the angle slider. The tip position (not the syringe body) determines depth.</div>
+          <div class="popup-angle-hint"><strong>Angle control:</strong> the needle starts at 0°. Drag the back of the needle to rotate it. You can also use Shift + drag, the mouse wheel, Q / E, or the slider. On a phone, use the Tip Depth and Angle sliders. On desktop, you may drag the needle or use the sliders. The tip position (not the syringe body) determines depth.</div>
           <div id="popup-needle" class="popup-needle" aria-label="Draggable injection needle">
             <div class="needle-plunger angle-handle-back" title="Drag the back of the needle to adjust angle"></div>
             <div class="needle-barrel"></div>
@@ -3358,13 +3411,19 @@ body:not(.learning-mode) .debrief-grid strong{overflow-wrap:anywhere}
       <div class="popup-controls">
         <div class="layer-info-card">
           <strong>How to complete the injection</strong>
-          <span>Move the needle and adjust the injection angle from 0° to the correct angle/depth. Drag the back of the needle to adjust angle, or use Shift + drag, mouse wheel, Q/E, or the slider. For IM, position the needle tip within the muscle region; for SC, position the tip in the yellow subcutaneous region. Set the angle with the slider, then select Submit Injection Attempt. A specific correction appears if the attempt needs adjustment.</span>
+          <span>Use the Tip Depth slider (shallow to deep) to move the needle into the intended tissue layer, then use the Angle slider. On desktop you can also drag the needle. For IM, the tip should reach the muscle; for SC, stop in the yellow subcutaneous region. Select Submit Injection Attempt when both are set. A specific correction appears if the attempt needs adjustment.</span>
         </div>
 
         <div class="popup-slider-row">
           <span>Angle</span>
           <input id="popup-angle-slider" type="range" min="0" max="110" value="0" oninput="setPopupNeedleAngle(this.value)">
           <span id="popup-angle-value">0°</span>
+        </div>
+
+        <div class="popup-slider-row depth-slider-row">
+          <span>Tip depth</span>
+          <input id="popup-depth-slider" type="range" min="5" max="95" value="18" aria-label="Needle tip depth, shallow to deep" oninput="setPopupNeedleDepth(this.value)">
+          <span id="popup-depth-value">18%</span>
         </div>
 
         <div class="popup-readout-grid">
@@ -3696,7 +3755,7 @@ function assignRandomScenario(){
 }
 let scene,camera,renderer,patient;
 function b64ToBlobUrl(b64,mime="model/gltf-binary"){const bin=atob(b64),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return URL.createObjectURL(new Blob([bytes],{type:mime}))}
-function initThree(){const stage=document.getElementById("stage"),canvas=document.getElementById("patient-canvas");scene=new THREE.Scene();scene.background=new THREE.Color(0x071225);camera=new THREE.PerspectiveCamera(35,stage.clientWidth/stage.clientHeight,.01,100);camera.position.set(.08,0,2.85);renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(stage.clientWidth,stage.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;scene.add(new THREE.HemisphereLight(0xffffff,0x243047,2.4));const key=new THREE.DirectionalLight(0xffffff,2.6);key.position.set(1.8,2.7,2.2);scene.add(key);const fill=new THREE.DirectionalLight(0x8ec5ff,1.25);fill.position.set(-2,.8,1.8);scene.add(fill);new GLTFLoader().load(b64ToBlobUrl(window.__PATIENT_GLB_BASE64),gltf=>{patient=gltf.scene;patient.position.set(0,-.05,0);patient.scale.setScalar(0.82);patient.traverse(o=>{if(o.isMesh&&o.material){o.material.side=THREE.DoubleSide;o.material.needsUpdate=true}});scene.add(patient);setView("right");animate()});window.addEventListener("resize",resizeThree);bindNeedleDrag();bindSwabCleaning();bindPopupNeedleDrag();bindEliteInteractions()}
+function initThree(){const stage=document.getElementById("stage"),canvas=document.getElementById("patient-canvas");scene=new THREE.Scene();scene.background=new THREE.Color(0x071225);camera=new THREE.PerspectiveCamera(35,stage.clientWidth/stage.clientHeight,.01,100);camera.position.set(.08,0,2.85);renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(stage.clientWidth,stage.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;scene.add(new THREE.HemisphereLight(0xffffff,0x243047,2.4));const key=new THREE.DirectionalLight(0xffffff,2.6);key.position.set(1.8,2.7,2.2);scene.add(key);const fill=new THREE.DirectionalLight(0x8ec5ff,1.25);fill.position.set(-2,.8,1.8);scene.add(fill);new GLTFLoader().load(b64ToBlobUrl(window.__PATIENT_GLB_BASE64),gltf=>{patient=gltf.scene;patient.position.set(0,-.05,0);patient.scale.setScalar(0.82);patient.traverse(o=>{if(o.isMesh&&o.material){o.material.side=THREE.DoubleSide;o.material.needsUpdate=true}});scene.add(patient);setView("right");animate()});window.addEventListener("resize",resizeThree);bindNeedleDrag();bindSwabCleaning();bindMobileTouchCleaning();bindPopupNeedleDrag();bindEliteInteractions()}
 function resizeThree(){if(!renderer||!camera)return;const stage=document.getElementById("stage");camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();renderer.setSize(stage.clientWidth,stage.clientHeight)}
 function animate(){requestAnimationFrame(animate);if(renderer&&scene&&camera)renderer.render(scene,camera)}
 function setView(view){state.currentView=view;document.querySelectorAll(".toolbar button").forEach(b=>b.classList.remove("active"));const activeId=view==="ventro"?"view-ventro":`view-${view}`;const btn=document.getElementById(activeId);if(btn)btn.classList.add("active");if(!patient||!camera){updateTarget();return}if(view==="right"){patient.rotation.y=-Math.PI/2;camera.position.set(.08,0,2.85)}else if(view==="front"){patient.rotation.y=0;camera.position.set(0,0,3.05)}else if(view==="ventro"){patient.rotation.y=-2.42;camera.position.set(.14,0,3.0)}else{patient.rotation.y=Math.PI;camera.position.set(0,0,3.05)}updateTarget()}
@@ -4189,6 +4248,10 @@ function updatePopupNeedle(){
   needle.style.transform = `translate(-50%, -128px) rotate(${state.popupAngle}deg)`;
 
   angleVal.textContent = `${state.popupAngle}°`;
+  const depthSlider=document.getElementById("popup-depth-slider");
+  if(depthSlider)depthSlider.value=state.popupNeedleY;
+  const depthValue=document.getElementById("popup-depth-value");
+  if(depthValue)depthValue.textContent=`${Math.round(state.popupNeedleY)}%`;
 
   if(!state.cleaned){
     layerEl.textContent = "Clean site first";
@@ -4231,6 +4294,13 @@ function setPopupAngleValue(value){
 
 function setPopupNeedleAngle(value){
   setPopupAngleValue(value);
+}
+function setPopupNeedleDepth(value){
+  const n=Number(value);
+  if(!Number.isFinite(n)) return;
+  state.popupNeedleY=Math.max(5,Math.min(95,n));
+  state.popupSubmitted=false;
+  updatePopupNeedle();
 }
 function openSkinPopup(){
   const site=currentSite();
@@ -4597,6 +4667,8 @@ function updateNeedle(){const needle=document.getElementById("needle"),angle=doc
 
 function cleaningGoal(site){
   const area = site && site.area && site.area[state.currentView];
+  // The phone cleaning pad contains 12 distinct zones for every site.
+  if(window.matchMedia && window.matchMedia("(max-width: 768px)").matches)return 12;
   return area ? 12 : 7;
 }
 
@@ -4652,7 +4724,7 @@ function markCleanedArea(){
   addCleanDot(state.swabX, state.swabY);
   updateSwabCleaning();
 
-  if(cleaningPercent() >= 85){
+  if(cleaningPercent() >= 100){
     state.cleaned = true;
     setEducationFeedback("");
     state.swabDragging = false;
@@ -4687,6 +4759,94 @@ function updateSwabCleaning(){
   swab.style.left = (state.swabX || 50) + "%";
   swab.style.top = (state.swabY || 50) + "%";
   fill.style.width = cleaningPercent() + "%";
+}
+
+
+function updateMobileCleaningWorkspace(){
+  const stage=document.getElementById("stage");
+  const panel=document.getElementById("mobile-cleaning-workspace");
+  if(!stage || !panel)return;
+  const site=currentSite();
+  const active=!!(site && site.allowed && state.chartReviewed && state.prepCompleted && !state.cleaned && !state.injected);
+  stage.classList.toggle("touch-cleaning-active",active);
+  panel.classList.toggle("active",active);
+  if(!active)return;
+  const siteName=document.getElementById("touch-selected-site");
+  if(siteName)siteName.textContent=site.label;
+  const percent=cleaningPercent();
+  const fill=document.getElementById("touch-clean-fill");
+  const value=document.getElementById("touch-clean-percent");
+  if(fill)fill.style.width=percent+"%";
+  if(value)value.textContent=percent+"%";
+  const grid=document.getElementById("touch-cell-grid");
+  if(grid){
+    if(!grid.children.length){
+      for(let row=0;row<3;row++)for(let col=0;col<4;col++){
+        const cell=document.createElement("div");
+        cell.className="touch-cell";cell.dataset.cleanKey=col+"-"+row;
+        grid.appendChild(cell);
+      }
+    }
+    Array.from(grid.children).forEach(cell=>cell.classList.toggle("done",!!state.cleanCoverage[cell.dataset.cleanKey]));
+  }
+}
+function bindMobileTouchCleaning(){
+  const pad=document.getElementById("touch-clean-zone");
+  if(!pad || pad.dataset.bound)return;
+  pad.dataset.bound="1";
+  let activeId=null, lastPoint=null;
+  const scrub=(event)=>{
+    if(state.cleaned || !state.chartReviewed || !state.prepCompleted || !state.site)return;
+    const box=pad.getBoundingClientRect();
+    if(!box.width || !box.height)return;
+    const pctX=Math.max(0,Math.min(.999,(event.clientX-box.left)/box.width));
+    const pctY=Math.max(0,Math.min(.999,(event.clientY-box.top)/box.height));
+    const next={x:pctX,y:pctY};
+    const distance=lastPoint?Math.hypot(next.x-lastPoint.x,next.y-lastPoint.y):0;
+    const count=Math.max(1,Math.ceil(distance*22));
+    for(let j=0;j<=count;j++){
+      const f=j/count;
+      const x=lastPoint?lastPoint.x+(next.x-lastPoint.x)*f:next.x;
+      const y=lastPoint?lastPoint.y+(next.y-lastPoint.y)*f:next.y;
+      const col=Math.min(3,Math.floor(x*4));
+      const row=Math.min(2,Math.floor(y*3));
+      state.cleanCoverage[col+"-"+row]=true;
+    }
+    lastPoint=next;
+    const icon=document.getElementById("touch-swab");
+    if(icon){icon.style.left=(pctX*100)+"%";icon.style.top=(pctY*100)+"%"}
+    updateSwabCleaning();
+    updateMobileCleaningWorkspace();
+    if(cleaningPercent()>=100 && !state.cleaned){
+      state.cleaned=true;
+      state.swabDragging=false;
+      setEducationFeedback("");
+      render();
+      toast("Injection site prepared. Continue with the needle depth and angle.");
+      setTimeout(()=>openSkinPopup(),220);
+    }
+  };
+  pad.addEventListener("pointerdown",event=>{
+    if(event.button!==undefined && event.button!==0)return;
+    if(!pad.closest(".active") || state.cleaned)return;
+    if(activeId!==null)return;
+    activeId=event.pointerId;lastPoint=null;
+    event.preventDefault();
+    event.stopPropagation();
+    try{pad.setPointerCapture(event.pointerId)}catch(e){}
+    scrub(event);
+  });
+  pad.addEventListener("pointermove",event=>{
+    if(activeId!==event.pointerId)return;
+    event.preventDefault();event.stopPropagation();scrub(event);
+  });
+  const end=event=>{
+    if(activeId!==event.pointerId)return;
+    event.stopPropagation();activeId=null;lastPoint=null;
+    try{if(pad.hasPointerCapture(event.pointerId))pad.releasePointerCapture(event.pointerId)}catch(e){}
+  };
+  pad.addEventListener("pointerup",end);
+  pad.addEventListener("pointercancel",end);
 }
 
 function bindSwabCleaning(){
@@ -4727,7 +4887,7 @@ function bindSwabCleaning(){
   stage.addEventListener("pointerdown", (event) => {
     const site = currentSite();
     if(!site || !site.allowed || !state.chartReviewed || state.cleaned || state.injected) return;
-    if(event.target.closest(".toolbar") || event.target.closest(".bottom-card") || event.target.closest(".cleaning-meter")) return;
+    if(event.target.closest(".toolbar") || event.target.closest(".bottom-card") || event.target.closest(".cleaning-meter") || event.target.closest(".mobile-cleaning-workspace")) return;
     state.swabDragging = true;
     moveSwabTo(event);
   }, true);
@@ -4842,7 +5002,7 @@ function openDebrief(){
   popup.classList.add("active");
 }
 function closeDebrief(){const popup=document.getElementById("debrief-popup");if(popup)popup.classList.remove("active")}
-function render(){renderMedications();renderPreparationMethods();renderSites();renderStep();renderDecisionLaunchers();updateTarget();updateNeedle();updateSwabCleaning();updatePopupNeedle();renderSummary();renderEducationFeedback();saveLAIScenario()}
+function render(){renderMedications();renderPreparationMethods();renderSites();renderStep();renderDecisionLaunchers();updateTarget();updateNeedle();updateSwabCleaning();updateMobileCleaningWorkspace();updatePopupNeedle();renderSummary();renderEducationFeedback();saveLAIScenario()}
 function retryDifferentScenario(){
   closeDebrief();
   state.site="";
@@ -5669,5 +5829,10 @@ body:not(.learning-mode) .debrief-card .debrief-note{
 }
 
 </style>
+<script>
+// Touch controls do not depend on the optional 3D model finishing download.
+if(typeof bindMobileTouchCleaning === "function")bindMobileTouchCleaning();
+if(typeof updateMobileCleaningWorkspace === "function")updateMobileCleaningWorkspace();
+</script>
 </body>
 </html>
